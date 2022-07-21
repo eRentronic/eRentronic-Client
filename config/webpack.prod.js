@@ -29,7 +29,7 @@ module.exports = merge(common, {
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
       reportFilename: 'bundle-report.html',
-      openAnalyzer: true, // 분석창 자동실행
+      openAnalyzer: false, // 분석창 자동실행
       generateStatsFile: true, // 분석 파일 json 저장
       statsFilename: 'bundle-stats.json',
     }),
