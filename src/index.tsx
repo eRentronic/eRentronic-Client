@@ -1,6 +1,8 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 
+import { GlobalStyle } from '@/styles/globalTheme';
+
 import { App } from './App';
 
 if (process.env.NODE_ENV === 'development') {
@@ -13,6 +15,7 @@ const root = createRoot(container as Element);
 
 root.render(
   <React.StrictMode>
+    <GlobalStyle />
     <App />
   </React.StrictMode>,
 );
