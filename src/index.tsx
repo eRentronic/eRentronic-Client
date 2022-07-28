@@ -1,9 +1,10 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 
-import { GlobalStyle } from '@/styles/globalTheme';
+import { GlobalStyle } from '@/styles/globalStyle';
 
 import { App } from './App';
+import '@/styles/index.css';
 
 if (process.env.NODE_ENV === 'development') {
   const { worker } = require('./mocks/browser');

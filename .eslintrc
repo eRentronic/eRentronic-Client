@@ -29,6 +29,7 @@
         "endOfLine": "auto"
       }
     ],
+    "react/jsx-props-no-spreading": "off",
     "global-require": "off",
     "import/no-extraneous-dependencies": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
