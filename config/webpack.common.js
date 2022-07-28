@@ -16,7 +16,6 @@ module.exports = {
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, '..', 'dist'),
-    assetModuleFilename: 'assets/[hash][ext][query]',
   },
 
   resolve: {
@@ -61,8 +60,8 @@ module.exports = {
         use: ['@svgr/webpack'],
       },
       {
-        test: /\.(jpe?g|gif|png|webp|bmp|svg|ttf|woff)$/,
-        type: 'assets/resource',
+        test: /\.(jpe?g|gif|png|webp|bmp|svg|ttf|woff|otf|woff2)$/,
+        type: 'asset/resource',
       },
     ],
   },
