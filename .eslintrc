@@ -29,6 +29,7 @@
         "endOfLine": "auto"
       }
     ],
+
     "react/jsx-props-no-spreading": "off",
     "global-require": "off",
     "import/no-extraneous-dependencies": "off",
@@ -41,6 +42,7 @@
     "consistent-return": "off",
     "@typescript-eslint/no-var-requires": "off",
     "react/function-component-definition": "off",
+    "import/namespace": "off",
     "import/order": [
       "error",
       {
