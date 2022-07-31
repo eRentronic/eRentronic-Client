@@ -57,6 +57,7 @@ module.exports = {
       },
       {
         test: /\.svg$/,
+        include: ['src'],
         use: ['@svgr/webpack'],
       },
       {
