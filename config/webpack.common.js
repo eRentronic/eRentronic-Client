@@ -60,7 +60,7 @@ module.exports = {
         use: ['@svgr/webpack'],
       },
       {
-        test: /\.(jpe?g|gif|png|webp|bmp|svg|ttf|woff|otf|woff2)$/,
+        test: /\.(jpe?g|gif|png|webp|bmp|ttf|woff|otf|woff2)$/,
         type: 'asset/resource',
       },
     ],

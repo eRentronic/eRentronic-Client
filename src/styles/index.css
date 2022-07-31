@@ -45,7 +45,7 @@
 
 @font-face {
   font-family: 'Noto Sans KR';
-  font-style: black;
+  font-style: 'black';
   font-weight: 900;
   src: url('../assets/fonts/NotoSansKR-Black.otf') format('woff2'),
     url('../assets/fonts/NotoSansKR-Black.otf') format('woff'),
