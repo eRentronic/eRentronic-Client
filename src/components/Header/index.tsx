@@ -1,47 +1,23 @@
-import styled from 'styled-components';
-
 import { Icon } from '@/components/common/Icon';
 import { IconTypes } from '@/components/common/Icon/types';
 import { Text } from '@/components/common/Text';
 
+import * as S from './styles';
+
 const USER_ICON_LIST: IconTypes[] = ['MENU', 'SHOPPING_CART', 'PERSON'];
 const UserIcons = USER_ICON_LIST.map(icon => <Icon iconSrc={icon} />);
 
+const NAV_TEXT_LIST: string[] = ['홈', '샵', 'QnA'];
+const NavList = NAV_TEXT_LIST.map(text => <Text>{text}</Text>);
+
 export function Header() {
   return (
-    <>
-      <Logo>eRentronic</Logo>
-      <ContentsLayOut>
-        <NavLeft>
-          <Text>홈</Text>
-          <Text>샵</Text>
-          <Text>qna</Text>
-        </NavLeft>
-        <NavRight>{UserIcons}</NavRight>
-      </ContentsLayOut>
-    </>
+    <S.Layout>
+      <S.Logo>eRentronic</S.Logo>
+      <S.ContentsLayOut>
+        <S.NavLeft>{NavList}</S.NavLeft>
+        <S.NavRight>{UserIcons}</S.NavRight>
+      </S.ContentsLayOut>
+    </S.Layout>
   );
 }
-
-const Logo = styled.a`
-  font-weight: 900;
-  font-size: 40px;
-  margin-right: 10px;
-`;
-
-const ContentsLayOut = styled.nav`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-`;
-
-const NavLeft = styled.div`
-  display: flex;
-  gap: 10px;
-`;
-
-const NavRight = styled.div`
-  display: flex;
-  gap: 10px;
-`;
