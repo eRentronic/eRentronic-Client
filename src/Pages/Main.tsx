@@ -8,10 +8,8 @@ export function Main() {
       <StyledHeader>
         <Header />
       </StyledHeader>
-      <main>
-        메인
-        <aside>사이드</aside>
-      </main>
+      <aside>사이드</aside>
+      <main>메인</main>
       <footer>푸터</footer>
     </Layout>
   );

@@ -10,7 +10,8 @@ const isDevelopment = process.env.NODE_ENV !== 'production';
 const removeNewLine = lines => lines.toString().replace('\n', '');
 
 module.exports = {
-  name: 'Dott-react-boilerplate',
+  name: 'eRentronic',
+
   entry: { app: path.join(__dirname, '..', 'src', 'index.tsx') },
 
   output: {
@@ -36,7 +37,6 @@ module.exports = {
               {
                 targets: { browsers: ['> 0.2% in KR, not dead'] },
                 debug: true,
-                modules: false,
                 useBuiltIns: 'usage',
                 corejs: 3,
               },
@@ -57,7 +57,6 @@ module.exports = {
       },
       {
         test: /\.svg$/,
-        include: ['src'],
         use: ['@svgr/webpack'],
       },
       {
@@ -89,4 +88,5 @@ module.exports = {
       `,
     }),
   ],
+  target: process.env.NODE_ENV === 'development' ? 'web' : 'browserslist',
 };
