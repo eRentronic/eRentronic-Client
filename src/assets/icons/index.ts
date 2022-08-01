@@ -1,3 +1,5 @@
-export { ReactComponent as MENU } from './menu.svg';
-export { ReactComponent as PERSON } from './person.svg';
-export { ReactComponent as SHOPPING_CART } from './shopping_cart.svg';
+import MENU from './menu.svg?component';
+import PERSON from './person.svg?component';
+import SHOPPING_CART from './shopping_cart.svg?component';
+
+export { MENU, PERSON, SHOPPING_CART };

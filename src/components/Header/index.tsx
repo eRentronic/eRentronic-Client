@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 
+import { Icon } from '@/components/common/Icon';
+import { IconTypes } from '@/components/common/Icon/types';
 import { Text } from '@/components/common/Text';
+
+const USER_ICON_LIST: IconTypes[] = ['MENU', 'SHOPPING_CART', 'PERSON'];
+const UserIcons = USER_ICON_LIST.map(icon => <Icon iconSrc={icon} />);
 
 export function Header() {
   return (
@@ -12,11 +17,7 @@ export function Header() {
           <Text>샵</Text>
           <Text>qna</Text>
         </NavLeft>
-        <NavRight>
-          <Text>유저</Text>
-          <Text>유저</Text>
-          <Text>유저</Text>
-        </NavRight>
+        <NavRight>{UserIcons}</NavRight>
       </ContentsLayOut>
     </>
   );
