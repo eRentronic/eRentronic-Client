@@ -8,7 +8,7 @@ export function Main() {
       <StyledHeader>
         <Header />
       </StyledHeader>
-      <aside>사이드</aside>
+      <aside>플러스 사이드</aside>
       <main>메인</main>
       <footer>푸터</footer>
     </>
@@ -17,6 +17,6 @@ export function Main() {
 
 const StyledHeader = styled.header`
   display: flex;
-  padding: 25px 30px;
+  padding: 20px 0px;
   box-shadow: 0px 11px 22px 5px rgba(0, 0, 0, 0.2);
 `;

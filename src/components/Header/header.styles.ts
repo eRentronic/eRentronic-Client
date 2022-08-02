@@ -1,8 +1,6 @@
-import { ElementType } from 'react';
 import styled from 'styled-components';
 
 import { Text } from '../common/Text';
-import { TextProps } from '../common/Text/types';
 
 export const Layout = styled.div`
   width: 100%;
