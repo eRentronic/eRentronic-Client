@@ -5,6 +5,7 @@ import { OverRidableProps } from '@/utils/helperType';
 
 export type TextBaseProps = {
   typography?: string;
+  className?: string;
 };
 
 export type TextProps<incomeElementType extends ElementType> = OverRidableProps<
