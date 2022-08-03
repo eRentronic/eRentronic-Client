@@ -10,6 +10,7 @@ module.exports = merge(common, {
     host: 'localhost',
     open: true,
     historyApiFallback: true,
+    port: 8080,
   },
   plugins: [new ReactRefreshWebpackPlugin()],
 });
