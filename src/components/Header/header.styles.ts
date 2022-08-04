@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Text } from '../common/Text';
+import { Text } from '@/components/common';
 
 export const Layout = styled.div`
   width: 100%;

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 
+import { Text } from '@/components/common';
+
 import * as S from './popUp.style';
 import * as Types from './popUp.types';
-
-import { Text } from '../common/Text';
 
 export function PopUp({ title, options }: Types.LinkProps) {
   const [isClicked, setClicked] = useState(false);

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Text } from '@/components/common/Text';
+import { Text } from '@/components/common';
 
 type CardProps = {
   thumbnail: string;
@@ -22,19 +22,21 @@ export function Card(props: CardProps) {
     discountRate,
     isLike,
   } = props;
-
+  // ERROR: as 키워드로 태그 변경시 프로퍼티로 스타일링 적용이 안됨
   return (
     <Wrapper>
       <ThumbnailContainer>
         <Thumbnail alt="제품 썸네일" src={thumbnail} />
       </ThumbnailContainer>
       <Labels>라벨 넣을 예정</Labels>
-      <Title>{title}</Title>
-      <Brand>{brand}</Brand>
+      <Title typography="Black">{title}</Title>
+      <Brand as="h4" color="grey3">
+        {brand}
+      </Brand>
       <PriceInfo>
         <DiscountInfo>
           <SaledPrice as="del">{salePrice}</SaledPrice>
-          <CurrentPrice>{currentPrice}</CurrentPrice>
+          <CurrentPrice color="secondary">{currentPrice}</CurrentPrice>
         </DiscountInfo>
 
         <Text>{discountRate}</Text>
@@ -50,6 +52,7 @@ export function Card(props: CardProps) {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  padding: 5px;
   width: 25%;
 `;
 
@@ -65,16 +68,17 @@ const Thumbnail = styled.img`
 `;
 
 const Title = styled(Text)`
-  font-weight: 700;
-  font-size: 16px;
+  font-size: 18px;
+  padding: 5px 0;
 `;
 
 const Brand = styled(Text)`
-  font-size: 10px;
+  font-size: 13px;
 `;
 
 const Labels = styled.div`
   display: flex;
+  padding: 10px 0;
 `;
 
 const PriceInfo = styled.div`
@@ -88,9 +92,7 @@ const DiscountInfo = styled.div`
 `;
 
 const SaledPrice = styled(Text)`
-  color: grey;
+  color: ${({ theme }) => theme.pallete.grey3};
 `;
 
-const CurrentPrice = styled(Text)`
-  color: blue;
-`;
+const CurrentPrice = styled(Text)``;

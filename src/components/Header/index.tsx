@@ -1,4 +1,4 @@
-import { Icon } from '@/components/common/Icon';
+import { Icon } from '@/components/common';
 import { IconTypes } from '@/components/common/Icon/types';
 
 import * as S from './header.styles';
