@@ -2,25 +2,42 @@ import styled from 'styled-components';
 
 import { Text } from '@/components/common/Text';
 
-export function Card() {
+type CardProps = {
+  thumbnail: string;
+  title: string;
+  brand: string;
+  currentPrice: number;
+  salePrice: number;
+  discountRate?: number;
+  isLike: boolean;
+};
+
+export function Card(props: CardProps) {
+  const {
+    thumbnail,
+    title,
+    brand,
+    currentPrice,
+    salePrice,
+    discountRate,
+    isLike,
+  } = props;
+
   return (
     <Wrapper>
       <ThumbnailContainer>
-        <Thumbnail
-          alt="제품 썸네일"
-          src="https://cdn.inflearn.com/public/courses/328753/cover/0c368e07-0353-4167-a4cb-56726d49218e/%E1%84%8F%E1%85%A5%E1%84%87%E1%85%A5.png"
-        />
+        <Thumbnail alt="제품 썸네일" src={thumbnail} />
       </ThumbnailContainer>
-      <Labels>라벨존</Labels>
-      <Title>상품명</Title>
-      <Brand>브랜드</Brand>
+      <Labels>라벨 넣을 예정</Labels>
+      <Title>{title}</Title>
+      <Brand>{brand}</Brand>
       <PriceInfo>
         <DiscountInfo>
-          <SaledPrice as="del">세일가</SaledPrice>
-          <CurrentPrice>현재가</CurrentPrice>
+          <SaledPrice as="del">{salePrice}</SaledPrice>
+          <CurrentPrice>{currentPrice}</CurrentPrice>
         </DiscountInfo>
 
-        <Text>할인률</Text>
+        <Text>{discountRate}</Text>
       </PriceInfo>
       <PriceInfo>
         <SaledPrice as="del">세일가</SaledPrice>
