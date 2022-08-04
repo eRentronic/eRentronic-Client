@@ -30,6 +30,6 @@
       "@/*": ["src/*"]
     }
   },
-  "include": ["src", "src/svgDeclare.d.ts"],
+  "include": ["src", "src/types/svgDeclare.d.ts", "src/types/globalTheme.d.ts"],
   "exclude": ["dist"]
 }
