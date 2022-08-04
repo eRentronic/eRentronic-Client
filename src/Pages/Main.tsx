@@ -20,6 +20,7 @@ export function Main() {
             salePrice={2000}
             discountRate={10}
             isLike={false}
+            content="제품 설명 테스트 중~"
           />
         </MainContents>
       </StyledMain>

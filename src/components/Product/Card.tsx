@@ -10,6 +10,7 @@ type CardProps = {
   currentPrice: number;
   salePrice: number;
   discountRate?: number;
+  content: string;
   isLike: boolean;
 };
 
@@ -21,12 +22,14 @@ export function Card(props: CardProps) {
     currentPrice,
     salePrice,
     discountRate,
+    content,
     isLike,
   } = props;
+
   // ERROR: as 키워드로 태그 변경시 프로퍼티로 스타일링 적용이 안됨
   // TODO: SOLVE https://github.com/styled-components/styled-components/issues/1981  forwardedAs를 사용해야함
   return (
-    <Wrapper>
+    <Wrapper Content={content}>
       <ThumbnailContainer>
         <Thumbnail alt="제품 썸네일" src={thumbnail} />
       </ThumbnailContainer>
@@ -42,24 +45,37 @@ export function Card(props: CardProps) {
           </SaledPrice>
           <CurrentPrice color="secondary">{currentPrice}</CurrentPrice>
         </DiscountInfo>
-
-        <Text>{discountRate}</Text>
+        <DiscountRate color="warning">{discountRate}%</DiscountRate>
       </PriceInfo>
       <PriceInfo>
         <SaledPrice color="grey3" forwardedAs="del">
           세일가
         </SaledPrice>
-        <Text>할인률</Text>
+        <DiscountRate color="warning">{discountRate}%</DiscountRate>
       </PriceInfo>
     </Wrapper>
   );
 }
 
-const Wrapper = styled.div`
+type WrapperProps = { Content: string };
+
+const Wrapper = styled.div<WrapperProps>`
   display: flex;
   flex-direction: column;
   padding: 5px;
   width: 25%;
+  position: relative;
+  &:hover {
+    ::before {
+      content: '${({ Content }) => Content}';
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      opacity: 0.5;
+      /* display: none; */
+      background-color: ${({ theme }) => theme.pallete.grey2};
+    }
+  }
 `;
 
 const ThumbnailContainer = styled.figure`
@@ -80,16 +96,19 @@ const Title = styled(Text)`
 
 const Brand = styled(Text)`
   font-size: 13px;
+  padding: 5px 0;
 `;
 
 const Labels = styled.div`
   display: flex;
   padding: 10px 0;
+  border-bottom: 0.5px solid ${({ theme }) => theme.pallete.grey5};
 `;
 
 const PriceInfo = styled.div`
   display: flex;
   justify-content: space-between;
+  padding-bottom: 5px;
 `;
 
 const DiscountInfo = styled.div`
@@ -100,3 +119,5 @@ const DiscountInfo = styled.div`
 const SaledPrice = styled(Text)<StyledTextProps>``;
 
 const CurrentPrice = styled(Text)``;
+
+const DiscountRate = styled(Text)``;
