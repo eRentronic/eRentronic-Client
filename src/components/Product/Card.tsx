@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { Text } from '@/components/common';
+import { StyledTextProps } from '@/components/common/Text/types';
 
 type CardProps = {
   thumbnail: string;
@@ -23,6 +24,7 @@ export function Card(props: CardProps) {
     isLike,
   } = props;
   // ERROR: as 키워드로 태그 변경시 프로퍼티로 스타일링 적용이 안됨
+  // TODO: SOLVE https://github.com/styled-components/styled-components/issues/1981  forwardedAs를 사용해야함
   return (
     <Wrapper>
       <ThumbnailContainer>
@@ -30,19 +32,23 @@ export function Card(props: CardProps) {
       </ThumbnailContainer>
       <Labels>라벨 넣을 예정</Labels>
       <Title typography="Black">{title}</Title>
-      <Brand as="h4" color="grey3">
+      <Brand forwardedAs="h4" color="grey3">
         {brand}
       </Brand>
       <PriceInfo>
         <DiscountInfo>
-          <SaledPrice as="del">{salePrice}</SaledPrice>
+          <SaledPrice color="grey3" forwardedAs="del">
+            {salePrice}
+          </SaledPrice>
           <CurrentPrice color="secondary">{currentPrice}</CurrentPrice>
         </DiscountInfo>
 
         <Text>{discountRate}</Text>
       </PriceInfo>
       <PriceInfo>
-        <SaledPrice as="del">세일가</SaledPrice>
+        <SaledPrice color="grey3" forwardedAs="del">
+          세일가
+        </SaledPrice>
         <Text>할인률</Text>
       </PriceInfo>
     </Wrapper>
@@ -91,8 +97,6 @@ const DiscountInfo = styled.div`
   gap: 5px;
 `;
 
-const SaledPrice = styled(Text)`
-  color: ${({ theme }) => theme.pallete.grey3};
-`;
+const SaledPrice = styled(Text)<StyledTextProps>``;
 
 const CurrentPrice = styled(Text)``;
