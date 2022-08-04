@@ -4,18 +4,19 @@ import { StyledText } from './style';
 import { TextProps } from './types';
 
 const Text = <incomeElementType extends ElementType = 'span'>(
-  {
-    typography = 'default',
-    className,
-    as,
-    ...props
-  }: TextProps<incomeElementType>,
+  { typography, className, as, color, ...props }: TextProps<incomeElementType>,
   ref: Ref<any>,
 ) => {
   const incomeElement = as ?? 'span';
 
   return (
-    <StyledText ref={ref} as={incomeElement} className={className}>
+    <StyledText
+      ref={ref}
+      as={incomeElement}
+      className={className}
+      typography={typography}
+      color={color}
+    >
       {props.children}
     </StyledText>
   );
