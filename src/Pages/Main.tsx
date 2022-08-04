@@ -12,7 +12,15 @@ export function Main() {
       <StyledMain>
         <SearchSection>여기는</SearchSection>
         <MainContents>
-          <Card />
+          <Card
+            title="키보드"
+            thumbnail="https://cdn.inflearn.com/public/courses/328753/cover/0c368e07-0353-4167-a4cb-56726d49218e/%E1%84%8F%E1%85%A5%E1%84%87%E1%85%A5.png"
+            brand="레오폴드"
+            currentPrice={3000}
+            salePrice={2000}
+            discountRate={10}
+            isLike={false}
+          />
         </MainContents>
       </StyledMain>
       <aside>플러스 사이드</aside>
