@@ -85,17 +85,22 @@ type ContentProps = {
 
 const Content = styled.div<ContentProps>`
   display: ${({ isHover }) => (isHover ? 'block' : 'none')};
-  width: 100%;
-  box-sizing: border-box;
-  height: 100%;
   position: absolute;
+  width: 100%;
+  height: 100%;
   opacity: 0.5;
   top: 0;
   left: 0;
+  padding: 5px;
   background-color: ${({ theme }) => theme.pallete.grey2};
 `;
 
-const ContentText = styled(Text)``;
+const ContentText = styled(Text)`
+  display: -webkit-box;
+  -webkit-line-clamp: 12;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+`;
 
 const Wrapper = styled.div`
   display: flex;
@@ -116,6 +121,11 @@ const Thumbnail = styled.img`
 `;
 
 const Title = styled(Text)`
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  width: 70%;
   font-size: 18px;
   padding: 5px 0;
 `;
