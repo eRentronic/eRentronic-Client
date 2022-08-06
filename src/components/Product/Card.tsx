@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 
 import { Text } from '@/components/common';
@@ -26,31 +27,44 @@ export function Card(props: CardProps) {
     isLike,
   } = props;
 
+  const [isHover, setIsHover] = useState(false);
+
   // ERROR: as 키워드로 태그 변경시 프로퍼티로 스타일링 적용이 안됨
   // TODO: SOLVE https://github.com/styled-components/styled-components/issues/1981  forwardedAs를 사용해야함
   return (
-    <Wrapper Content={content}>
+    <Wrapper
+      onMouseEnter={() => {
+        setIsHover(true);
+      }}
+      onMouseLeave={() => {
+        setIsHover(false);
+      }}
+    >
       <StyledCard>
-        <Content />
+        <Content isHover={isHover}>
+          <ContentText color="white" typography="Thin">
+            {content}
+          </ContentText>
+        </Content>
         <ThumbnailContainer>
           <Thumbnail alt="제품 썸네일" src={thumbnail} />
         </ThumbnailContainer>
         <Labels>라벨 넣을 예정</Labels>
-        <Title typography="Black">{title}</Title>
-        <Brand forwardedAs="h4" color="grey3">
+        <Title typography="Regular">{title}</Title>
+        <Brand forwardedAs="h4" color="grey3" typography="Light">
           {brand}
         </Brand>
         <PriceInfo>
           <DiscountInfo>
-            <SaledPrice color="grey3" as="del">
+            <CurrentPrice color="secondary">{currentPrice}</CurrentPrice>
+            <SaledPrice typography="Thin" color="grey3" forwardedAs="del">
               {salePrice}
             </SaledPrice>
-            <CurrentPrice color="secondary">{currentPrice}</CurrentPrice>
           </DiscountInfo>
           <DiscountRate color="warning">{discountRate}%</DiscountRate>
         </PriceInfo>
         <PriceInfo>
-          <SaledPrice color="grey3" forwardedAs="del">
+          <SaledPrice typography="Thin" color="grey3" forwardedAs="del">
             세일가
           </SaledPrice>
           <DiscountRate color="warning">{discountRate}%</DiscountRate>
@@ -60,14 +74,17 @@ export function Card(props: CardProps) {
   );
 }
 
-type WrapperProps = { Content: string };
-
 const StyledCard = styled.div`
   width: 100%;
   position: relative;
 `;
 
-const Content = styled.div`
+type ContentProps = {
+  isHover: boolean;
+};
+
+const Content = styled.div<ContentProps>`
+  display: ${({ isHover }) => (isHover ? 'block' : 'none')};
   width: 100%;
   box-sizing: border-box;
   height: 100%;
@@ -78,7 +95,9 @@ const Content = styled.div`
   background-color: ${({ theme }) => theme.pallete.grey2};
 `;
 
-const Wrapper = styled.div<WrapperProps>`
+const ContentText = styled(Text)``;
+
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   padding: 10px;
