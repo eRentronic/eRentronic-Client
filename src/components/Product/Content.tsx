@@ -36,6 +36,7 @@ const Wrapper = styled.div<WrapperProps>`
   left: 0;
   padding: 5px;
   background-color: rgba(0, 0, 0, 0.7);
+  cursor: pointer;
 `;
 
 const ContentMain = styled.div`
