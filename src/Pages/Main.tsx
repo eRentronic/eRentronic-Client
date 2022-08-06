@@ -38,7 +38,6 @@ const StyledHeader = styled.header`
 
 const StyledMain = styled.main`
   display: flex;
-
   flex-direction: column;
 `;
 
@@ -51,5 +50,5 @@ const MainContents = styled.section`
   display: flex;
   width: 60%;
   margin: 0 auto;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
 `;
