@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { Text } from '@/components/common';
 import { StyledTextProps } from '@/components/common/Text/types';
 
+import { Content } from './Content';
+
 type CardProps = {
   thumbnail: string;
   title: string;
@@ -41,11 +43,8 @@ export function Card(props: CardProps) {
       }}
     >
       <StyledCard>
-        <Content isHover={isHover}>
-          <ContentText color="white" typography="Thin">
-            {content}
-          </ContentText>
-        </Content>
+        <Content isDisplay={isHover} content={content} />
+
         <ThumbnailContainer>
           <Thumbnail alt="제품 썸네일" src={thumbnail} />
         </ThumbnailContainer>
@@ -77,29 +76,6 @@ export function Card(props: CardProps) {
 const StyledCard = styled.div`
   width: 100%;
   position: relative;
-`;
-
-type ContentProps = {
-  isHover: boolean;
-};
-
-const Content = styled.div<ContentProps>`
-  display: ${({ isHover }) => (isHover ? 'block' : 'none')};
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  opacity: 0.5;
-  top: 0;
-  left: 0;
-  padding: 5px;
-  background-color: ${({ theme }) => theme.pallete.grey2};
-`;
-
-const ContentText = styled(Text)`
-  display: -webkit-box;
-  -webkit-line-clamp: 12;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 `;
 
 const Wrapper = styled.div`
