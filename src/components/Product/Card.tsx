@@ -30,52 +30,59 @@ export function Card(props: CardProps) {
   // TODO: SOLVE https://github.com/styled-components/styled-components/issues/1981  forwardedAs를 사용해야함
   return (
     <Wrapper Content={content}>
-      <ThumbnailContainer>
-        <Thumbnail alt="제품 썸네일" src={thumbnail} />
-      </ThumbnailContainer>
-      <Labels>라벨 넣을 예정</Labels>
-      <Title typography="Black">{title}</Title>
-      <Brand forwardedAs="h4" color="grey3">
-        {brand}
-      </Brand>
-      <PriceInfo>
-        <DiscountInfo>
+      <StyledCard>
+        <Content />
+        <ThumbnailContainer>
+          <Thumbnail alt="제품 썸네일" src={thumbnail} />
+        </ThumbnailContainer>
+        <Labels>라벨 넣을 예정</Labels>
+        <Title typography="Black">{title}</Title>
+        <Brand forwardedAs="h4" color="grey3">
+          {brand}
+        </Brand>
+        <PriceInfo>
+          <DiscountInfo>
+            <SaledPrice color="grey3" as="del">
+              {salePrice}
+            </SaledPrice>
+            <CurrentPrice color="secondary">{currentPrice}</CurrentPrice>
+          </DiscountInfo>
+          <DiscountRate color="warning">{discountRate}%</DiscountRate>
+        </PriceInfo>
+        <PriceInfo>
           <SaledPrice color="grey3" forwardedAs="del">
-            {salePrice}
+            세일가
           </SaledPrice>
-          <CurrentPrice color="secondary">{currentPrice}</CurrentPrice>
-        </DiscountInfo>
-        <DiscountRate color="warning">{discountRate}%</DiscountRate>
-      </PriceInfo>
-      <PriceInfo>
-        <SaledPrice color="grey3" forwardedAs="del">
-          세일가
-        </SaledPrice>
-        <DiscountRate color="warning">{discountRate}%</DiscountRate>
-      </PriceInfo>
+          <DiscountRate color="warning">{discountRate}%</DiscountRate>
+        </PriceInfo>
+      </StyledCard>
     </Wrapper>
   );
 }
 
 type WrapperProps = { Content: string };
 
+const StyledCard = styled.div`
+  width: 100%;
+  position: relative;
+`;
+
+const Content = styled.div`
+  width: 100%;
+  box-sizing: border-box;
+  height: 100%;
+  position: absolute;
+  opacity: 0.5;
+  top: 0;
+  left: 0;
+  background-color: ${({ theme }) => theme.pallete.grey2};
+`;
+
 const Wrapper = styled.div<WrapperProps>`
   display: flex;
   flex-direction: column;
-  padding: 5px;
+  padding: 10px;
   width: 25%;
-  position: relative;
-  &:hover {
-    ::before {
-      content: '${({ Content }) => Content}';
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      opacity: 0.5;
-      /* display: none; */
-      background-color: ${({ theme }) => theme.pallete.grey2};
-    }
-  }
 `;
 
 const ThumbnailContainer = styled.figure`
