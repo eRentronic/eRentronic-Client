@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { SideTab } from '@/components/Filter/SideTab';
+import { SideTab } from '@/components/Filter/SideTab/SideTab';
 import { Header } from '@/components/Header';
 import { Card } from '@/components/Product/Card/Card';
 
