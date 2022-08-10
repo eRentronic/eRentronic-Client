@@ -10,6 +10,7 @@ function Input<incomElementType extends ElementType = 'input'>(
     as,
     padding,
     onChangeHandler,
+    type,
     ...props
   }: InputProps<incomElementType>,
   ref: Ref<any>,
@@ -24,6 +25,7 @@ function Input<incomElementType extends ElementType = 'input'>(
       fontSize={fontSize}
       padding={padding}
       onChange={onChangeHandler}
+      type={type}
     />
   );
 }
