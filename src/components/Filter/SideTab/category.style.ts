@@ -17,6 +17,7 @@ export const CategoryList = styled.ul<TYPE.CategoryListProps>`
   display: ${({ isDisplay }) => (isDisplay ? 'flex' : 'none')};
   width: 100%;
   flex-direction: row;
+  justify-content: center;
   gap: 5px;
   flex-wrap: wrap;
   border-bottom: 1px solid ${({ theme }) => theme.pallete.grey4};
