@@ -5,6 +5,7 @@ import { Text } from '@/components/common';
 import * as TYPE from './category.type';
 
 export const List = styled.li`
+  border-radius: 8px;
   padding: 8px;
   box-sizing: border-box;
   font-weight: 100;
@@ -16,7 +17,9 @@ export const List = styled.li`
 export const CategoryList = styled.ul<TYPE.CategoryListProps>`
   display: ${({ isDisplay }) => (isDisplay ? 'flex' : 'none')};
   width: 100%;
+  padding: 5px 0;
   flex-direction: row;
+  justify-content: center;
   gap: 5px;
   flex-wrap: wrap;
   border-bottom: 1px solid ${({ theme }) => theme.pallete.grey4};
