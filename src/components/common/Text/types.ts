@@ -1,4 +1,4 @@
-import { ElementType } from 'react';
+import { ElementType, MouseEventHandler } from 'react';
 
 import { globalTheme } from '@/styles/globlaTheme';
 import { OverRidableProps } from '@/utils/helperType';
@@ -9,6 +9,7 @@ export type TextBaseProps = {
   typography?: keyof typeof globalTheme.typography;
   color?: keyof typeof globalTheme.pallete;
   className?: string;
+  onClick: MouseEventHandler;
 };
 
 export type TextProps<incomeElementType extends ElementType> = OverRidableProps<
