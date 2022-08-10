@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import { Text } from '../common';
 
-const DUMMY_SIDEBAR_MODEL = {
+const DUMMY_SIDEBAR_MODEL: { [key: string]: { id: number; name: string }[] } = {
   vendors: [
     {
       id: 1,
@@ -86,17 +86,15 @@ const DUMMY_SIDEBAR_MODEL = {
   ],
 };
 
-function Category({
-  categoryLists,
-}: {
+type CategoryProps = {
   categoryLists: { id: number; name: string }[];
-}) {
-  const test = Object.keys(DUMMY_SIDEBAR_MODEL);
-  console.log(test);
+  title: string;
+};
+
+function Category({ categoryLists, title }: CategoryProps) {
   const [isClicked, setIsClicked] = useState(false);
-  const Vendors = categoryLists.map(({ name }) => (
-    <List isDisplay={isClicked}>{name}</List>
-  ));
+
+  const Vendors = categoryLists.map(({ name }) => <List>{name}</List>);
 
   return (
     <>
@@ -107,22 +105,32 @@ function Category({
           setIsClicked(!isClicked);
         }}
       >
-        테스트 카테고리
+        {title}
       </CategoryTitle>
-      {Vendors}
+      <CategoryList isDisplay={isClicked}>{Vendors}</CategoryList>
     </>
   );
 }
 
+const CategoryTitles: { [key: string]: string } = {
+  vendors: '제조사',
+  keyboardConnections: '접점부',
+  switches: '스위치',
+  layouts: '배열',
+};
+
 export function SideTab() {
-  const { vendors, keyboardConnections, switches } = DUMMY_SIDEBAR_MODEL;
+  const categoryLists = Object.keys(DUMMY_SIDEBAR_MODEL);
+  const test = categoryLists.map(key => (
+    <Category
+      categoryLists={DUMMY_SIDEBAR_MODEL[key]}
+      title={CategoryTitles[key]}
+    />
+  ));
+
   return (
     <Wrapper>
-      <CategoryWrapper>
-        <Category categoryLists={vendors} />
-        <Category categoryLists={keyboardConnections} />
-        <Category categoryLists={switches} />
-      </CategoryWrapper>
+      <CategoryWrapper>{test}</CategoryWrapper>
     </Wrapper>
   );
 }
@@ -131,13 +139,14 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 20px;
+  cursor: pointer;
 `;
 
-const CategoryWrapper = styled.ul`
+const CategoryWrapper = styled.div`
   width: 100%;
   overflow: hidden;
   border-radius: 10px;
-  background-color: ${({ theme }) => theme.pallete.grey5};
+  /* background-color: ${({ theme }) => theme.pallete.grey5}; */
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 `;
@@ -145,23 +154,31 @@ const CategoryWrapper = styled.ul`
 const CategoryTitle = styled(Text)`
   padding: 10px;
   font-size: 16px;
+  border-bottom: 1px solid ${({ theme }) => theme.pallete.grey4};
   &:hover {
-    background-color: ${({ theme }) => theme.pallete.grey1};
+    background-color: ${({ theme }) => theme.pallete.grey2};
     color: ${({ theme }) => theme.pallete.white};
   }
 `;
 
-type ListProps = {
+const List = styled.li`
+  /* width: 100%; */
+  padding: 8px;
+  box-sizing: border-box;
+  font-weight: 100;
+  &:hover {
+    background-color: ${({ theme }) => theme.pallete.grey5};
+  }
+`;
+type CategoryListProps = {
   isDisplay: boolean;
 };
 
-const List = styled.li<ListProps>`
+const CategoryList = styled.ul<CategoryListProps>`
+  display: ${({ isDisplay }) => (isDisplay ? 'flex' : 'none')};
   width: 100%;
-  padding: 5px;
-  box-sizing: border-box;
-  font-weight: 100;
-  display: ${({ isDisplay }) => (isDisplay ? 'block' : 'none')};
-  &:hover {
-    background-color: ${({ theme }) => theme.pallete.grey6};
-  }
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  border-bottom: 1px solid ${({ theme }) => theme.pallete.grey4};
 `;
