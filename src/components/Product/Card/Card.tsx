@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+import { SaleLabel } from '@/components/Product/Label/SaleLabel';
+
 import * as S from './card.style';
 import { Content } from './Content';
 
@@ -43,7 +45,9 @@ export function Card(props: CardProps) {
         <S.ThumbnailContainer>
           <S.Thumbnail alt="제품 썸네일" src={thumbnail} />
         </S.ThumbnailContainer>
-        <S.Labels>라벨 넣을 예정</S.Labels>
+        <S.Labels>
+          <SaleLabel isEventSale={false} isBrandNewSale />
+        </S.Labels>
         <S.Title typography="Regular">{title}</S.Title>
         <S.Brand forwardedAs="h4" color="grey3" typography="Light">
           {brand}
