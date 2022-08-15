@@ -9,9 +9,18 @@ export const Icon = (props: IconProps) => {
     height = 20,
     stroke = 'none',
     fill = 'none',
+    viewBox = '0 0 32 32',
   } = props;
 
   const SVGIcon = ICONS[iconSrc];
 
-  return <SVGIcon width={width} height={height} stroke={stroke} fill={fill} />;
+  return (
+    <SVGIcon
+      width={width}
+      height={height}
+      stroke={stroke}
+      fill={fill}
+      viewBox={viewBox}
+    />
+  );
 };

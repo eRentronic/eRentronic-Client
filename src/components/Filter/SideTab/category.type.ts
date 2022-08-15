@@ -6,3 +6,7 @@ export type CategoryProps = {
 export type CategoryListProps = {
   isDisplay: boolean;
 };
+
+export type ViewMoreBtnProps = {
+  isDisplay: boolean;
+};

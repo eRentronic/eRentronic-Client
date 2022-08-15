@@ -39,6 +39,7 @@
     "import/prefer-default-export": "off",
     "import/extensions": "off",
     "no-use-before-define": "off",
+    "no-nested-ternary": "off",
     "consistent-return": "off",
     "@typescript-eslint/no-var-requires": "off",
     "react/function-component-definition": "off",

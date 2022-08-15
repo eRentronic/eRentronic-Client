@@ -4,7 +4,7 @@ import { StyledButton } from './style';
 import { ButtonProps } from './types';
 
 function Button<imcomeElement extends ElementType>(
-  { onClickHandler, as, ...props }: ButtonProps<imcomeElement>,
+  { onClickHandler, as, className, ...props }: ButtonProps<imcomeElement>,
   ref: Ref<any>,
 ) {
   const IncomeElement = as ?? 'button';
@@ -15,6 +15,7 @@ function Button<imcomeElement extends ElementType>(
       as={IncomeElement}
       ref={ref}
       onClick={onClickHandler}
+      className={className}
     >
       {props.children}
     </StyledButton>

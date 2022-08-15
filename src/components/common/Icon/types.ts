@@ -8,4 +8,5 @@ export type IconProps = {
   height?: number;
   stroke?: string;
   fill?: string;
+  viewBox?: string;
 };
