@@ -1,5 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { RecoilRoot } from 'recoil';
 import { ThemeProvider } from 'styled-components';
 
 import { GlobalStyle } from '@/styles/globalStyle';
@@ -19,9 +20,11 @@ const root = createRoot(container as Element);
 
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={globalTheme}>
-      <GlobalStyle />
-      <App />
-    </ThemeProvider>
+    <RecoilRoot>
+      <ThemeProvider theme={globalTheme}>
+        <GlobalStyle />
+        <App />
+      </ThemeProvider>
+    </RecoilRoot>
   </React.StrictMode>,
 );
