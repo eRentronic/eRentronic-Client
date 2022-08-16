@@ -1,17 +1,21 @@
+import { useResetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import { SideTab } from '@/components/Filter/SideTab/SideTab';
 import { Header } from '@/components/Header';
 import { Card } from '@/components/Product/Card/Card';
 import { MainInput } from '@/components/Search/MainInput';
+import { popUpOpenState } from '@/recoils/popUp/popUp';
 
 export function Main() {
+  const closeWholePopUp = useResetRecoilState(popUpOpenState);
+
   return (
     <>
-      <StyledHeader>
+      <StyledHeader onClick={closeWholePopUp}>
         <Header />
       </StyledHeader>
-      <StyledMain>
+      <StyledMain onClick={closeWholePopUp}>
         <SearchSection>여기는</SearchSection>
         <MainInput />
         <MainContents>
@@ -27,7 +31,7 @@ export function Main() {
           />
         </MainContents>
       </StyledMain>
-      <StyledAside>
+      <StyledAside onClick={closeWholePopUp}>
         <SideTab />
       </StyledAside>
       <footer>푸터</footer>
