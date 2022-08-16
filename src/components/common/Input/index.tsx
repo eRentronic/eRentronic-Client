@@ -2,7 +2,6 @@ import { forwardRef, Ref, ElementType } from 'react';
 
 import { StyledInput } from './style';
 import { InputProps } from './types';
-// 폰트사이즈 , 패딩, 플레이스 홀더
 
 function Input<incomElementType extends ElementType = 'input'>(
   {
