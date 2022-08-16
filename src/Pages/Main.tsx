@@ -2,6 +2,7 @@ import { useResetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import { SideTab } from '@/components/Filter/SideTab/SideTab';
+import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
 import { Card } from '@/components/Product/Card/Card';
 import { MainInput } from '@/components/Search/MainInput';
@@ -34,7 +35,7 @@ export function Main() {
       <StyledAside onClick={closeWholePopUp}>
         <SideTab />
       </StyledAside>
-      <footer>푸터</footer>
+      <Footer />
     </>
   );
 }
