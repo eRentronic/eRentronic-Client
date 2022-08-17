@@ -11,11 +11,11 @@ export function Main() {
   const closeWholePopUp = useResetRecoilState(popUpOpenState);
 
   return (
-    <>
-      <StyledHeader onClick={closeWholePopUp}>
+    <Wrapper onClick={closeWholePopUp}>
+      <StyledHeader>
         <Header />
       </StyledHeader>
-      <StyledMain onClick={closeWholePopUp}>
+      <StyledMain>
         <SearchSection>여기는</SearchSection>
         <MainInput />
         <MainContents>
@@ -31,13 +31,15 @@ export function Main() {
           />
         </MainContents>
       </StyledMain>
-      <StyledAside onClick={closeWholePopUp}>
+      <StyledAside>
         <SideTab />
       </StyledAside>
       <footer>푸터</footer>
-    </>
+    </Wrapper>
   );
 }
+
+const Wrapper = styled.div``;
 
 const StyledHeader = styled.header`
   display: flex;
