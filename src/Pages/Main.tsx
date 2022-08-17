@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query';
 import { useResetRecoilState } from 'recoil';
 import styled from 'styled-components';
 
@@ -5,10 +6,74 @@ import { SideTab } from '@/components/Filter/SideTab/SideTab';
 import { Header } from '@/components/Header';
 import { Card } from '@/components/Product/Card/Card';
 import { MainInput } from '@/components/Search/MainInput';
+import { map } from '@/libs/fx';
 import { popUpOpenState } from '@/recoils/popUp/popUp';
+
+type ProductsType = {
+  content: {
+    product: {
+      id: number;
+      title: string;
+      content: string;
+      imageUrl: string;
+      price: number;
+      rentable: boolean;
+      like: boolean;
+      inBucket: boolean;
+    };
+    discountInfo: {
+      discounts: { id: number; title: string; saleRate: string }[];
+    };
+    vendors: { id: number; name: string };
+  }[];
+  pageable: {
+    sort: {
+      sorted: boolean;
+      unsorted: boolean;
+      empty: true;
+    };
+    pageNumber: number;
+    pageSize: number;
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
+  numberOfElements: number;
+  number: number;
+  first: boolean;
+  last: boolean;
+  size: number;
+  sort: {
+    sorted: boolean;
+    unsorted: boolean;
+    empty: boolean;
+  };
+  empty: boolean;
+};
+
+async function getMainProducts() {
+  const result = await fetch(`${process.env.MAIN_PRODUCTS}`).then(data =>
+    data.json(),
+  );
+  return result;
+}
+
+function parse(data: ProductsType | undefined) {
+  if (!data) {
+    return;
+  }
+
+  const { content } = data;
+  const ids = map(({ product: { id } }) => id, content);
+}
 
 export function Main() {
   const closeWholePopUp = useResetRecoilState(popUpOpenState);
+  const { data } = useQuery<ProductsType, Error>(
+    ['productQueryKey'],
+    getMainProducts,
+  );
+  parse(data);
 
   return (
     <Wrapper onClick={closeWholePopUp}>

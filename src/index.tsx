@@ -18,7 +18,14 @@ if (process.env.NODE_ENV === 'development') {
 
 const container = document.getElementById('root');
 const root = createRoot(container as Element);
-const queryClient = new QueryClient();
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      suspense: true,
+    },
+  },
+});
 
 root.render(
   <React.StrictMode>
