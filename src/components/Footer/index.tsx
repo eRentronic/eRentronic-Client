@@ -1,11 +1,15 @@
 import * as S from './index.style';
 import { portfolioType } from './index.types';
+import { Text } from '../common';
+
+const portFolioLink: portfolioType = {
+  JS: 'https://github.com/herrakam',
+  Dott: 'https://github.com/godhyeongman',
+  Jerry: 'https://github.com/jeremy0405',
+  Riako: 'https://github.com/naneun',
+};
 
 export function Footer() {
-  const portFolioLink: portfolioType = {
-    JS: 'https://github.com/herrakam',
-    Dott: 'https://github.com/godhyeongman',
-  };
   const goToPortfolio = (e: React.MouseEvent<HTMLButtonElement>) => {
     let link: string = '';
     switch (e.currentTarget.textContent) {
@@ -29,17 +33,33 @@ export function Footer() {
             goToPortfolio(e);
           }}
         >
-          Dott
+          <S.Engineer>Dott</S.Engineer>
         </S.Link>
         <S.Link
           onClick={e => {
             goToPortfolio(e);
           }}
         >
-          JS
+          <S.Engineer>JS</S.Engineer>
         </S.Link>
       </S.Field>
-      <S.Field>Back</S.Field>
+      <S.Field>
+        Back
+        <S.Link
+          onClick={e => {
+            goToPortfolio(e);
+          }}
+        >
+          <S.Engineer>Jerry</S.Engineer>
+        </S.Link>
+        <S.Link
+          onClick={e => {
+            goToPortfolio(e);
+          }}
+        >
+          <S.Engineer>Riako</S.Engineer>
+        </S.Link>
+      </S.Field>
     </S.FooterWrap>
   );
 }

@@ -68,4 +68,5 @@ const MainContents = styled.section`
   width: 60%;
   margin: 0 auto;
   flex-wrap: wrap;
+  min-height: 70vh;
 `;
