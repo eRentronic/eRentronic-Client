@@ -11,7 +11,7 @@ const globalTheme: DefaultTheme = {
     grey4: '#BDBDBD',
     grey5: '#E0E0E0',
     grey6: '#F5F5F7',
-    grey7: '#444',
+    footerGrey: '#444',
     black: '#010101',
     white: '#FFFFFF',
   },

@@ -1,3 +1,7 @@
-export type portfolioType ={
-    [key:string]:string,
-}
+export type PortfolioType = {
+  name: string;
+  url: string;
+};
+export type PortfolioProps = {
+  info: PortfolioType;
+};
