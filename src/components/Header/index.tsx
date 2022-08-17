@@ -6,7 +6,6 @@ import * as S from './header.styles';
 import { PopUp } from './Popup';
 
 const USER_ICON_LIST: IconTypes[] = ['MENU', 'SHOPPING_CART', 'PERSON'];
-
 const NAV_DATA_LIST: {
   title: string;
   options: string[];
