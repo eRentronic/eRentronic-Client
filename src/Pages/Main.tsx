@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { useResetRecoilState } from 'recoil';
+import { useEffect } from 'react';
+import { useResetRecoilState, useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 import { SideTab } from '@/components/Filter/SideTab/SideTab';
@@ -8,24 +9,10 @@ import { Card } from '@/components/Product/Card/Card';
 import { MainInput } from '@/components/Search/MainInput';
 import { map } from '@/libs/fx';
 import { popUpOpenState } from '@/recoils/popUp/popUp';
+import { productsStore } from '@/recoils/products/products';
 
 type ProductsType = {
-  content: {
-    product: {
-      id: number;
-      title: string;
-      content: string;
-      imageUrl: string;
-      price: number;
-      rentable: boolean;
-      like: boolean;
-      inBucket: boolean;
-    };
-    discountInfo: {
-      discounts: { id: number; title: string; saleRate: string }[];
-    };
-    vendors: { id: number; name: string };
-  }[];
+  content: contentType[];
   pageable: {
     sort: {
       sorted: boolean;
@@ -51,21 +38,88 @@ type ProductsType = {
   empty: boolean;
 };
 
-async function getMainProducts() {
+type contentType = {
+  product: {
+    id: number;
+    title: string;
+    content: string;
+    imageUrl: string;
+    price: number;
+    rentable: boolean;
+    like: boolean;
+    inBucket: boolean;
+    rentalPrice: number;
+  };
+  discountInfo: {
+    discounts: { id: number; title: string; saleRate: string }[];
+  };
+  vendors: { id: number; name: string };
+};
+
+const getMainProducts = async () => {
   const result = await fetch(`${process.env.MAIN_PRODUCTS}`).then(data =>
     data.json(),
   );
   return result;
-}
+};
 
-function parse(data: ProductsType | undefined) {
+const normalize = (data: ProductsType | undefined) => {
   if (!data) {
     return;
   }
 
   const { content } = data;
-  const ids = map(({ product: { id } }) => id, content);
-}
+  const normalizedData = content.reduce(
+    (
+      acc,
+      {
+        product: {
+          id,
+          title,
+          content: productContent,
+          imageUrl,
+          price,
+          rentable,
+          rentalPrice,
+          like,
+          inBucket,
+        },
+      },
+    ) => {
+      return {
+        titles: { ...acc.titles, [id]: title },
+        contents: { ...acc.contents, [id]: productContent },
+        images: { ...acc.images, [id]: imageUrl },
+        prices: { ...acc.prices, [id]: price },
+        rentables: { ...acc.rentables, [id]: rentable },
+        rentalPrices: { ...acc.rentalPrices, [id]: rentalPrice },
+        likes: { ...acc.likes, [id]: like },
+        inBuckets: { ...acc.inBuckets, [id]: inBucket },
+      };
+    },
+    {
+      titles: {},
+      contents: {},
+      images: {},
+      prices: {},
+      rentables: {},
+      rentalPrices: {},
+      likes: {},
+      inBuckets: {},
+    },
+  );
+
+  return normalizedData;
+};
+
+const getIds = (data: ProductsType | undefined) => {
+  if (!data) {
+    return;
+  }
+  const { content } = data;
+  const ids = map(({ product: { id } }: contentType) => id, content);
+  return ids;
+};
 
 export function Main() {
   const closeWholePopUp = useResetRecoilState(popUpOpenState);
@@ -73,7 +127,32 @@ export function Main() {
     ['productQueryKey'],
     getMainProducts,
   );
-  parse(data);
+  const [productsList, setProductsList] = useRecoilState(productsStore);
+
+  const newProductList = normalize(data);
+  const ids = getIds(data);
+  console.log(ids);
+  useEffect(() => {
+    if (!newProductList) {
+      return;
+    }
+
+    setProductsList({
+      ...productsList,
+      titles: { ...productsList.titles, ...newProductList.titles },
+      contents: { ...productsList.contents, ...newProductList.contents },
+      images: { ...productsList.images, ...newProductList.images },
+      prices: { ...productsList.prices, ...newProductList.prices },
+      rentables: { ...productsList.rentables, ...newProductList.rentables },
+      rentalPrices: {
+        ...productsList.rentalPrices,
+        ...newProductList.rentalPrices,
+      },
+      likes: { ...productsList.likes, ...newProductList.likes },
+      inBuckets: { ...productsList.inBuckets, ...newProductList.inBuckets },
+    });
+  }, []);
+  console.log(productsList);
 
   return (
     <Wrapper onClick={closeWholePopUp}>
