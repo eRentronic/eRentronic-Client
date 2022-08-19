@@ -64,6 +64,124 @@ export const handlers = [
               name: '앱코',
             },
           },
+          {
+            product: {
+              id: 11,
+              title: 'FC750RBT PD',
+              content: '화이트 블루스타 한글',
+              imageUrl:
+                'https://cdn.pixabay.com/photo/2015/10/17/17/38/keyboard-992915_960_720.png',
+              price: 164320,
+              quantity: 10,
+              rentalPrice: 5000,
+              rentalProductQuantity: 5,
+              rentable: true,
+              like: false,
+              inBucket: false,
+            },
+            discountInfo: {
+              discounts: [],
+              salePrice: 164320,
+              saleRentalPrice: 5000,
+            },
+            vendor: {
+              id: 11,
+              name: '로지텍',
+            },
+          },
+          {
+            product: {
+              id: 10,
+              title: 'G913 TKL',
+              content: '(정품)',
+              imageUrl:
+                'https://cdn.pixabay.com/photo/2013/08/25/11/41/keyboard-175614_960_720.jpg',
+              price: 249000,
+              quantity: 10,
+              rentalPrice: 5000,
+              rentalProductQuantity: 5,
+              rentable: true,
+              like: false,
+              inBucket: false,
+            },
+            discountInfo: {
+              discounts: [
+                {
+                  id: 2,
+                  title: '신제품 할인',
+                  saleRate: '10.0',
+                },
+              ],
+              salePrice: 224100,
+              saleRentalPrice: 4500,
+            },
+            vendor: {
+              id: 1,
+              name: '로지텍',
+            },
+          },
+          {
+            product: {
+              id: 9,
+              title: 'HACKER K660M',
+              content: '이색사출 PBT 체리 키보드 미드나잇그린',
+              imageUrl:
+                'https://cdn.pixabay.com/photo/2018/08/19/15/58/mac-3616959_960_720.jpg',
+              price: 75000,
+              quantity: 10,
+              rentalPrice: 5000,
+              rentalProductQuantity: 5,
+              rentable: true,
+              like: false,
+              inBucket: false,
+            },
+            discountInfo: {
+              discounts: [
+                {
+                  id: 1,
+                  title: '이벤트 할인',
+                  saleRate: '2.25',
+                },
+              ],
+              salePrice: 73312,
+              saleRentalPrice: 4887,
+            },
+            vendor: {
+              id: 1,
+              name: '로지텍',
+            },
+          },
+          {
+            product: {
+              id: 8,
+              title: 'NP900RBT PD',
+              content: '화이트투톤 한글 ',
+              imageUrl:
+                'https://cdn.pixabay.com/photo/2015/09/09/22/03/keyboard-933680_960_720.jpg',
+              price: 166970,
+              quantity: 10,
+              rentalPrice: 5000,
+              rentalProductQuantity: 5,
+              rentable: true,
+              like: false,
+              inBucket: false,
+            },
+            discountInfo: {
+              discounts: [
+                {
+                  id: 2,
+                  title: '신제품 할인',
+                  saleRate: '10.0',
+                },
+              ],
+              salePrice: 150273,
+              saleRentalPrice: 4500,
+            },
+            vendor: {
+              id: 1,
+              name: '로지텍',
+            },
+          },
         ],
         pageable: {
           sort: {

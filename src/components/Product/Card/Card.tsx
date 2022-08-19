@@ -32,9 +32,9 @@ export function Card({ productId }: CardProps) {
   const brandName = vendors[productId].name;
   const totalSaleRate = discountInfos[productId].reduce(
     (acc, { saleRate }): number => acc + +saleRate,
-
     0,
   );
+
   return (
     <S.Wrapper
       onMouseEnter={() => {
