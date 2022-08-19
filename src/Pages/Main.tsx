@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { SideTab } from '@/components/Filter/SideTab/SideTab';
 import { Footer } from '@/components/Footer';
 import { Header } from '@/components/Header';
+import { Panel } from '@/components/panel';
 import { Card } from '@/components/Product/Card/Card';
 import { MainInput } from '@/components/Search/MainInput';
 import { popUpOpenState } from '@/recoils/popUp/popUp';
@@ -35,6 +36,7 @@ export function Main() {
       <StyledAside onClick={closeWholePopUp}>
         <SideTab />
       </StyledAside>
+      <Panel />
       <Footer />
     </>
   );
