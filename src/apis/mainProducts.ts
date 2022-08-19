@@ -37,10 +37,12 @@ export type ContentType = {
     inBucket: boolean;
     rentalPrice: number;
   };
+
   discountInfo: {
     discounts: { id: number; title: string; saleRate: string }[];
     salePrice: number;
     saleRentalPrice: number;
   };
+
   vendor: { id: number; name: string };
 };
