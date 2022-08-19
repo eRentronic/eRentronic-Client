@@ -37,7 +37,7 @@ export function Main() {
       const { content } = data;
       setProductsList([...productsList, ...content]);
     }
-  }, []);
+  }, [data]);
 
   return (
     <S.Wrapper onClick={closeWholePopUp}>
