@@ -15,6 +15,7 @@ declare module 'styled-components' {
       footerGrey: string;
       black: string;
       white: string;
+      panelGreen: string;
     };
 
     typography: {

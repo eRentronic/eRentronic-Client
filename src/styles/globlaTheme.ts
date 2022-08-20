@@ -14,6 +14,7 @@ const globalTheme: DefaultTheme = {
     footerGrey: '#444',
     black: '#010101',
     white: '#FFFFFF',
+    panelGreen: '#00c471',
   },
   typography: {
     Black: { weight: 900, size: '24px' },
