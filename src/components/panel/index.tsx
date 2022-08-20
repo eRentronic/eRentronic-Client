@@ -21,6 +21,9 @@ export function Panel() {
     e.stopPropagation();
     setIsClicked(!isClicked);
   }
+  function goTop() {
+    window.scrollTo(0, 0);
+  }
   return (
     <S.PanelWrap>
       <S.showPanelBtn
@@ -34,7 +37,12 @@ export function Panel() {
       >
         <S.BtnText>{isClicked ? '접기' : '펼치기'}</S.BtnText>
       </S.showPanelBtn>
-      <S.GoTopBtn isClicked={isClicked}>
+      <S.GoTopBtn
+        isClicked={isClicked}
+        onClick={() => {
+          goTop();
+        }}
+      >
         <S.BtnText>TOP</S.BtnText>
       </S.GoTopBtn>
       <S.DarkModeBtn
