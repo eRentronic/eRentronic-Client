@@ -1,10 +1,18 @@
 import { useState, MouseEvent } from 'react';
+import { useRecoilState } from 'recoil';
+
+import { DarkModeStore } from '@/recoils/dark/dark';
 
 import * as S from './index.style';
 
+import { Icon } from '../common';
+
 export function Panel() {
   const [isClicked, setIsClicked] = useState(false);
-
+  const [isDarkMode, setIsDarkMode] = useRecoilState(DarkModeStore);
+  function changeColorMode() {
+    setIsDarkMode(!isDarkMode);
+  }
   function showHiddenBtn(e: MouseEvent) {
     e.stopPropagation();
     setIsClicked(true);
@@ -29,8 +37,18 @@ export function Panel() {
       <S.GoTopBtn isClicked={isClicked}>
         <S.BtnText>TOP</S.BtnText>
       </S.GoTopBtn>
-      <S.DarkModeBtn isClicked={isClicked}>
-        <S.Moon iconSrc="MOON" fill="white" />
+      <S.DarkModeBtn
+        isClicked={isClicked}
+        darkMode={isDarkMode}
+        onClick={() => {
+          changeColorMode();
+        }}
+      >
+        {isDarkMode ? (
+          <Icon iconSrc="SUN" fill="black" />
+        ) : (
+          <Icon iconSrc="MOON" fill="white" />
+        )}
       </S.DarkModeBtn>
       <S.gotoLogin isClicked={isClicked}>
         <S.BtnText>로그인</S.BtnText>

@@ -36,8 +36,12 @@ export const GoTopBtn = styled(CircleBtn)<{ isClicked: boolean }>`
   z-index: 10;
   bottom: ${({ isClicked }) => (isClicked ? '300px' : '0')};
 `;
-export const DarkModeBtn = styled(CircleBtn)<{ isClicked: boolean }>`
-  background: ${({ theme }) => theme.pallete.grey1};
+export const DarkModeBtn = styled(CircleBtn)<{
+  isClicked: boolean;
+  darkMode: boolean;
+}>`
+  background: ${({ theme, darkMode }) =>
+    darkMode ? theme.pallete.white : theme.pallete.grey1};
   z-index: 15;
   bottom: ${({ isClicked }) => (isClicked ? '100px' : '0')};
 `;
@@ -51,6 +55,5 @@ export const BtnText = styled(Text)`
   color: white;
 `;
 export const Moon = styled(Icon)`
-  color: ${({ theme }) => theme.pallete.white};
-  background-size: cover;
+  background: ${({ theme }) => theme.pallete.white};
 `;
