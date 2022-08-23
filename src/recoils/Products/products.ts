@@ -1,17 +1,8 @@
 import { atom } from 'recoil';
 
-export const defaultProductsStore = {
-  titles: {},
-  contents: {},
-  images: {},
-  prices: {},
-  rentalPrices: {},
-  rentables: {},
-  likes: {},
-  inBucket: {},
-  vendors: {},
-  discountInfos: {},
-};
+import { ContentType } from '@/apis/mainProducts';
+
+export const defaultProductsStore: ContentType[] = [];
 
 export const productsStore = atom({
   key: 'productsStore',

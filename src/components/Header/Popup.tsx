@@ -1,4 +1,4 @@
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useRecoilState } from 'recoil';
 
 import { Text } from '@/components/common';
 import { popUpOpenState, defaultPopUpOpenState } from '@/recoils/popUp/popUp';

@@ -11,7 +11,11 @@ export function SaleLabel({ isEventSale, isBrandNewSale }: SaleLabelProps) {
   return (
     <StyledLabel isEventSale={isEventSale} isBrandNewSale={isBrandNewSale}>
       <Text typography="Light">
-        {isEventSale ? '이벤트 할인' : isBrandNewSale ? '신상품 할인' : null}
+        {isEventSale
+          ? '이벤트 할인'
+          : isBrandNewSale
+          ? '신상품 할인'
+          : undefined}
       </Text>
     </StyledLabel>
   );

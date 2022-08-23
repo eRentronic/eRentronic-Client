@@ -1,3 +1,5 @@
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { RecoilRoot } from 'recoil';
@@ -7,7 +9,6 @@ import { GlobalStyle } from '@/styles/globalStyle';
 
 import { App } from './App';
 import { globalTheme } from './styles/globlaTheme';
-
 import '@/styles/index.css';
 
 if (process.env.NODE_ENV === 'development') {
@@ -18,13 +19,24 @@ if (process.env.NODE_ENV === 'development') {
 const container = document.getElementById('root');
 const root = createRoot(container as Element);
 
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      suspense: true,
+    },
+  },
+});
+
 root.render(
   <React.StrictMode>
     <RecoilRoot>
-      <ThemeProvider theme={globalTheme}>
-        <GlobalStyle />
-        <App />
-      </ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <ReactQueryDevtools initialIsOpen />
+        <ThemeProvider theme={globalTheme}>
+          <GlobalStyle />
+          <App />
+        </ThemeProvider>
+      </QueryClientProvider>
     </RecoilRoot>
   </React.StrictMode>,
 );

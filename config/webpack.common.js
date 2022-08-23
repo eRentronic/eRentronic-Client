@@ -88,5 +88,5 @@ module.exports = {
       `,
     }),
   ],
-  target: process.env.NODE_ENV === 'development' ? 'web' : 'browserslist',
+  // target: process.env.NODE_ENV === 'development' ? 'web' : 'browserslist',
 };
