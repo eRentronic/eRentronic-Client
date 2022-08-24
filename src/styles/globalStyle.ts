@@ -27,8 +27,13 @@ export const GlobalStyle = createGlobalStyle`
 	}
 
 	button {
+		font: inherit;
 		cursor: pointer;
 	}
+
+input {
+	font: inherit;
+}
 
 	a {
 		text-decoration:none;
