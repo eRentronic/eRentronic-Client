@@ -12,10 +12,9 @@ declare module 'styled-components' {
       grey4: string;
       grey5: string;
       grey6: string;
-      footerGrey: string;
       black: string;
       white: string;
-      panelGreen: string;
+      darkModeBg: string;
     };
 
     typography: {
