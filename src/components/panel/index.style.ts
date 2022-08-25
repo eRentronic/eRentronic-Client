@@ -29,7 +29,7 @@ export const PanelWrap = styled.div`
 
 export const showPanelBtn = styled(CircleBtn)<{ isClicked: boolean }>`
   z-index: 40;
-  background: ${({ theme }) => theme.pallete.panelGreen};
+  background: ${({ theme }) => theme.pallete.primary};
 `;
 export const GoTopBtn = styled(CircleBtn)<{ isClicked: boolean }>`
   background: ${({ theme }) => theme.pallete.grey4};
