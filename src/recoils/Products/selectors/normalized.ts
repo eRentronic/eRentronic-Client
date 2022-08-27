@@ -1,8 +1,7 @@
 import { selector } from 'recoil';
 
 import * as API from '@/apis/mainProducts';
-
-import { productsStore } from '../products';
+import { productsStore } from '@/recoils/Products/products';
 
 export type normalizedProductType = {
   titles: { [key: number]: string };

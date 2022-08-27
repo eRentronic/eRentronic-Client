@@ -1,11 +1,9 @@
 import { useState, MouseEvent } from 'react';
 import { useRecoilState } from 'recoil';
 
+import * as S from '@/components/client/Panel/index.style';
+import { Icon } from '@/components/common';
 import { DarkModeStore } from '@/recoils/dark/dark';
-
-import * as S from './index.style';
-
-import { Icon } from '../../common';
 
 export function Panel() {
   const [isClicked, setIsClicked] = useState(false);

@@ -1,6 +1,6 @@
-import * as S from './index.style';
-import { PortfolioType } from './index.types';
-import { PortFolio } from './PortFolio';
+import * as S from '@/components/client/Footer/index.style';
+import { PortfolioType } from '@/components/client/Footer/index.types';
+import { PortFolio } from '@/components/client/Footer/PortFolio';
 
 const portFolioLink: Array<PortfolioType> = [
   {

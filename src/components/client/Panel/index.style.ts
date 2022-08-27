@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { Icon, Text } from '../../common';
+import { Icon, Text } from '@/components/common';
 
 const CircleBtn = styled.button`
   text-decoration: none;
@@ -51,7 +51,6 @@ export const GotoLogin = styled(CircleBtn)<{ isClicked: boolean }>`
   bottom: ${({ isClicked }) => (isClicked ? '200px' : '0')};
 `;
 export const BtnText = styled(Text)`
-  /* font-weight: bold; */
   color: ${({ theme }) => theme.pallete.white};
 `;
 export const Moon = styled(Icon)`

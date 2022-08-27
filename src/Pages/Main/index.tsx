@@ -3,13 +3,15 @@ import { useEffect } from 'react';
 import { useResetRecoilState, useRecoilState, useRecoilValue } from 'recoil';
 
 import * as API from '@/apis/mainProducts';
+import { Footer } from '@/components/client/Footer';
+import { Header } from '@/components/client/Header';
+import { Panel } from '@/components/client/Panel';
 import { SideTab } from '@/components/Filter/SideTab/SideTab';
-import { Header } from '@/components/Header';
 import { Card } from '@/components/Product/Card/Card';
 import { MainInput } from '@/components/Search/MainInput';
 import { popUpOpenState } from '@/recoils/popUp/popUp';
-import { productsStore } from '@/recoils/products/products';
-import { productIds } from '@/recoils/products/selectors/ids';
+import { productsStore } from '@/recoils/Products/products';
+import { productIds } from '@/recoils/Products/selectors/ids';
 
 import * as S from './style';
 
@@ -52,7 +54,8 @@ export function Main() {
       <S.StyledAside>
         <SideTab />
       </S.StyledAside>
-      <footer>푸터</footer>
+      <Panel />
+      <Footer />
     </S.Wrapper>
   );
 }
