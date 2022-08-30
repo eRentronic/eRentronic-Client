@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  background-color: ${({ theme }) => theme.pallete.white};
-  height: 100vh;
+  background-color: ${({ theme }) => theme.pallete.normalBg};
+  height: 100%;
 `;
 
 export const StyledHeader = styled.header`

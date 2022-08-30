@@ -34,11 +34,13 @@ export const Title = styled(Text)`
   width: 70%;
   font-size: 18px;
   padding: 5px 0;
+  color: ${({ theme }) => theme.pallete.normalFont};
 `;
 
 export const Brand = styled(Text)`
   font-size: 13px;
   padding: 5px 0;
+  /* color: ${({ theme }) => theme.pallete.normalFont}; */
 `;
 
 export const Labels = styled.div`

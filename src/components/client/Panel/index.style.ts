@@ -41,7 +41,7 @@ type DarkModeProps = { isClicked: boolean; darkMode: boolean };
 
 export const DarkModeBtn = styled(CircleBtn)<DarkModeProps>`
   background: ${({ theme, darkMode }) =>
-    darkMode ? theme.pallete.white : theme.pallete.darkModeBg};
+    darkMode ? theme.pallete.white : theme.pallete.grey2};
   z-index: 15;
   bottom: ${({ isClicked }) => (isClicked ? '100px' : '0')};
 `;
@@ -51,7 +51,7 @@ export const GotoLogin = styled(CircleBtn)<{ isClicked: boolean }>`
   bottom: ${({ isClicked }) => (isClicked ? '200px' : '0')};
 `;
 export const BtnText = styled(Text)`
-  color: ${({ theme }) => theme.pallete.white};
+  color: ${({ theme }) => theme.pallete.normalFont};
 `;
 export const Moon = styled(Icon)`
   background: ${({ theme }) => theme.pallete.white};

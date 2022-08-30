@@ -53,4 +53,5 @@ export const ViewMoreBtn = styled(Button)<TYPE.ViewMoreBtnProps>`
 
 export const ViewMoreText = styled(Text)`
   font-size: 1px;
+  color: ${({ theme }) => theme.pallete.normalFont};
 `;

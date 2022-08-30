@@ -52,7 +52,9 @@ export function Card({ productId }: CardProps) {
         <S.Labels>
           <SaleLabel isEventSale={false} isBrandNewSale />
         </S.Labels>
-        <S.Title typography="Regular">{titles[productId]}</S.Title>
+        <S.Title typography="Regular" color="normalFont">
+          {titles[productId]}
+        </S.Title>
         <S.Brand forwardedAs="h4" color="grey3" typography="Light">
           {brandName}
         </S.Brand>
