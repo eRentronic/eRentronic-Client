@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useEffect } from 'react';
-import { useResetRecoilState, useRecoilState, useRecoilValue } from 'recoil';
+import { useResetRecoilState } from 'recoil';
 
 import * as API from '@/apis/mainProducts';
 import { SideTab } from '@/components/Filter/SideTab/SideTab';
@@ -8,8 +7,6 @@ import { Header } from '@/components/Header';
 import { Card } from '@/components/Product/Card/Card';
 import { MainInput } from '@/components/Search/MainInput';
 import { popUpOpenState } from '@/recoils/popUp/popUp';
-import { productsStore } from '@/recoils/products/products';
-import { productIds } from '@/recoils/products/selectors/ids';
 
 import * as S from './style';
 
@@ -20,24 +17,25 @@ const getMainProducts = async () => {
   return result;
 };
 
+const getIds = (productData: API.ContentType[]) => {
+  const productIdList = productData.map(({ product: { id } }) => id);
+  return productIdList;
+};
+
 export function Main() {
   const closeWholePopUp = useResetRecoilState(popUpOpenState);
-  const { data } = useQuery<API.MainProductsType, Error>(
+  const { data: ID } = useQuery<API.MainProductsType, Error, number[]>(
     ['productQueryKey'],
     getMainProducts,
+    {
+      select: data => {
+        const pure = data.content;
+        return getIds(pure);
+      },
+    },
   );
 
-  const [productsList, setProductsList] = useRecoilState(productsStore);
-  const ids = useRecoilValue(productIds);
-
-  const mainContents = ids.map(id => <Card productId={id} />);
-
-  useEffect(() => {
-    if (data) {
-      const { content } = data;
-      setProductsList([...productsList, ...content]);
-    }
-  }, [data]);
+  const mainContents = ID?.map(id => <Card productId={id} />);
 
   return (
     <S.Wrapper onClick={closeWholePopUp}>
