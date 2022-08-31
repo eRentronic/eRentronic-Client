@@ -6,8 +6,8 @@ import { Footer } from '@/components/client/Footer';
 import { Header } from '@/components/client/Header';
 import { Panel } from '@/components/client/Panel';
 import { SideTab } from '@/components/Filter/SideTab/SideTab';
-import { Card } from '@/components/Product/Card/Card';
 import { MainInput } from '@/components/Search/MainInput';
+import { Card } from '@/components/server/Product/Card/';
 import { popUpOpenState } from '@/recoils/popUp/popUp';
 
 import * as S from './style';

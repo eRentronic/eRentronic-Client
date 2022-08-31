@@ -14,7 +14,8 @@ declare module 'styled-components' {
       grey6: string;
       black: string;
       white: string;
-      darkModeBg: string;
+      normalBg: string;
+      normalFont: string;
     };
 
     typography: {
