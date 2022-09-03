@@ -11,6 +11,7 @@ import { darkMode, lightMode } from '@/styles/globalTheme';
 import { Footer } from './components/client/Footer';
 import { Header } from './components/client/Header';
 import { Panel } from './components/client/Panel';
+import { Detail } from './Pages/detail';
 
 export function App() {
   const isDarkmode = useRecoilValue(DarkModeStore);
@@ -23,6 +24,7 @@ export function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Main />} />
+            <Route path="/detail" element={<Detail />} />
           </Routes>
         </BrowserRouter>
         <Panel />
