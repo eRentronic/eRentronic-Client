@@ -4,11 +4,17 @@ import { Text } from '@/components/common';
 
 export const DetailWrap = styled.div`
   width: 100%;
+  max-width: 1000px;
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
+  margin: 0 auto;
   background: ${({ theme }) => theme.pallete.normalBg};
   height: 100vh;
   padding: 42px;
 `;
 export const Title = styled(Text)`
+  width: 100%;
   font-weight: 700;
   font-size: 32px;
   margin-bottom: 30px;
