@@ -4,12 +4,9 @@ import { Text } from '@/components/common';
 
 export const DetailWrap = styled.div`
   width: 100%;
-  max-width: 1000px;
-  /* display: flex;
+  display: flex;
   flex-direction: column;
-  align-items: center; */
-  margin: 0 auto;
-  background: ${({ theme }) => theme.pallete.normalBg};
+  align-items: center;
   height: 100vh;
   padding: 42px;
 `;
@@ -111,6 +108,7 @@ export const RentalBtn = styled.button`
 `;
 export const BuyBtn = styled(RentalBtn)``;
 export const MoreItemsTitle = styled.div`
+  width: 100%;
   font-weight: 600;
   margin: 30px 0;
 `;

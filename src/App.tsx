@@ -18,17 +18,19 @@ export function App() {
   return (
     <ThemeProvider theme={isDarkmode ? darkMode : lightMode}>
       <Suspense fallback={<Spinner />}>
-        <StyledHeader>
-          <Header />
-        </StyledHeader>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Main />} />
-            <Route path="/detail" element={<Detail />} />
-          </Routes>
-        </BrowserRouter>
-        <Panel />
-        <Footer />
+        <BodyWrap>
+          <StyledHeader>
+            <Header />
+          </StyledHeader>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Main />} />
+              <Route path="/detail" element={<Detail />} />
+            </Routes>
+          </BrowserRouter>
+          <Panel />
+          <Footer />
+        </BodyWrap>
       </Suspense>
     </ThemeProvider>
   );
@@ -39,5 +41,8 @@ export const StyledHeader = styled.header`
   display: flex;
   padding: 20px 0px;
   /* box-shadow: 0px 11px 22px 5px rgba(0, 0, 0, 0.2); */
+  background: ${({ theme }) => theme.pallete.normalBg};
+`;
+export const BodyWrap = styled.div`
   background: ${({ theme }) => theme.pallete.normalBg};
 `;
