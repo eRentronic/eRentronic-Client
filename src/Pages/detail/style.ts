@@ -3,12 +3,13 @@ import styled from 'styled-components';
 import { Text } from '@/components/common';
 
 export const DetailWrap = styled.div`
-  width: 100%;
+  width: 70vw;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  /* height: 100vh; */
   padding: 42px;
+  margin: 0 auto;
 `;
 export const Title = styled(Text)`
   width: 100%;

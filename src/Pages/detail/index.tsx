@@ -1,5 +1,9 @@
+import { useRecoilState } from 'recoil';
+
 import { Icon } from '@/components/common';
+import { Purchase } from '@/components/server/Purchase';
 import * as S from '@/Pages/detail/style';
+import { modalStore } from '@/recoils/modal/modal';
 
 import { image } from './index.type';
 
@@ -20,7 +24,12 @@ const productImages: Array<image> = [
       'https://cdn.pixabay.com/photo/2016/11/28/01/34/laptop-1864126_960_720.jpg',
   },
 ];
+
 export function Detail() {
+  const [isClicked, setIsClicked] = useRecoilState(modalStore);
+  function toggleModal() {
+    setIsClicked(!isClicked);
+  }
   return (
     <S.DetailWrap>
       <S.Title>제품 명</S.Title>
@@ -56,10 +65,15 @@ export function Detail() {
           <S.RentalBtn>
             <S.BtnText>대여</S.BtnText>
           </S.RentalBtn>
-          <S.BuyBtn>
+          <S.BuyBtn
+            onClick={() => {
+              toggleModal();
+            }}
+          >
             <S.BtnText>구매</S.BtnText>
           </S.BuyBtn>
         </S.InfoRight>
+        <Purchase />
       </S.InfoWrap>
       <S.MoreItemsTitle>more items</S.MoreItemsTitle>
       <S.MoreItems />
