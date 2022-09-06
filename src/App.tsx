@@ -45,4 +45,5 @@ export const StyledHeader = styled.header`
 `;
 export const BodyWrap = styled.div`
   background: ${({ theme }) => theme.pallete.normalBg};
+  margin: 0 auto;
 `;
