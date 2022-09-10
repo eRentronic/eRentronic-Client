@@ -33,7 +33,6 @@ export function Main() {
       },
     },
   );
-
   const mainContents = ID?.map(id => <Card productId={id} />);
 
   return (
