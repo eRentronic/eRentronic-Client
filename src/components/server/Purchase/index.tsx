@@ -1,25 +1,21 @@
-import { MouseEvent } from 'react';
+import React, { MouseEvent } from 'react';
 import { useRecoilState } from 'recoil';
 
 import { Text } from '@/components/common';
 import * as S from '@/components/server/Purchase/style.index';
 import { modalStore } from '@/recoils/modal/modal';
+import { stopEventDelivery } from '@/utils/utils';
 
 export function Purchase() {
-  function closeModal(e: MouseEvent) {
+  const closeModal = (e: MouseEvent) => {
     e.stopPropagation();
     setIsClicked(!isClicked);
-  }
+  };
+
   const [isClicked, setIsClicked] = useRecoilState(modalStore);
   return (
-    <>
-      <S.Dimmed
-        isClicked={isClicked}
-        onClick={e => {
-          closeModal(e);
-        }}
-      />
-      <S.PurchaseWrap isClicked={isClicked}>
+    <S.Dimmed isClicked={isClicked} onClick={closeModal}>
+      <S.PurchaseWrap onClick={stopEventDelivery} isClicked={isClicked}>
         <S.InfoWrap>
           <S.InfoLeft>
             <S.ProductImage />
@@ -41,6 +37,6 @@ export function Purchase() {
           </S.Purchase>
         </S.PriceAndButton>
       </S.PurchaseWrap>
-    </>
+    </S.Dimmed>
   );
 }
