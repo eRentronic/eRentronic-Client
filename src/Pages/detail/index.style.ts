@@ -93,11 +93,13 @@ export const DetailInfoWrap = styled.div`
   flex-direction: column;
   gap: 15px;
 `;
-const DetailContent = styled.div``;
+const DetailContent = styled(Text)`
+  color: ${({ theme }) => theme.pallete.normalFont};
+`;
 export const DetailTitle = styled(DetailContent)``;
 export const Price = styled(DetailContent)``;
 export const RentalPrice = styled(DetailContent)``;
-export const Switches = styled.div``;
+export const Switches = styled(DetailContent)``;
 export const RentalBtn = styled.button`
   width: 90%;
   height: 56px;
