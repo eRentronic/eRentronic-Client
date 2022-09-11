@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import styled, { ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 
 import { Spinner } from '@/components/common';
 import { Detail } from '@/Pages/Detail';
@@ -27,15 +27,3 @@ export function App() {
     </ThemeProvider>
   );
 }
-
-export const StyledHeader = styled.header`
-  width: 100%;
-  display: flex;
-  padding: 20px 0px;
-  /* box-shadow: 0px 11px 22px 5px rgba(0, 0, 0, 0.2); */
-  background: ${({ theme }) => theme.pallete.normalBg};
-`;
-export const BodyWrap = styled.div`
-  background: ${({ theme }) => theme.pallete.normalBg};
-  margin: 0 auto;
-`;

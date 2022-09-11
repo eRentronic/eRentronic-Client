@@ -4,11 +4,11 @@ import { Footer } from '@/components/client/Footer';
 import { Header } from '@/components/client/Header';
 import { Panel } from '@/components/client/Panel';
 
-import { StyledHeader } from './style';
+import { Layout, StyledHeader } from './style';
 
 export function MainLayout() {
   return (
-    <>
+    <Layout>
       <StyledHeader>
         <Header />
       </StyledHeader>
@@ -17,6 +17,6 @@ export function MainLayout() {
       </main>
       <Panel />
       <Footer />
-    </>
+    </Layout>
   );
 }
