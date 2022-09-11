@@ -2,9 +2,6 @@ import { useQuery } from '@tanstack/react-query';
 import { useResetRecoilState } from 'recoil';
 
 import * as API from '@/apis/mainProducts';
-import { Footer } from '@/components/client/Footer';
-import { Header } from '@/components/client/Header';
-import { Panel } from '@/components/client/Panel';
 import { SideTab } from '@/components/Filter/SideTab/SideTab';
 import { MainInput } from '@/components/Search/MainInput';
 import { Card } from '@/components/server/Product/Card/';
@@ -36,14 +33,10 @@ export function Main() {
       },
     },
   );
-
   const mainContents = ID?.map(id => <Card productId={id} />);
 
   return (
     <S.Wrapper onClick={closeWholePopUp}>
-      <S.StyledHeader>
-        <Header />
-      </S.StyledHeader>
       <S.StyledMain>
         <S.SearchSection>여기는</S.SearchSection>
         <MainInput />
@@ -52,8 +45,6 @@ export function Main() {
       <S.StyledAside>
         <SideTab />
       </S.StyledAside>
-      <Panel />
-      <Footer />
     </S.Wrapper>
   );
 }

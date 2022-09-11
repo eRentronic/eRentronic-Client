@@ -5,12 +5,6 @@ export const Wrapper = styled.div`
   height: 100%;
 `;
 
-export const StyledHeader = styled.header`
-  display: flex;
-  padding: 20px 0px;
-  box-shadow: 0px 11px 22px 5px rgba(0, 0, 0, 0.2);
-`;
-
 export const StyledMain = styled.main`
   display: flex;
   flex-direction: column;
@@ -33,5 +27,5 @@ export const MainContents = styled.section`
   width: 60%;
   margin: 0 auto;
   flex-wrap: wrap;
-  min-height: 70vh;
+  min-height: 100vh;
 `;

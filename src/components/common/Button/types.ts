@@ -3,7 +3,6 @@ import { ElementType } from 'react';
 import { OverRidableProps } from '@/utils/helperType';
 
 export type ButtonBaseProps = {
-  onClickHandler?: React.MouseEventHandler;
   className?: string;
 };
 

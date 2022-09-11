@@ -40,7 +40,4 @@ input {
     cursor: pointer;
 	}
 
-	span {
-		display:block;
-	}
 `;
