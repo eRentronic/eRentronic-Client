@@ -2,7 +2,7 @@ import { useRecoilState } from 'recoil';
 
 import { Icon } from '@/components/common';
 import { Purchase } from '@/components/server/Purchase';
-import * as S from '@/Pages/detail/index.style';
+import * as S from '@/Pages/Detail/index.style';
 import { modalStore } from '@/recoils/modal/modal';
 
 import { image } from './index.type';

@@ -11,7 +11,7 @@ import { darkMode, lightMode } from '@/styles/globalTheme';
 import { Footer } from './components/client/Footer';
 import { Header } from './components/client/Header';
 import { Panel } from './components/client/Panel';
-import { Detail } from './Pages/detail';
+import { Detail } from './Pages/Detail';
 
 export function App() {
   const isDarkmode = useRecoilValue(DarkModeStore);
