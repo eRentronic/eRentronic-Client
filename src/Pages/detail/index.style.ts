@@ -22,6 +22,7 @@ export const InfoWrap = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 30px;
+  margin-bottom: 50px;
 `;
 export const InfoLeft = styled.div`
   width: 370px;
@@ -35,7 +36,10 @@ export const ImgSlide = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
+`;
+export const SlideImg = styled.img`
+  width: 100%;
+  height: 100%;
 `;
 export const SlideBtnsWrap = styled.div`
   position: absolute;
@@ -110,6 +114,10 @@ export const RentalBtn = styled.button`
   border-radius: 10px;
 `;
 export const BuyBtn = styled(RentalBtn)``;
+export const DetailInfoImg = styled.img<{ showDetail: boolean }>`
+  display: ${({ showDetail }) => (showDetail ? 'block' : 'none')};
+  width: 100%;
+`;
 export const MoreItemsTitle = styled.div`
   width: 100%;
   font-weight: 600;
@@ -120,5 +128,8 @@ export const MoreItems = styled.div`
   display: flex;
   gap: 20px;
   height: 130px;
-  background: grey;
+`;
+export const ExtraItem = styled.img`
+  width: 20%;
+  height: 100%;
 `;
