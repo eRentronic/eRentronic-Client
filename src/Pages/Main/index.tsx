@@ -6,10 +6,6 @@ import {
 import { useResetRecoilState } from 'recoil';
 
 import * as API from '@/apis/mainProducts';
-import { Footer } from '@/components/client/Footer';
-import { Header } from '@/components/client/Header';
-import { Panel } from '@/components/client/Panel';
-import { Text } from '@/components/common';
 import { SideTab } from '@/components/server/Filter/SideTab';
 import { Card } from '@/components/server/Product/Card/';
 import { MainInput } from '@/components/server/Search';

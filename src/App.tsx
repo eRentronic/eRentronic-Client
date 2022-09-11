@@ -4,33 +4,25 @@ import { useRecoilValue } from 'recoil';
 import styled, { ThemeProvider } from 'styled-components';
 
 import { Spinner } from '@/components/common';
+import { Detail } from '@/Pages/Detail';
+import { MainLayout } from '@/Pages/Layout';
 import { Main } from '@/Pages/Main';
 import { DarkModeStore } from '@/recoils/dark/dark';
 import { darkMode, lightMode } from '@/styles/globalTheme';
-
-import { Footer } from './components/client/Footer';
-import { Header } from './components/client/Header';
-import { Panel } from './components/client/Panel';
-import { Detail } from './Pages/Detail';
 
 export function App() {
   const isDarkmode = useRecoilValue(DarkModeStore);
   return (
     <ThemeProvider theme={isDarkmode ? darkMode : lightMode}>
       <Suspense fallback={<Spinner />}>
-        <BodyWrap>
-          <StyledHeader>
-            <Header />
-          </StyledHeader>
-          <BrowserRouter>
-            <Routes>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<MainLayout />}>
               <Route path="/" element={<Main />} />
               <Route path="/detail" element={<Detail />} />
-            </Routes>
-          </BrowserRouter>
-          <Panel />
-          <Footer />
-        </BodyWrap>
+            </Route>
+          </Routes>
+        </BrowserRouter>
       </Suspense>
     </ThemeProvider>
   );
