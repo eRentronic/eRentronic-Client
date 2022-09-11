@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query';
+import { useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
 import { Icon } from '@/components/common';
@@ -25,11 +27,23 @@ const productImages: Array<image> = [
   },
 ];
 
+const getDetails = (id: string | null) => async () => {
+  const result = await fetch(`${process.env.MAIN_PRODUCTS}/${id}`).then(data =>
+    data.json(),
+  );
+  return result;
+};
+
 export function Detail() {
   const [isClicked, setIsClicked] = useRecoilState(modalStore);
-  const query = window.location.search;
-  const param = new URLSearchParams(query);
+  const location = useLocation();
+  const param = new URLSearchParams(location.search);
   const productID = param.get('id');
+
+  const { data } = useQuery<string, Error>(
+    ['getDetails'],
+    getDetails(productID),
+  );
 
   function toggleModal() {
     setIsClicked(!isClicked);
