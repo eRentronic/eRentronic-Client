@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import * as API from '@/apis/mainProducts';
 import { SaleLabel } from '@/components/server/Product/Label';
@@ -102,6 +103,7 @@ export function Card({ productId }: CardProps) {
       },
     },
   );
+  const navigate = useNavigate();
 
   const {
     titles,
@@ -135,7 +137,11 @@ export function Card({ productId }: CardProps) {
         setIsHover(false);
       }}
     >
-      <S.StyledCard>
+      <S.StyledCard
+        onClick={() => {
+          navigate(`detail?id=${productId}`);
+        }}
+      >
         <Content isDisplay={isHover} content={contents[productId]} />
         <S.ThumbnailContainer>
           <S.Thumbnail alt="제품 썸네일" src={images[productId]} />

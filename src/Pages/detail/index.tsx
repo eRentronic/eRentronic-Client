@@ -27,6 +27,10 @@ const productImages: Array<image> = [
 
 export function Detail() {
   const [isClicked, setIsClicked] = useRecoilState(modalStore);
+  const query = window.location.search;
+  const param = new URLSearchParams(query);
+  const productID = param.get('id');
+
   function toggleModal() {
     setIsClicked(!isClicked);
   }
