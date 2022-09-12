@@ -70,6 +70,26 @@ export const OriginPrice = styled(ContentText)`
   margin-bottom: 10px;
 `;
 export const DiscountedPrice = styled(ContentText)``;
+export const SelectWrap = styled.section`
+  width: 100%;
+`;
+export const DetailOptionBtn = styled.button``;
+export const OptionList = styled.ul<{ isDisplay: boolean }>`
+  display: ${({ isDisplay }) => (isDisplay ? 'flex' : 'none')};
+`;
+export const Option = styled.li``;
+export const AmountWrap = styled.div``;
+export const AmountBtn = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+`;
+export const MinusBtn = styled(AmountBtn)``;
+export const PlusBtn = styled(AmountBtn)``;
 export const UserInfo = styled.div`
   width: 100%;
   height: 150px;
