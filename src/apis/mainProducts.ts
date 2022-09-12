@@ -60,6 +60,10 @@ export type ProductDetail = {
     id: number;
     imageUrl: string;
   }[];
+  keyboardInfoImages: {
+    id: number;
+    imageUrl: string;
+  }[];
   discountInfoResponse: {
     discounts: Discount;
     salePrice: number;

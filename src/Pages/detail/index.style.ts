@@ -90,6 +90,12 @@ export const InfoRight = styled.div`
   align-items: center;
   gap: 20px;
 `;
+export const Info = styled.div`
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
 export const DetailInfoWrap = styled.div`
   width: 100%;
   height: 250px;
@@ -99,6 +105,13 @@ export const DetailInfoWrap = styled.div`
 `;
 const DetailContent = styled(Text)`
   color: ${({ theme }) => theme.pallete.normalFont};
+  display: flex;
+  /* justify-content: space-between; */
+`;
+export const DetailStatus = styled(Text)`
+  color: ${({ theme }) => theme.pallete.normalFont};
+  display: flex;
+  justify-content: center;
 `;
 export const DetailTitle = styled(DetailContent)``;
 export const Price = styled(DetailContent)``;
@@ -112,6 +125,11 @@ export const RentalBtn = styled.button`
   justify-content: center;
   align-items: center;
   border-radius: 10px;
+`;
+export const DecisionBtns = styled.div`
+  width: 100%;
+  display: flex;
+  gap: 30px;
 `;
 export const BuyBtn = styled(RentalBtn)``;
 export const DetailInfoImg = styled.img<{ showDetail: boolean }>`

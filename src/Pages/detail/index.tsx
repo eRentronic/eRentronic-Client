@@ -7,17 +7,15 @@ import { useRecoilState } from 'recoil';
 import * as API from '@/apis/mainProducts';
 import { Icon } from '@/components/common';
 import { Purchase } from '@/components/server/Purchase';
-import * as S from '@/Pages/Detail/index.style';
+import * as S from '@/Pages/detail/index.style';
+import { image } from '@/Pages/detail/index.type';
 import { modalStore } from '@/recoils/modal/modal';
-
-import { image } from './index.type';
 
 const getInfos = (path: string) => async () => {
   // id를 살려야 하나? 의논해보기
   const result = await axios.get<API.ProductDetail>(path);
   return result.data;
 };
-// const getRecommandItems = (id:String|n)
 export function Detail() {
   const [isClicked, setIsClicked] = useRecoilState(modalStore);
   const [showDetail, setShowDetail] = useState(false);
@@ -25,8 +23,8 @@ export function Detail() {
   const param = new URLSearchParams(location.search);
   const productID = param.get('id');
 
-  const detailPath = `${process.env.MAIN_PRODUCTS}/${productID}`;
-  const recommendPath = `${process.env.MAIN_PRODUCTS}/${productID}/recommendations`;
+  const detailPath = `${process.env.PRODUCT_DETAIL}/${productID}`;
+  // const recommendPath = `${process.env.MAIN_PRODUCTS}/${productID}/recommendations`;
 
   const { data } = useQuery<API.ProductDetail, AxiosError>(
     ['getInfos'],
@@ -78,26 +76,36 @@ export function Detail() {
         <S.InfoRight>
           <S.DetailInfoWrap>
             <S.DetailTitle>{productInfo.title}</S.DetailTitle>
-            <S.Price>가격 {productInfo.price.toLocaleString()}</S.Price>
-            <S.RentalPrice>
-              하루 대여비 {productInfo.rentalPrice.toLocaleString()}
-            </S.RentalPrice>
+            <S.Info>
+              <S.Price>가격</S.Price>
+              <S.DetailStatus>
+                {productInfo.price.toLocaleString()}
+              </S.DetailStatus>
+            </S.Info>
+            <S.Info>
+              <S.RentalPrice>하루 대여비</S.RentalPrice>
+              <S.DetailStatus>
+                {productInfo.rentalPrice.toLocaleString()}
+              </S.DetailStatus>
+            </S.Info>
             <S.Switches>스위치</S.Switches>
           </S.DetailInfoWrap>
-          <S.RentalBtn>
-            <S.BtnText>대여</S.BtnText>
-          </S.RentalBtn>
-          <S.BuyBtn
-            onClick={() => {
-              toggleModal();
-            }}
-          >
-            <S.BtnText>구매</S.BtnText>
-          </S.BuyBtn>
+          <S.DecisionBtns>
+            <S.RentalBtn>
+              <S.BtnText>대여</S.BtnText>
+            </S.RentalBtn>
+            <S.BuyBtn
+              onClick={() => {
+                toggleModal();
+              }}
+            >
+              <S.BtnText>구매</S.BtnText>
+            </S.BuyBtn>
+          </S.DecisionBtns>
         </S.InfoRight>
         <Purchase />
       </S.InfoWrap>
-      {data.keyboardInfoImages.map((info: image) => {
+      {data!.keyboardInfoImages.map((info: image) => {
         return (
           <S.DetailInfoImg
             key={info.id}
