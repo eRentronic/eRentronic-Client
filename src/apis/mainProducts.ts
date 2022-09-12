@@ -26,23 +26,63 @@ export type MainProductsType = {
 };
 
 export type ContentType = {
-  product: {
-    id: number;
-    title: string;
-    content: string;
-    imageUrl: string;
-    price: number;
-    rentable: boolean;
-    like: boolean;
-    inBucket: boolean;
-    rentalPrice: number;
-  };
+  product: Product;
 
   discountInfo: {
-    discounts: { id: number; title: string; saleRate: string }[];
+    discounts: Discount;
     salePrice: number;
     saleRentalPrice: number;
   };
 
   vendor: { id: number; name: string };
 };
+
+export type ProductDetail = {
+  product: Product;
+  keyboardId: number;
+  vendor: {
+    id: number;
+    name: string;
+  };
+  connection: {
+    id: number;
+    name: string;
+  };
+  keyboardSwitches: {
+    id: number;
+    name: string;
+  }[];
+  layout: {
+    id: number;
+    name: string;
+  };
+  keyboardImages: {
+    id: number;
+    imageUrl: string;
+  }[];
+  discountInfoResponse: {
+    discounts: Discount;
+    salePrice: number;
+    saleRentalPrice: number;
+  };
+};
+
+export type Product = {
+  id: number;
+  title: string;
+  content: string;
+  imageUrl: string;
+  price: number;
+  quantity: number;
+  rentalPrice: number;
+  rentalProductQuantity: number;
+  rentable: true;
+  like: false;
+  inBucket: false;
+};
+
+export type Discount = {
+  id: number;
+  title: string;
+  saleRate: string;
+}[];
