@@ -1,9 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
+import * as API from '@/apis/mainProducts';
 import { Icon } from '@/components/common';
 import { Purchase } from '@/components/server/Purchase';
 import * as S from '@/Pages/Detail/index.style';
@@ -13,8 +14,8 @@ import { image } from './index.type';
 
 const getInfos = (path: string) => async () => {
   // id를 살려야 하나? 의논해보기
-  const result = await axios.get(path);
-  return result;
+  const result = await axios.get<API.ProductDetail>(path);
+  return result.data;
 };
 // const getRecommandItems = (id:String|n)
 export function Detail() {
@@ -23,18 +24,21 @@ export function Detail() {
   const location = useLocation();
   const param = new URLSearchParams(location.search);
   const productID = param.get('id');
-  const detailPath = `${process.env.PRODUCT_DETAIL}/${productID}`;
-  const recommendPath = `${process.env.PRODUCT_DETAIL}/${productID}/recommendations`;
-  const { data } = useQuery<string, Error>(
+
+  const detailPath = `${process.env.MAIN_PRODUCTS}/${productID}`;
+  const recommendPath = `${process.env.MAIN_PRODUCTS}/${productID}/recommendations`;
+
+  const { data } = useQuery<API.ProductDetail, AxiosError>(
     ['getInfos'],
     getInfos(detailPath),
-  ).data;
-  const recommend = useQuery<string, Error>(
-    ['getInfos'],
-    getInfos(recommendPath),
-  ).data;
-  console.log(recommendPath, recommend); // recommend api 주소 404 뜸
-  const productInfo = data.product;
+  );
+  // const recommend = useQuery<API.ProductDetail, AxiosError>(
+  //   ['getRecommend'],
+  //   getInfos(recommendPath),
+  // );
+
+  const productInfo = data!.product;
+
   const toggleModal = () => {
     setIsClicked(!isClicked);
   };
@@ -54,7 +58,7 @@ export function Detail() {
             </S.SlideBtnsWrap>
           </S.ImgSlide>
           <S.SmallImgs>
-            {data.keyboardImages.map((el: image) => {
+            {data!.keyboardImages.map((el: image) => {
               return <S.SmallImg key={el.id} src={el.imageUrl} />;
             })}
           </S.SmallImgs>
@@ -74,8 +78,10 @@ export function Detail() {
         <S.InfoRight>
           <S.DetailInfoWrap>
             <S.DetailTitle>{productInfo.title}</S.DetailTitle>
-            <S.Price>가격 ${productInfo.price}</S.Price>
-            <S.RentalPrice>하루 대여비${productInfo.rentalPrice}</S.RentalPrice>
+            <S.Price>가격 {productInfo.price.toLocaleString()}</S.Price>
+            <S.RentalPrice>
+              하루 대여비 {productInfo.rentalPrice.toLocaleString()}
+            </S.RentalPrice>
             <S.Switches>스위치</S.Switches>
           </S.DetailInfoWrap>
           <S.RentalBtn>
