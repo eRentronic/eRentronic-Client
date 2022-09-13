@@ -7,8 +7,8 @@ import { useRecoilState } from 'recoil';
 import * as API from '@/apis/mainProducts';
 import { Icon } from '@/components/common';
 import { Purchase } from '@/components/server/Purchase';
-import * as S from '@/Pages/detail/index.style';
-import { image } from '@/Pages/detail/index.type';
+import * as S from '@/Pages/Detail/index.style';
+import { image } from '@/Pages/Detail/index.type';
 import { modalStore } from '@/recoils/modal/modal';
 
 const getInfos = (path: string) => async () => {
@@ -34,7 +34,7 @@ export function Detail() {
   //   ['getRecommend'],
   //   getInfos(recommendPath),
   // );
-
+  if (!data) return <>에러</>;
   const productInfo = data.product;
 
   const toggleModal = () => {
