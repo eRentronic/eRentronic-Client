@@ -23,7 +23,7 @@ export function Detail() {
   const param = new URLSearchParams(location.search);
   const productID = param.get('id');
 
-  const detailPath = `${process.env.PRODUCT_DETAIL}/${productID}`;
+  const detailPath = `${process.env.MAIN_PRODUCTS}/${productID}`;
   // const recommendPath = `${process.env.MAIN_PRODUCTS}/${productID}/recommendations`;
 
   const { data } = useQuery<API.ProductDetail, AxiosError>(
@@ -35,7 +35,7 @@ export function Detail() {
   //   getInfos(recommendPath),
   // );
 
-  const productInfo = data!.product;
+  const productInfo = data.product;
 
   const toggleModal = () => {
     setIsClicked(!isClicked);
