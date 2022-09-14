@@ -103,11 +103,16 @@ export const PriceAndButton = styled.div`
   align-items: center;
   gap: 20px;
 `;
-export const Purchase = styled.button`
+type PurchaseProps = {
+  isFormFilled: boolean;
+};
+
+export const Purchase = styled.button<PurchaseProps>`
   width: 70%;
   height: 100%;
   text-decoration: none;
   border: none;
-  background: ${({ theme }) => theme.pallete.primary};
+  background: ${({ theme, isFormFilled }) =>
+    isFormFilled ? theme.pallete.primary : theme.pallete.grey4};
   border-radius: 10px;
 `;
