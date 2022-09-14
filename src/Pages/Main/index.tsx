@@ -3,20 +3,18 @@ import {
   useInfiniteQuery,
   InfiniteData,
 } from '@tanstack/react-query';
-import { useResetRecoilState } from 'recoil';
 
 import * as API from '@/apis/mainProducts';
 import { SideTab } from '@/components/server/Filter/SideTab';
 import { Card } from '@/components/server/Product/Card/';
 import { MainInput } from '@/components/server/Search';
-import { popUpOpenState } from '@/recoils/popUp/popUp';
 
 import * as S from './style';
 
 const getMainProducts = async () => {
-  const result = await fetch(`${process.env.MAIN_PRODUCTS}`).then(data =>
-    data.json(),
-  );
+  const result = await fetch(
+    `${process.env.MAIN_PRODUCTS}?page=2&size=12`,
+  ).then(data => data.json());
   return result;
 };
 
@@ -26,7 +24,6 @@ const getIds = (productData: API.ContentType[]) => {
 };
 
 export function Main() {
-  const closeWholePopUp = useResetRecoilState(popUpOpenState);
   const { data: ID } = useQuery<API.MainProductsType, Error, number[]>(
     ['productQueryKey'],
     getMainProducts,
@@ -40,7 +37,7 @@ export function Main() {
   const mainContents = ID?.map(id => <Card productId={id} />);
 
   return (
-    <S.Wrapper onClick={closeWholePopUp}>
+    <S.Wrapper>
       <S.StyledMain>
         <S.SearchSection>여기는</S.SearchSection>
         <MainInput />

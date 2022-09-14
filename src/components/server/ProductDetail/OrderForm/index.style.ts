@@ -13,6 +13,7 @@ export const Dimmed = styled.div<{ isClicked: boolean }>`
   height: 100vh;
   background: rgba(0, 0, 0, 0.5);
 `;
+
 export const PurchaseWrap = styled.div<{ isClicked: boolean }>`
   display: ${({ isClicked }) => (isClicked ? 'flex' : 'none')};
   position: fixed;
@@ -34,44 +35,97 @@ export const InfoWrap = styled.div`
   justify-content: space-between;
   margin-top: 50px;
 `;
+
 export const InfoLeft = styled.div`
   display: flex;
   gap: 10px;
   height: 100px; ;
 `;
+
 export const ProductImage = styled.img`
   width: 150px;
   height: 100%;
 `;
+
 export const ProductInfo = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   gap: 5px;
-  padding-top: 20px;
 `;
 
-export const Title = styled(Text)``;
-export const Brand = styled(Text)``;
+export const Title = styled(Text)`
+  font-size: 10px;
+  font-weight: 300;
+  color: ${({ theme }) => theme.pallete.grey4};
+`;
+
+export const Brand = styled(Text)`
+  font-size: 10px;
+  font-weight: 300;
+  color: ${({ theme }) => theme.pallete.grey4};
+`;
 
 export const InfoRight = styled.div`
-  float: right;
-  padding-top: 20px;
+  display: flex;
+  gap: 5px;
+  justify-content: flex-end;
+  align-items: flex-start;
 `;
+
 export const OriginPrice = styled(Text)`
   margin-bottom: 10px;
+  font-weight: 500;
 `;
+
 export const DiscountedPrice = styled(Text)``;
+
 export const SelectWrap = styled.section`
   width: 100%;
 `;
-export const DetailOptionBtn = styled.button``;
-export const OptionList = styled.ul<{ isDisplay: boolean }>`
-  display: ${({ isDisplay }) => (isDisplay ? 'flex' : 'none')};
+
+export const OptionZone = styled.section`
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
 `;
-export const Option = styled.li``;
-export const AmountWrap = styled.div``;
+
+export const DetailOptionBtn = styled.button`
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  width: fit-content;
+  border-radius: 10px;
+
+  border: none;
+  background-color: ${({ theme }) => theme.pallete.secondary};
+  &:hover {
+    transform: scale(0.9);
+  }
+  transition: 0.2s;
+`;
+
+export const OptionList = styled.ul<{ isDisplay: boolean }>`
+  position: absolute;
+  left: 20%;
+
+  display: ${({ isDisplay }) => (isDisplay ? 'flex' : 'none')};
+  border: 1px solid black;
+  width: fit-content;
+  border-radius: 10px;
+`;
+
+export const Option = styled.li`
+  padding: 5px 10px;
+`;
+
+export const AmountWrap = styled.div`
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+`;
+
 export const AmountBtn = styled.button`
   display: flex;
   justify-content: center;
@@ -82,7 +136,9 @@ export const AmountBtn = styled.button`
   border-radius: 50%;
 `;
 export const MinusBtn = styled(AmountBtn)``;
+
 export const PlusBtn = styled(AmountBtn)``;
+
 export const UserInfo = styled.div`
   width: 100%;
   height: 150px;

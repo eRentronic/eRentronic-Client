@@ -13,9 +13,9 @@ type CardProps = {
 };
 
 const getMainProducts = async () => {
-  const result = await fetch(`${process.env.MAIN_PRODUCTS}`).then(data =>
-    data.json(),
-  );
+  const result = await fetch(
+    `${process.env.MAIN_PRODUCTS}?page=2&size=12`,
+  ).then(data => data.json());
   return result;
 };
 

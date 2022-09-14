@@ -37,8 +37,8 @@ export function Header() {
   };
 
   return (
-    <S.Layout onClick={onClickLogo}>
-      <S.Logo>eRentronic</S.Logo>
+    <S.Layout>
+      <S.Logo onClick={onClickLogo}>eRentronic</S.Logo>
       <S.ContentsLayOut>
         <S.NavLeft>{NAV_CONTENTS}</S.NavLeft>
         <S.NavRight>{UserIcons}</S.NavRight>

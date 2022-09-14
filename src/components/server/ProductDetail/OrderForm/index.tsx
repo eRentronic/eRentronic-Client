@@ -6,7 +6,7 @@ import { useRecoilState } from 'recoil';
 
 import * as API from '@/apis/mainProducts';
 import { Text } from '@/components/common';
-import * as S from '@/components/server/ProductDetail/index.style';
+import * as S from '@/components/server/ProductDetail/OrderForm/index.style';
 import { modalStore } from '@/recoils/modal/modal';
 import { stopEventDelivery } from '@/utils/utils';
 
@@ -87,6 +87,7 @@ export function Purchase() {
       setOptions({ ...options, amount: options.amount - 1 });
     }
   };
+
   const onClickAddress = () => {
     new daum.Postcode({
       oncomplete(userAddress: any) {
@@ -137,7 +138,7 @@ export function Purchase() {
           address2: address.adress2,
           zipCode: address.zipCode,
         },
-        totalPrice: data.product.price * options.amount,
+        totalPrice: data.discountInfoResponse.salePrice * options.amount,
       })
       .catch(e => console.error(e));
   };
@@ -160,32 +161,37 @@ export function Purchase() {
           </S.InfoLeft>
           <S.InfoRight>
             {!!data.discountInfoResponse.discounts.length && (
-              <S.OriginPrice forwardedAs="del" styles={{ color: 'grey' }}>
-                {data.product.price}
+              <S.OriginPrice
+                forwardedAs="del"
+                styles={{ color: 'grey', fontSize: '10px' }}
+              >
+                {data.product.price.toLocaleString()}
               </S.OriginPrice>
             )}
             <S.DiscountedPrice>
-              {data.discountInfoResponse.salePrice}
+              {data.discountInfoResponse.salePrice.toLocaleString()}
             </S.DiscountedPrice>
           </S.InfoRight>
         </S.InfoWrap>
         <S.SelectWrap>
-          옵션 목록
-          <div>
-            현재 옵션: 현재 옵션
+          <S.OptionZone>
             <S.DetailOptionBtn
               onClick={e => {
                 setIsDisplay(true);
                 e.stopPropagation();
               }}
             >
-              드롭 다운 버튼
+              <Text typography="Light" styles={{ fontSize: '9px' }}>
+                option
+              </Text>
             </S.DetailOptionBtn>
-            <S.OptionList isDisplay={isDisplay}>{optionLists}</S.OptionList>
-          </div>
+            <Text typography="Light">{options.switch}</Text>
+            {isDisplay && (
+              <S.OptionList isDisplay={isDisplay}>{optionLists}</S.OptionList>
+            )}
+          </S.OptionZone>
           {options.switch && (
             <S.AmountWrap>
-              개수 선택 목록
               <S.PlusBtn onClick={increaseAmount}>+</S.PlusBtn>
               <Text>{options.amount}</Text>
               <S.MinusBtn onClick={decreaseAmount}>-</S.MinusBtn>
@@ -210,7 +216,9 @@ export function Purchase() {
         </S.UserInfo>
         <S.PriceAndButton>
           <S.DiscountedPrice>
-            {(data.product.price * options.amount).toLocaleString()}
+            {(
+              data.discountInfoResponse.salePrice * options.amount
+            ).toLocaleString()}
           </S.DiscountedPrice>
           <S.PurchaseButton
             disabled={!isFormFilled}
