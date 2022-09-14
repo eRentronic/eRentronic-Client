@@ -42,11 +42,9 @@ export const InfoLeft = styled.div`
 export const ProductImage = styled.img`
   width: 150px;
   height: 100%;
-  border: 1px solid black;
 `;
 export const ProductInfo = styled.div`
   height: 100%;
-  border: 1px solid black;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -54,22 +52,17 @@ export const ProductInfo = styled.div`
   padding-top: 20px;
 `;
 
-const ContentText = styled(Text)`
-  color: ${({ theme }) => theme.pallete.normalFont};
-`;
-
-export const Title = styled(ContentText)``;
-export const Brand = styled(ContentText)``;
+export const Title = styled(Text)``;
+export const Brand = styled(Text)``;
 
 export const InfoRight = styled.div`
   float: right;
   padding-top: 20px;
 `;
-export const OriginPrice = styled(ContentText)`
-  text-decoration: line-through;
+export const OriginPrice = styled(Text)`
   margin-bottom: 10px;
 `;
-export const DiscountedPrice = styled(ContentText)``;
+export const DiscountedPrice = styled(Text)``;
 export const SelectWrap = styled.section`
   width: 100%;
 `;
@@ -103,6 +96,7 @@ export const PriceAndButton = styled.div`
   align-items: center;
   gap: 20px;
 `;
+
 type PurchaseProps = {
   isFormFilled: boolean;
 };

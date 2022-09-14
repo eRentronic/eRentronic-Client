@@ -90,9 +90,6 @@ export function Purchase() {
   const onClickAddress = () => {
     new daum.Postcode({
       oncomplete(userAddress: any) {
-        // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-        // 건물명이 있고, 공동주택일 경우 추가한다.
-
         if (userAddress.buildingName === '' && userAddress.apartment === 'N') {
           setAddress({
             ...address,
@@ -115,8 +112,6 @@ export function Purchase() {
             zipCode: userAddress.zonecode,
           });
         }
-        // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-        // 조합된 참고항목을 해당 필드에 넣는다.
       },
     }).open();
   };
@@ -136,15 +131,19 @@ export function Purchase() {
       >
         <S.InfoWrap>
           <S.InfoLeft>
-            <S.ProductImage />
+            <S.ProductImage src={data.product.imageUrl} />
             <S.ProductInfo>
-              <S.Title>제품명</S.Title>
-              <S.Brand>제조사</S.Brand>
+              <S.Title>{data.product.title}</S.Title>
+              <S.Brand>{data.vendor.name}</S.Brand>
             </S.ProductInfo>
           </S.InfoLeft>
           <S.InfoRight>
-            <S.OriginPrice>정가</S.OriginPrice>
-            <S.DiscountedPrice>구매가</S.DiscountedPrice>
+            {!!data.discountInfoResponse.discounts.length && (
+              <S.OriginPrice forwardedAs="del" styles={{ color: 'grey' }}>
+                {data.discountInfoResponse.salePrice}
+              </S.OriginPrice>
+            )}
+            <S.DiscountedPrice>{data.product.price}</S.DiscountedPrice>
           </S.InfoRight>
         </S.InfoWrap>
         <S.SelectWrap>
