@@ -120,6 +120,27 @@ export function Purchase() {
     !Object.keys(address).find(key => !address[key]) &&
     !Object.keys(options).find(key => !options[key]);
 
+  const postOrder = async () => {
+    axios
+      .post(`${process.env.ORDER_PRODUCTS}`, {
+        purchases: [
+          {
+            productID: data.product.id,
+            quantity: options.amount,
+            productTotalPrice: data.product.price,
+          },
+        ],
+        rentals: [],
+        address: {
+          fullAddress: address.address1 + address.address2,
+          address1: address.address1,
+          address2: address.adress2,
+          zipCode: address.zipCode,
+        },
+        totalPrice: data.product.price * options.amount,
+      })
+      .catch(e => console.error(e));
+  };
   return (
     <S.Dimmed isClicked={isClicked} onClick={closeModal}>
       <S.PurchaseWrap
@@ -140,10 +161,12 @@ export function Purchase() {
           <S.InfoRight>
             {!!data.discountInfoResponse.discounts.length && (
               <S.OriginPrice forwardedAs="del" styles={{ color: 'grey' }}>
-                {data.discountInfoResponse.salePrice}
+                {data.product.price}
               </S.OriginPrice>
             )}
-            <S.DiscountedPrice>{data.product.price}</S.DiscountedPrice>
+            <S.DiscountedPrice>
+              {data.discountInfoResponse.salePrice}
+            </S.DiscountedPrice>
           </S.InfoRight>
         </S.InfoWrap>
         <S.SelectWrap>
@@ -186,10 +209,13 @@ export function Purchase() {
           />
         </S.UserInfo>
         <S.PriceAndButton>
-          <S.DiscountedPrice>구매가</S.DiscountedPrice>
+          <S.DiscountedPrice>
+            {(data.product.price * options.amount).toLocaleString()}
+          </S.DiscountedPrice>
           <S.PurchaseButton
             disabled={!isFormFilled}
             isFormFilled={isFormFilled}
+            onClick={postOrder}
           >
             <Text>구매</Text>
           </S.PurchaseButton>
