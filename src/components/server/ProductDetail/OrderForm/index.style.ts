@@ -58,13 +58,13 @@ export const ProductInfo = styled.div`
 export const Title = styled(Text)`
   font-size: 10px;
   font-weight: 300;
-  color: ${({ theme }) => theme.pallete.grey4};
+  color: ${({ theme }) => theme.pallete.grey3};
 `;
 
 export const Brand = styled(Text)`
   font-size: 10px;
   font-weight: 300;
-  color: ${({ theme }) => theme.pallete.grey4};
+  color: ${({ theme }) => theme.pallete.grey3};
 `;
 
 export const InfoRight = styled.div`
@@ -122,6 +122,7 @@ export const Option = styled.li`
 
 export const AmountWrap = styled.div`
   display: flex;
+  align-items: center;
   gap: 10px;
   margin-top: 15px;
 `;
@@ -142,7 +143,42 @@ export const PlusBtn = styled(AmountBtn)``;
 export const UserInfo = styled.div`
   width: 100%;
   height: 150px;
-  border: 1px solid black;
+  border: 1px solid ${({ theme }) => theme.pallete.grey3};
+  padding: 3px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
+export const UserInfoTitle = styled(Text)`
+  font-size: 15px;
+`;
+export const UserInfoContent = styled(Text)`
+  color: ${({ theme }) => theme.pallete.grey3};
+  font-size: 10px;
+`;
+export const ChangeAddressBtn = styled.button`
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 15px;
+  border: none;
+  background: none;
+  color: ${({ theme }) => theme.pallete.grey4};
+`;
+export const Address1 = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 20px;
+  border: 1px solid ${({ theme }) => theme.pallete.grey3};
+  border-radius: 3px;
+`;
+export const Address2 = styled.input`
+  padding: 0;
+  height: 20px;
+  border: 1px solid ${({ theme }) => theme.pallete.grey3};
+  border-radius: 3px;
+  font-size: 10px;
 `;
 export const PriceAndButton = styled.div`
   width: 100%;

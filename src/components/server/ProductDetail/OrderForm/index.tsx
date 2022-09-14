@@ -11,7 +11,6 @@ import { modalStore } from '@/recoils/modal/modal';
 import { stopEventDelivery } from '@/utils/utils';
 
 const getInfos = async (path: string) => {
-  // id를 살려야 하나? 의논해보기
   const result = await axios.get<API.ProductDetail>(path);
   return result.data;
 };
@@ -169,7 +168,7 @@ export function Purchase() {
               </S.OriginPrice>
             )}
             <S.DiscountedPrice>
-              {data.discountInfoResponse.salePrice.toLocaleString()}
+              {data.discountInfoResponse.salePrice.toLocaleString()}원
             </S.DiscountedPrice>
           </S.InfoRight>
         </S.InfoWrap>
@@ -193,22 +192,29 @@ export function Purchase() {
           {options.switch && (
             <S.AmountWrap>
               <S.PlusBtn onClick={increaseAmount}>+</S.PlusBtn>
-              <Text>{options.amount}</Text>
+              <Text styles={{ fontSize: '15px' }}>{options.amount}</Text>
               <S.MinusBtn onClick={decreaseAmount}>-</S.MinusBtn>
             </S.AmountWrap>
           )}
         </S.SelectWrap>
-        {options.amount && options.switch && (
-          <button type="button" onClick={onClickAddress}>
-            누르면 주소
-          </button>
-        )}
+
         <S.UserInfo>
-          사용자 정보
-          <div>도로명 주소</div>
-          <div>{address.address1}</div>
-          <input
-            placeholder="상세주소 입력해주세요"
+          <S.UserInfoTitle>사용자정보</S.UserInfoTitle>
+          <S.UserInfoContent>
+            주소
+            <S.ChangeAddressBtn type="button" onClick={onClickAddress}>
+              주소변경
+            </S.ChangeAddressBtn>
+          </S.UserInfoContent>
+
+          {/* {options.amount && options.switch && (
+            <button type="button" onClick={onClickAddress}>
+              주소변경
+            </button>
+          )} */}
+          <S.Address1>{address.address1}</S.Address1>
+          <S.Address2
+            placeholder="상세주소를 입력해주세요"
             onChange={e => {
               setAddress({ ...address, address2: e.target.value });
             }}
@@ -219,6 +225,7 @@ export function Purchase() {
             {(
               data.discountInfoResponse.salePrice * options.amount
             ).toLocaleString()}
+            원
           </S.DiscountedPrice>
           <S.PurchaseButton
             disabled={!isFormFilled}
