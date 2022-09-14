@@ -125,7 +125,7 @@ export function Purchase() {
       .post(`${process.env.ORDER_PRODUCTS}`, {
         purchases: [
           {
-            productID: data.product.id,
+            productId: data.product.id,
             quantity: options.amount,
             productTotalPrice: data.product.price,
           },
