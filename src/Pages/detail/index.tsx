@@ -6,7 +6,7 @@ import { useRecoilState } from 'recoil';
 
 import * as API from '@/apis/mainProducts';
 import { Icon } from '@/components/common';
-import { Purchase } from '@/components/server/Purchase';
+import { Purchase } from '@/components/server/ProductDetail';
 import * as S from '@/Pages/Detail/index.style';
 import { image } from '@/Pages/Detail/index.type';
 import { modalStore } from '@/recoils/modal/modal';

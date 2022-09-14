@@ -6,7 +6,7 @@ import { useRecoilState } from 'recoil';
 
 import * as API from '@/apis/mainProducts';
 import { Text } from '@/components/common';
-import * as S from '@/components/server/Purchase/style.index';
+import * as S from '@/components/server/ProductDetail/style.index';
 import { modalStore } from '@/recoils/modal/modal';
 import { stopEventDelivery } from '@/utils/utils';
 
