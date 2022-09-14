@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
-import { MouseEvent, useState, useRef, useEffect } from 'react';
+import { MouseEvent, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
@@ -10,7 +10,7 @@ import * as S from '@/components/server/Purchase/style.index';
 import { modalStore } from '@/recoils/modal/modal';
 import { stopEventDelivery } from '@/utils/utils';
 
-const getInfos = (path: string) => async () => {
+const getInfos = async (path: string) => {
   // id를 살려야 하나? 의논해보기
   const result = await axios.get<API.ProductDetail>(path);
   return result.data;
@@ -30,21 +30,19 @@ export function Purchase() {
     address2: '',
     zipCode: '',
   });
-  const container = useRef();
 
   const location = useLocation();
   const param = new URLSearchParams(location.search);
   const productID = param.get('id');
 
   const detailPath = `${process.env.MAIN_PRODUCTS}/${productID}`;
-  const recommendPath = `${process.env.MAIN_PRODUCTS}/${productID}/recommendations`;
+  // const recommendPath = `${process.env.MAIN_PRODUCTS}/${productID}/recommendations`;
 
-  const { data } = useQuery<API.ProductDetail, AxiosError>(
-    ['getInfos'],
+  const { data } = useQuery<API.ProductDetail, AxiosError>(['getInfos'], () =>
     getInfos(detailPath),
   );
 
-  const test = data?.keyboardSwitches.map(SWITCH => (
+  const optionLists = data?.keyboardSwitches.map(SWITCH => (
     <S.Option key={SWITCH.id}>{SWITCH.name}</S.Option>
   ));
 
@@ -53,43 +51,46 @@ export function Purchase() {
     setIsClicked(!isClicked);
     setIsDisplay(false);
   };
+
   const increaseAmount = () => {
     setAmount(amount + 1);
   };
+
   const decreaseAmount = () => {
     if (amount > 1) {
       setAmount(amount - 1);
     }
   };
-
   const onClickAddress = () => {
     new daum.Postcode({
-      oncomplete(data) {
+      oncomplete(userAddress: any) {
         // 사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
         // 건물명이 있고, 공동주택일 경우 추가한다.
 
-        if (data.buildingName !== '' && data.apartment === 'Y') {
-          data.bname !== ''
-            ? setAddress({
-                ...address,
-                address1: data.roadAddress,
-                address2: ` ${data.buildingName}`,
-              })
-            : setAddress({
-                ...address,
-                address1: data.roadAddress,
-                address2: data.buildingName,
-              });
-
+        if (userAddress.buildingName === '' && userAddress.apartment === 'N') {
+          setAddress({
+            ...address,
+            address1: userAddress.roadAddress,
+          });
           return;
         }
-        setAddress({ ...address, address1: data.roadAddress });
+
+        if (userAddress.bname !== '') {
+          setAddress({
+            ...address,
+            address1: `${userAddress.roadAddress}${userAddress.roadAddress} ${userAddress.buildingName}`,
+          });
+        } else {
+          setAddress({
+            ...address,
+            address1: userAddress.roadAddress + userAddress.buildingName,
+          });
+        }
         // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
         // 조합된 참고항목을 해당 필드에 넣는다.
       },
     }).open();
   };
-  console.log(address);
   return (
     <S.Dimmed isClicked={isClicked} onClick={closeModal}>
       <S.PurchaseWrap
@@ -120,14 +121,11 @@ export function Purchase() {
               onClick={e => {
                 setIsDisplay(true);
                 e.stopPropagation();
-                if (container.current) {
-                  container.current.focus();
-                }
               }}
             >
               드롭 다운 버튼
             </S.DetailOptionBtn>
-            <S.OptionList isDisplay={isDisplay}>{test}</S.OptionList>
+            <S.OptionList isDisplay={isDisplay}>{optionLists}</S.OptionList>
           </div>
           <button type="button" onClick={onClickAddress}>
             누르면 주소
@@ -142,7 +140,13 @@ export function Purchase() {
         <S.UserInfo>
           사용자 정보
           <div>도로명 주소</div>
-          <input />
+          <div>{address.address1}</div>
+          <input
+            placeholder="상세주소 입력해주세요"
+            onChange={e => {
+              setAddress({ ...address, address2: e.target.value });
+            }}
+          />
         </S.UserInfo>
         <S.PriceAndButton>
           <S.DiscountedPrice>구매가</S.DiscountedPrice>
