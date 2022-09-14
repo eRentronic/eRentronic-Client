@@ -188,9 +188,12 @@ export function Purchase() {
         </S.UserInfo>
         <S.PriceAndButton>
           <S.DiscountedPrice>구매가</S.DiscountedPrice>
-          <S.Purchase disabled={!isFormFilled} isFormFilled={isFormFilled}>
+          <S.PurchaseButton
+            disabled={!isFormFilled}
+            isFormFilled={isFormFilled}
+          >
             <Text>구매</Text>
-          </S.Purchase>
+          </S.PurchaseButton>
         </S.PriceAndButton>
       </S.PurchaseWrap>
     </S.Dimmed>

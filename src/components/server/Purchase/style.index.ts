@@ -107,7 +107,7 @@ type PurchaseProps = {
   isFormFilled: boolean;
 };
 
-export const Purchase = styled.button<PurchaseProps>`
+export const PurchaseButton = styled.button<PurchaseProps>`
   width: 70%;
   height: 100%;
   text-decoration: none;
