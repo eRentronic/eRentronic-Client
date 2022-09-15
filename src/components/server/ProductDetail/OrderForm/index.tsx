@@ -151,44 +151,62 @@ export function Purchase() {
         isClicked={isClicked}
       >
         <S.InfoWrap>
-          <S.InfoLeft>
-            <S.ProductImage src={data.product.imageUrl} />
-            <S.ProductInfo>
-              <S.Title>{data.product.title}</S.Title>
-              <S.Brand>{data.vendor.name}</S.Brand>
-            </S.ProductInfo>
-          </S.InfoLeft>
-          <S.InfoRight>
-            {!!data.discountInfoResponse.discounts.length && (
-              <S.OriginPrice
-                forwardedAs="del"
-                styles={{ color: 'grey', fontSize: '10px' }}
-              >
-                {data.product.price.toLocaleString()}
-              </S.OriginPrice>
-            )}
-            <S.DiscountedPrice>
-              {data.discountInfoResponse.salePrice.toLocaleString()}원
-            </S.DiscountedPrice>
-          </S.InfoRight>
+          <S.ProductImage src={data.product.imageUrl} />
+          <S.ProductDetail>
+            <S.InfoLeft>
+              <S.ProductInfo>
+                <S.Title>{data.product.title}</S.Title>
+                <S.Brand>{data.vendor.name}</S.Brand>
+              </S.ProductInfo>
+            </S.InfoLeft>
+            <S.InfoRight>
+              <S.PriceCompare>
+                {!!data.discountInfoResponse.discounts.length && (
+                  <S.OriginPrice
+                    forwardedAs="del"
+                    styles={{ color: 'grey', fontSize: '10px' }}
+                  >
+                    {data.product.price.toLocaleString()}
+                  </S.OriginPrice>
+                )}
+                <S.DiscountedPrice>
+                  {`${data.discountInfoResponse.salePrice.toLocaleString()} 원`}
+                </S.DiscountedPrice>
+              </S.PriceCompare>
+
+              {!!data.discountInfoResponse.discounts.length && (
+                <S.DiscountRate color="warning">
+                  {data.discountInfoResponse.discounts.length &&
+                    `${
+                      data.discountInfoResponse.discounts.reduce(
+                        (acc, curr) => {
+                          return {
+                            ...acc,
+                            saleRate: String(+acc.saleRate + +curr.saleRate),
+                          };
+                        },
+                      ).saleRate
+                    }%`}
+                </S.DiscountRate>
+              )}
+            </S.InfoRight>
+          </S.ProductDetail>
         </S.InfoWrap>
-        <S.SelectWrap>
-          <S.OptionZone>
-            <S.DetailOptionBtn
-              onClick={e => {
-                setIsDisplay(true);
-                e.stopPropagation();
-              }}
-            >
-              <Text typography="Light" styles={{ fontSize: '9px' }}>
-                option
-              </Text>
-            </S.DetailOptionBtn>
-            <Text typography="Light">{options.switch}</Text>
-            {isDisplay && (
-              <S.OptionList isDisplay={isDisplay}>{optionLists}</S.OptionList>
-            )}
-          </S.OptionZone>
+        <S.OptionZone>
+          <S.DetailOptionBtn
+            onClick={e => {
+              setIsDisplay(true);
+              e.stopPropagation();
+            }}
+          >
+            <Text typography="Light" styles={{ fontSize: '9px' }}>
+              option
+            </Text>
+          </S.DetailOptionBtn>
+          <Text typography="Light">{options.switch}</Text>
+          {isDisplay && (
+            <S.OptionList isDisplay={isDisplay}>{optionLists}</S.OptionList>
+          )}
           {options.switch && (
             <S.AmountWrap>
               <S.PlusBtn onClick={increaseAmount}>+</S.PlusBtn>
@@ -196,32 +214,29 @@ export function Purchase() {
               <S.MinusBtn onClick={decreaseAmount}>-</S.MinusBtn>
             </S.AmountWrap>
           )}
-        </S.SelectWrap>
+        </S.OptionZone>
 
-        <S.UserInfo>
-          <S.UserInfoTitle>사용자정보</S.UserInfoTitle>
-          <S.UserInfoContent>
-            주소
-            <S.ChangeAddressBtn type="button" onClick={onClickAddress}>
-              주소변경
-            </S.ChangeAddressBtn>
-          </S.UserInfoContent>
-
-          {/* {options.amount && options.switch && (
-            <button type="button" onClick={onClickAddress}>
-              주소변경
-            </button>
-          )} */}
-          <S.Address1>{address.address1}</S.Address1>
-          <S.Address2
-            placeholder="상세주소를 입력해주세요"
-            onChange={e => {
-              setAddress({ ...address, address2: e.target.value });
-            }}
-          />
-        </S.UserInfo>
+        {options.amount && options.switch && (
+          <S.UserInfo>
+            <S.UserInfoTitle>사용자정보</S.UserInfoTitle>
+            <S.UserInfoContent>
+              주소
+              <S.ChangeAddressBtn type="button" onClick={onClickAddress}>
+                {address.address1 ? '주소변경' : '주소선택'}
+              </S.ChangeAddressBtn>
+            </S.UserInfoContent>
+            <S.Address1>{address.address1}</S.Address1>
+            <S.Address2
+              placeholder="상세주소를 입력해주세요"
+              onChange={e => {
+                setAddress({ ...address, address2: e.target.value });
+              }}
+            />
+          </S.UserInfo>
+        )}
         <S.PriceAndButton>
           <S.DiscountedPrice>
+            총 &nbsp;
             {(
               data.discountInfoResponse.salePrice * options.amount
             ).toLocaleString()}
