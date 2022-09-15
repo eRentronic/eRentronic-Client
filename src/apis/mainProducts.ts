@@ -87,6 +87,6 @@ export type Product = {
 
 export type Discount = {
   id: number;
-  title: string;
+  title: '이벤트 할인' | '신제품 할인';
   saleRate: string;
 }[];

@@ -3,32 +3,28 @@ import styled from 'styled-components';
 import { Text } from '@/components/common';
 
 type SaleLabelProps = {
-  isEventSale: boolean;
-  isBrandNewSale: boolean;
+  title: '이벤트 할인' | '신제품 할인';
 };
 
-export function SaleLabel({ isEventSale, isBrandNewSale }: SaleLabelProps) {
+export function SaleLabel({ title }: SaleLabelProps) {
   return (
-    <StyledLabel isEventSale={isEventSale} isBrandNewSale={isBrandNewSale}>
-      <Text typography="Light">
-        {isEventSale
-          ? '이벤트 할인'
-          : isBrandNewSale
-          ? '신상품 할인'
-          : undefined}
+    <StyledLabel title={title}>
+      <Text typography="Light" styles={{ fontSize: '5px' }}>
+        {title}
       </Text>
     </StyledLabel>
   );
 }
 
 const StyledLabel = styled.div<SaleLabelProps>`
-  background-color: ${({ isEventSale, isBrandNewSale, theme }) =>
-    isEventSale
+  display: flex;
+  align-items: center;
+  background-color: ${({ title, theme }) =>
+    title === '이벤트 할인'
       ? theme.pallete.primary
-      : isBrandNewSale
+      : title === '신제품 할인'
       ? theme.pallete.secondary
-      : null};
+      : 'none'};
   border-radius: 999999px;
-
   padding: 6px;
 `;
