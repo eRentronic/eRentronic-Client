@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
@@ -22,7 +22,7 @@ type DefaultAddressState = {
   zipCode: string;
 };
 
-const defaultAddress = {
+const defaultAddress: DefaultAddressState = {
   address1: '',
   address2: '',
   zipCode: '',
@@ -34,14 +34,25 @@ type DefaultOptionsState = {
   amount: number;
 };
 
-const defaultOptions = { switch: '', amount: 1 };
+const defaultOptions: DefaultOptionsState = { switch: '', amount: 1 };
+
+type OrderResponseState = {
+  id: number;
+  message: string;
+};
+
+const defaultOrderResponse: OrderResponseState = {
+  id: 0,
+  message: '',
+};
 
 export function Purchase() {
   const { daum } = window;
   const [isDisplay, setIsDisplay] = useState(false);
   const [isClicked, setIsClicked] = useRecoilState(modalStore);
-  const [address, setAddress] = useState<DefaultAddressState>(defaultAddress);
-  const [options, setOptions] = useState<DefaultOptionsState>(defaultOptions);
+  const [orderResponse, setOrderResponse] = useState(defaultOrderResponse);
+  const [address, setAddress] = useState(defaultAddress);
+  const [options, setOptions] = useState(defaultOptions);
 
   const location = useLocation();
   const param = new URLSearchParams(location.search);
@@ -53,6 +64,15 @@ export function Purchase() {
   const { data } = useQuery<API.ProductDetail, AxiosError>(['getInfos'], () =>
     getInfos(detailPath),
   );
+
+  useEffect(() => {
+    setTimeout(() => {
+      setOptions(defaultOptions);
+      setAddress(defaultAddress);
+      setOrderResponse(defaultOrderResponse);
+      setIsDisplay(false);
+    }, 2000);
+  }, [orderResponse]);
 
   if (!data) {
     return <>에러</>;
@@ -121,8 +141,10 @@ export function Purchase() {
     !Object.keys(options).find(key => !options[key]);
 
   const postOrder = async () => {
-    axios
-      .post(`${process.env.ORDER_PRODUCTS}`, {
+    try {
+      const {
+        data: { id, message },
+      } = await axios.post(`${process.env.ORDER_PRODUCTS}`, {
         purchases: [
           {
             productId: data.product.id,
@@ -138,9 +160,14 @@ export function Purchase() {
           zipCode: address.zipCode,
         },
         totalPrice: data.discountInfoResponse.salePrice * options.amount,
-      })
-      .catch(e => console.error(e));
+      });
+
+      setOrderResponse({ id, message });
+    } catch (e) {
+      console.error(e);
+    }
   };
+
   return (
     <S.Dimmed isClicked={isClicked} onClick={closeModal}>
       <S.PurchaseWrap
@@ -150,6 +177,9 @@ export function Purchase() {
         }}
         isClicked={isClicked}
       >
+        {!!orderResponse.message && (
+          <S.OrderConfirmation>{orderResponse.message}</S.OrderConfirmation>
+        )}
         <S.InfoWrap>
           <S.ProductImage src={data.product.imageUrl} />
           <S.ProductDetail>
@@ -236,11 +266,9 @@ export function Purchase() {
         )}
         <S.PriceAndButton>
           <S.DiscountedPrice>
-            총 &nbsp;
-            {(
+            {`총 ${(
               data.discountInfoResponse.salePrice * options.amount
-            ).toLocaleString()}
-            원
+            ).toLocaleString()} 원`}
           </S.DiscountedPrice>
           <S.PurchaseButton
             disabled={!isFormFilled}

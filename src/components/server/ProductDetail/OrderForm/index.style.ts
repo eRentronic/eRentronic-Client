@@ -225,3 +225,16 @@ export const PurchaseButton = styled.button<PurchaseProps>`
     isFormFilled ? theme.pallete.primary : theme.pallete.grey4};
   border-radius: 10px;
 `;
+
+export const OrderConfirmation = styled.div`
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 15px;
+  background-color: ${({ theme }) => theme.pallete.grey5};
+  transform: translate(-50%, -50%);
+`;
