@@ -26,7 +26,7 @@ const UserIcons = USER_ICON_LIST.map(icon => (
 ));
 
 const NAV_CONTENTS = NAV_DATA_LIST.map(({ title, options, id }) => (
-  <PopUp title={title} options={options} id={id} />
+  <PopUp title={title} options={options} id={id} key={id} />
 ));
 
 export function Header() {

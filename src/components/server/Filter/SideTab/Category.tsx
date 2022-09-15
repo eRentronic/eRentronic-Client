@@ -8,7 +8,9 @@ export function Category({ categoryLists, title }: TYPE.CategoryProps) {
   const [viewMore, setViewMore] = useState(false);
 
   const itemLists = viewMore ? categoryLists : categoryLists.slice(0, 2);
-  const items = itemLists.map(({ name }) => <S.List>{name}</S.List>);
+  const items = itemLists.map(({ name, id }) => (
+    <S.List key={id}>{name}</S.List>
+  ));
 
   return (
     <>
@@ -24,7 +26,7 @@ export function Category({ categoryLists, title }: TYPE.CategoryProps) {
       <S.CategoryList isDisplay={isClicked}>
         {items}
         <S.ViewMoreBtn
-          onClickHandler={() => {
+          onClick={() => {
             setViewMore(!viewMore);
           }}
           isDisplay={viewMore}

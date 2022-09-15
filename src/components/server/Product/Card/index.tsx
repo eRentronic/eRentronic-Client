@@ -132,8 +132,8 @@ export function Card({ productId }: CardProps) {
     0,
   );
 
-  const saleLabels = discountInfos[productId].map(({ title }) => {
-    return <SaleLabel title={title} />;
+  const saleLabels = discountInfos[productId].map(({ title, id }) => {
+    return <SaleLabel key={id} title={title} />;
   });
 
   return (

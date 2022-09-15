@@ -58,14 +58,14 @@ export function Purchase() {
     return <>에러</>;
   }
 
-  const optionLists = data?.keyboardSwitches.map(switchOption => (
+  const optionLists = data?.keyboardSwitches.map(({ id, name }) => (
     <S.Option
-      key={switchOption.id}
+      key={id}
       onClick={() => {
-        setOptions({ ...options, switch: switchOption.name });
+        setOptions({ ...options, switch: name });
       }}
     >
-      {switchOption.name}
+      {name}
     </S.Option>
   ));
 

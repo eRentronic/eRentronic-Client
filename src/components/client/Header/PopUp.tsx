@@ -8,7 +8,11 @@ import * as Types from './popUp.types';
 export function PopUp({ title, options }: Types.PopUpProps) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const MenuList = options.map(option => <Text as="li">{option}</Text>);
+  const MenuList = options.map(option => (
+    <Text key={option} as="li">
+      {option}
+    </Text>
+  ));
   window.addEventListener('click', () => {
     if (!isOpen) {
       return;

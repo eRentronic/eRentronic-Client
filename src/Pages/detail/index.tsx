@@ -23,7 +23,7 @@ export function Detail() {
   const param = new URLSearchParams(location.search);
   const productID = param.get('id');
 
-  const detailPath = `${process.env.MAIN_PRODUCTS}/${productID}`;
+  const detailPath = `${process.env.PRODUCT}/${productID}`;
   // const recommendPath = `${process.env.MAIN_PRODUCTS}/${productID}/recommendations`;
 
   const { data } = useQuery<API.ProductDetail, AxiosError>(
@@ -56,8 +56,8 @@ export function Detail() {
             </S.SlideBtnsWrap>
           </S.ImgSlide>
           <S.SmallImgs>
-            {data!.keyboardImages.map((el: image) => {
-              return <S.SmallImg key={el.id} src={el.imageUrl} />;
+            {data!.keyboardImages.map(({ id, imageUrl }) => {
+              return <S.SmallImg key={id} src={imageUrl} />;
             })}
           </S.SmallImgs>
           <S.BtnsWrap>
@@ -105,13 +105,9 @@ export function Detail() {
         </S.InfoRight>
         <Purchase />
       </S.InfoWrap>
-      {data!.keyboardInfoImages.map((info: image) => {
+      {data!.keyboardInfoImages.map(({ id, imageUrl }) => {
         return (
-          <S.DetailInfoImg
-            key={info.id}
-            src={info.imageUrl}
-            showDetail={showDetail}
-          />
+          <S.DetailInfoImg key={id} src={imageUrl} showDetail={showDetail} />
         );
       })}
 
