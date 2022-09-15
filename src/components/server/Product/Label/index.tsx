@@ -26,5 +26,5 @@ const StyledLabel = styled.div<SaleLabelProps>`
       ? theme.pallete.secondary
       : 'none'};
   border-radius: 999999px;
-  padding: 6px;
+  padding: 4px;
 `;

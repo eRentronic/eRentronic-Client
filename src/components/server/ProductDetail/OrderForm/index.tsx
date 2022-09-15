@@ -47,7 +47,7 @@ export function Purchase() {
   const param = new URLSearchParams(location.search);
   const productID = param.get('id');
 
-  const detailPath = `${process.env.MAIN_PRODUCTS}/${productID}`;
+  const detailPath = `${process.env.PRODUCT}/${productID}`;
   // const recommendPath = `${process.env.MAIN_PRODUCTS}/${productID}/recommendations`;
   // 서버 구현중
   const { data } = useQuery<API.ProductDetail, AxiosError>(['getInfos'], () =>

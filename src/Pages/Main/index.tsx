@@ -12,9 +12,9 @@ import { MainInput } from '@/components/server/Search';
 import * as S from './style';
 
 const getMainProducts = async () => {
-  const result = await fetch(
-    `${process.env.MAIN_PRODUCTS}?page=2&size=12`,
-  ).then(data => data.json());
+  const result = await fetch(`${process.env.MAIN_PRODUCTS}`).then(data =>
+    data.json(),
+  );
   return result;
 };
 
@@ -34,7 +34,7 @@ export function Main() {
       },
     },
   );
-  const mainContents = ID?.map(id => <Card productId={id} />);
+  const mainContents = ID?.map(id => <Card key={id} productId={id} />);
 
   return (
     <S.Wrapper>

@@ -4,6 +4,9 @@ import { Text } from '@/components/common';
 import { StyledTextProps } from '@/components/common/Text/types';
 
 export const StyledCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 100%;
   height: 100%;
   position: relative;
@@ -14,8 +17,7 @@ export const Wrapper = styled.div`
   flex-direction: column;
   padding: 10px;
   width: 25%;
-  /* overflow: hidden; */
-  max-height: 200px;
+  max-height: 235px;
 `;
 
 export const ThumbnailContainer = styled.figure`
@@ -50,6 +52,7 @@ export const Brand = styled(Text)`
 
 export const Labels = styled.div`
   display: flex;
+  gap: 3px;
   padding: 10px 0;
   border-bottom: 0.5px solid ${({ theme }) => theme.pallete.grey5};
 `;
@@ -73,7 +76,7 @@ export const DiscountRate = styled(Text)``;
 
 export const ProductInfoContainer = styled.section`
   display: flex;
-
+  box-sizing: border-box;
   flex-direction: column;
   justify-content: space-between;
 `;
