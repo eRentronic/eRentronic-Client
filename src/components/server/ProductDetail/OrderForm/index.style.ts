@@ -25,7 +25,7 @@ export const PurchaseWrap = styled.div<{ isClicked: boolean }>`
   width: 50%;
   height: 80%;
   background: ${({ theme }) => theme.pallete.normalBg};
-  padding: 20px;
+  padding: 10px;
   gap: 30px;
 `;
 
@@ -143,7 +143,8 @@ export const PlusBtn = styled(AmountBtn)``;
 export const UserInfo = styled.div`
   width: 100%;
   height: 150px;
-  border: 1px solid ${({ theme }) => theme.pallete.grey3};
+  border: 1px solid ${({ theme }) => theme.pallete.grey4};
+  border-radius: 5px;
   padding: 3px;
   display: flex;
   flex-direction: column;
@@ -169,9 +170,12 @@ export const Address1 = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  height: 20px;
+  height: 22px; // Address2랑 똑같이 20px로 했는데 크기가 작음. input 여백 설정이 남아있는듯
   border: 1px solid ${({ theme }) => theme.pallete.grey3};
   border-radius: 3px;
+  font-size: 10px;
+  padding-left: 5px;
+  background: ${({ theme }) => theme.pallete.white};
 `;
 export const Address2 = styled.input`
   padding: 0;
@@ -179,6 +183,7 @@ export const Address2 = styled.input`
   border: 1px solid ${({ theme }) => theme.pallete.grey3};
   border-radius: 3px;
   font-size: 10px;
+  padding-left: 5px;
 `;
 export const PriceAndButton = styled.div`
   width: 100%;
