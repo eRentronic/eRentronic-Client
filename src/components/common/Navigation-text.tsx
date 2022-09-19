@@ -1,7 +1,9 @@
 import { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 import { Text } from './Text';
+import { TextProps } from './Text/types';
 
 type CautionProps = {
   children: ReactNode;
@@ -21,9 +23,13 @@ export function Caution({ children, linkPath, size }: CautionProps) {
 
   return (
     <Link to={linkPath}>
-      <Text typography={TextSize} color="grey4">
+      <LinkText typography={TextSize} color="grey4">
         {children}
-      </Text>
+      </LinkText>
     </Link>
   );
 }
+
+const LinkText = styled(Text)<TextProps<'span'>>`
+  cursor: pointer;
+`;
