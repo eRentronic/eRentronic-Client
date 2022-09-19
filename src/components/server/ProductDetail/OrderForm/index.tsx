@@ -70,7 +70,7 @@ export function Purchase() {
       setOptions(defaultOptions);
       setAddress(defaultAddress);
       setOrderResponse(defaultOrderResponse);
-      setIsDisplay(false);
+      setIsClicked(false);
     }, 2000);
   }, [orderResponse]);
 

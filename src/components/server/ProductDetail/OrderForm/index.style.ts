@@ -129,7 +129,6 @@ export const DetailOptionBtn = styled.button`
 export const OptionList = styled.ul<{ isDisplay: boolean }>`
   position: absolute;
   left: 20%;
-
   display: ${({ isDisplay }) => (isDisplay ? 'flex' : 'none')};
   border: 1px solid black;
   width: fit-content;

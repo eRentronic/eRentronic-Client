@@ -39,7 +39,6 @@ export function Main() {
   return (
     <S.Wrapper>
       <S.StyledMain>
-        <S.SearchSection>여기는</S.SearchSection>
         <MainInput />
         <S.MainContents>{mainContents}</S.MainContents>
       </S.StyledMain>

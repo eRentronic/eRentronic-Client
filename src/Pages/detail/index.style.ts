@@ -11,12 +11,14 @@ export const DetailWrap = styled.div`
   padding: 42px;
   margin: 0 auto;
 `;
+
 export const Title = styled(Text)`
   width: 100%;
   font-weight: 700;
   font-size: 32px;
   margin-bottom: 30px;
 `;
+
 export const InfoWrap = styled.div`
   width: 100%;
   display: flex;
@@ -24,11 +26,13 @@ export const InfoWrap = styled.div`
   gap: 30px;
   margin-bottom: 50px;
 `;
+
 export const InfoLeft = styled.div`
   width: 370px;
   display: flex;
   flex-direction: column;
 `;
+
 export const ImgSlide = styled.div`
   width: 100%;
   position: relative;
@@ -37,10 +41,12 @@ export const ImgSlide = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
 export const SlideImg = styled.img`
   width: 100%;
   height: 100%;
 `;
+
 export const SlideBtnsWrap = styled.div`
   position: absolute;
   top: 45%;
@@ -58,10 +64,12 @@ export const SmallImgs = styled.div`
   display: flex;
   gap: 10px;
 `;
+
 export const SmallImg = styled.img`
   width: 100px;
   height: 100%;
 `;
+
 export const BtnsWrap = styled.div`
   width: 100%;
   height: 56px;
@@ -69,6 +77,7 @@ export const BtnsWrap = styled.div`
   display: flex;
   gap: 32px;
 `;
+
 export const InfoBtn = styled.button`
   width: 150px;
   height: 100%;
@@ -80,8 +89,11 @@ export const InfoBtn = styled.button`
   border-radius: 10px;
   background: ${({ theme }) => theme.pallete.primary};
 `;
+
 export const BtnText = styled(Text)``;
+
 export const ReviewBtn = styled(InfoBtn)``;
+
 export const InfoRight = styled.div`
   width: 390px;
   padding: 30px 15px;
@@ -90,12 +102,14 @@ export const InfoRight = styled.div`
   align-items: center;
   gap: 20px;
 `;
+
 export const Info = styled.div`
   width: 50%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
+
 export const DetailInfoWrap = styled.div`
   width: 100%;
   height: 250px;
@@ -103,20 +117,26 @@ export const DetailInfoWrap = styled.div`
   flex-direction: column;
   gap: 15px;
 `;
+
 const DetailContent = styled(Text)`
   color: ${({ theme }) => theme.pallete.normalFont};
   display: flex;
   /* justify-content: space-between; */
 `;
+
 export const DetailStatus = styled(Text)`
   color: ${({ theme }) => theme.pallete.normalFont};
   display: flex;
   justify-content: center;
 `;
 export const DetailTitle = styled(DetailContent)``;
+
 export const Price = styled(DetailContent)``;
+
 export const RentalPrice = styled(DetailContent)``;
+
 export const Switches = styled(DetailContent)``;
+
 export const RentalBtn = styled.button`
   width: 90%;
   height: 56px;
@@ -126,27 +146,33 @@ export const RentalBtn = styled.button`
   align-items: center;
   border-radius: 10px;
 `;
+
 export const DecisionBtns = styled.div`
   width: 100%;
   display: flex;
   gap: 30px;
 `;
+
 export const BuyBtn = styled(RentalBtn)``;
+
 export const DetailInfoImg = styled.img<{ showDetail: boolean }>`
   display: ${({ showDetail }) => (showDetail ? 'block' : 'none')};
   width: 100%;
 `;
+
 export const MoreItemsTitle = styled.div`
   width: 100%;
   font-weight: 600;
   margin: 30px 0;
 `;
+
 export const MoreItems = styled.div`
   width: 100%;
   display: flex;
   gap: 20px;
   height: 130px;
 `;
+
 export const ExtraItem = styled.img`
   width: 20%;
   height: 100%;
