@@ -1,7 +1,6 @@
-import { useNavigate } from 'react-router-dom';
-
 import { Icon } from '@/components/common';
 import { IconTypes } from '@/components/common/Icon/types';
+import { Logo } from '@/components/common/Logo';
 import { defaultPopUpOpenState } from '@/recoils/popUp/popUp';
 
 import * as S from './index.styles';
@@ -30,15 +29,9 @@ const NAV_CONTENTS = NAV_DATA_LIST.map(({ title, options, id }) => (
 ));
 
 export function Header() {
-  const navigate = useNavigate();
-
-  const onClickLogo = () => {
-    navigate('/');
-  };
-
   return (
     <S.Layout>
-      <S.Logo onClick={onClickLogo}>eRentronic</S.Logo>
+      <Logo size="small" destination="/" />
       <S.ContentsLayOut>
         <S.NavLeft>{NAV_CONTENTS}</S.NavLeft>
         <S.NavRight>{UserIcons}</S.NavRight>
