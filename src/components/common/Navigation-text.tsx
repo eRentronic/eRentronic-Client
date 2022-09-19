@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 import { Text } from './Text';
 
 type CautionProps = {
-  Children: ReactNode;
+  children: ReactNode;
   linkPath: string;
   size: 'large' | 'medium' | 'small';
 };
 
-export function Caution({ Children, linkPath, size }: CautionProps) {
+export function Caution({ children, linkPath, size }: CautionProps) {
   const TextSize =
     size === 'large'
       ? 'Bold'
@@ -22,7 +22,7 @@ export function Caution({ Children, linkPath, size }: CautionProps) {
   return (
     <Link to={linkPath}>
       <Text typography={TextSize} color="grey4">
-        {Children}
+        {children}
       </Text>
     </Link>
   );
