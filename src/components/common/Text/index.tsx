@@ -10,6 +10,7 @@ const Text = <incomeElementType extends ElementType = 'span'>(
     onClick,
     as,
     color,
+    styles,
     ...props
   }: TextProps<incomeElementType>,
   ref: Ref<any>,
@@ -24,6 +25,7 @@ const Text = <incomeElementType extends ElementType = 'span'>(
       typography={typography}
       color={color}
       onClick={onClick}
+      styles={styles}
     >
       {props.children}
     </StyledText>

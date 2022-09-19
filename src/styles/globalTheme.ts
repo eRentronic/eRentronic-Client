@@ -8,6 +8,27 @@ const typographyContent = {
   Thin: { weight: 100, size: '10px' },
 };
 
+const globalTheme: DefaultTheme = {
+  pallete: {
+    primary: '#1DC078',
+    secondary: '#3298dc',
+    warning: '#ff5b16',
+    grey1: '#20232a',
+    grey2: '#333333',
+    grey3: '#828282',
+    grey4: '#BDBDBD',
+    grey5: '#E0E0E0',
+    grey6: '#F5F5F7',
+    black: '#010101',
+    white: '#FFFFFF',
+    normalBg: '#ffffff',
+    normalFont: '#010101',
+  },
+  typography: {
+    ...typographyContent,
+  },
+};
+
 const lightMode: DefaultTheme = {
   pallete: {
     primary: '#1DC078',
@@ -47,4 +68,4 @@ const darkMode: DefaultTheme = {
   },
   typography: { ...typographyContent },
 };
-export { lightMode, darkMode };
+export { lightMode, darkMode, globalTheme };
