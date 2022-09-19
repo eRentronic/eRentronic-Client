@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { Text } from '@/components/common';
+import { TextProps } from '@/components/common/Text/types';
 
 export const Dimmed = styled.div<{ isClicked: boolean }>`
   display: ${({ isClicked }) => (isClicked ? 'flex' : 'none')};
@@ -35,7 +36,7 @@ export const ProductDetail = styled.section`
   justify-content: space-between;
 `;
 
-export const DiscountRate = styled(Text)``;
+export const DiscountRate = styled(Text)<TextProps<'span'>>``;
 
 export const InfoWrap = styled.div`
   width: 100%;
@@ -88,12 +89,12 @@ export const PriceCompare = styled.div`
   gap: 5px;
 `;
 
-export const OriginPrice = styled(Text)`
+export const OriginPrice = styled(Text)<TextProps<'del'>>`
   margin-bottom: 10px;
   font-weight: 500;
 `;
 
-export const DiscountedPrice = styled(Text)``;
+export const DiscountedPrice = styled(Text)<TextProps<'span'>>``;
 
 export const SelectWrap = styled.section`
   width: 100%;
@@ -167,7 +168,8 @@ export const UserInfo = styled.div`
   flex-direction: column;
   gap: 10px;
 `;
-export const UserInfoTitle = styled(Text)`
+
+export const UserInfoTitle = styled(Text)<TextProps<'span'>>`
   font-size: 15px;
 `;
 export const UserInfoContent = styled(Text)`

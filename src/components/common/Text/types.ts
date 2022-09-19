@@ -10,7 +10,6 @@ export type TextBaseProps = {
   typography?: keyof typeof globalTheme.typography;
   color?: keyof typeof globalTheme.pallete;
   className?: string;
-  onClick: MouseEventHandler;
   styles?: CSSProperties;
 };
 

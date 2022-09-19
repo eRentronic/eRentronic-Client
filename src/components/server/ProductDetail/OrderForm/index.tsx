@@ -193,8 +193,8 @@ export function Purchase() {
               <S.PriceCompare>
                 {!!data.discountInfoResponse.discounts.length && (
                   <S.OriginPrice
-                    forwardedAs="del"
                     styles={{ color: 'grey', fontSize: '10px' }}
+                    forwardedAs="del"
                   >
                     {data.product.price.toLocaleString()}
                   </S.OriginPrice>
