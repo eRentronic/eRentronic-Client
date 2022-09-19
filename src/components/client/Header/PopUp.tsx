@@ -1,15 +1,24 @@
-import { useRecoilState } from 'recoil';
+import { useState } from 'react';
 
 import { Text } from '@/components/common';
-import { popUpOpenState, defaultPopUpOpenState } from '@/recoils/popUp/popUp';
 
 import * as S from './popUp.style';
 import * as Types from './popUp.types';
 
-export function PopUp({ title, options, id }: Types.PopUpProps) {
-  const [isOpen, setIsOpen] = useRecoilState(popUpOpenState);
+export function PopUp({ title, options }: Types.PopUpProps) {
+  const [isOpen, setIsOpen] = useState(false);
 
-  const MenuList = options.map(option => <Text as="li">{option}</Text>);
+  const MenuList = options.map(option => (
+    <Text key={option} as="li">
+      {option}
+    </Text>
+  ));
+  window.addEventListener('click', () => {
+    if (!isOpen) {
+      return;
+    }
+    setIsOpen(false);
+  });
   return (
     <S.Select
       onClick={e => {
@@ -18,12 +27,12 @@ export function PopUp({ title, options, id }: Types.PopUpProps) {
     >
       <Text
         onClick={() => {
-          setIsOpen({ ...defaultPopUpOpenState, [id]: true });
+          setIsOpen(true);
         }}
       >
         {title}
       </Text>
-      <S.Menu isVisible={isOpen[id]}>{MenuList}</S.Menu>
+      <S.Menu isVisible={isOpen}>{MenuList}</S.Menu>
     </S.Select>
   );
 }

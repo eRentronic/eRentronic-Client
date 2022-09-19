@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import * as API from '@/apis/mainProducts';
 import { SaleLabel } from '@/components/server/Product/Label';
@@ -31,7 +32,11 @@ type normalizedProductType = {
   salePrice: { [key: number]: number };
   saleRentalPrice: { [key: number]: number };
   discountInfos: {
-    [key: number]: { id: number; title: string; saleRate: string }[];
+    [key: number]: {
+      id: number;
+      title: '이벤트 할인' | '신제품 할인';
+      saleRate: string;
+    }[];
   };
 };
 
@@ -102,6 +107,7 @@ export function Card({ productId }: CardProps) {
       },
     },
   );
+  const navigate = useNavigate();
 
   const {
     titles,
@@ -126,6 +132,10 @@ export function Card({ productId }: CardProps) {
     0,
   );
 
+  const saleLabels = discountInfos[productId].map(({ title, id }) => {
+    return <SaleLabel key={id} title={title} />;
+  });
+
   return (
     <S.Wrapper
       onMouseEnter={() => {
@@ -135,35 +145,37 @@ export function Card({ productId }: CardProps) {
         setIsHover(false);
       }}
     >
-      <S.StyledCard>
+      <S.StyledCard
+        onClick={() => {
+          navigate(`detail?id=${productId}`);
+        }}
+      >
         <Content isDisplay={isHover} content={contents[productId]} />
         <S.ThumbnailContainer>
           <S.Thumbnail alt="제품 썸네일" src={images[productId]} />
         </S.ThumbnailContainer>
-        <S.Labels>
-          <SaleLabel isEventSale={false} isBrandNewSale />
-        </S.Labels>
-        <S.Title typography="Regular">{titles[productId]}</S.Title>
-        <S.Brand forwardedAs="h4" color="grey3" typography="Light">
-          {brandName}
-        </S.Brand>
-        <S.PriceInfo>
-          <S.DiscountInfo>
-            <S.CurrentPrice color="secondary">
-              {prices[productId]}
-            </S.CurrentPrice>
-            <S.SaledPrice typography="Thin" color="grey3" forwardedAs="del">
-              {salePrice[productId]}
-            </S.SaledPrice>
-          </S.DiscountInfo>
-          <S.DiscountRate color="warning">{totalSaleRate}%</S.DiscountRate>
-        </S.PriceInfo>
-        <S.PriceInfo>
-          <S.SaledPrice typography="Thin" color="grey3" forwardedAs="del">
-            세일가
-          </S.SaledPrice>
-          <S.DiscountRate color="warning">{totalSaleRate}%</S.DiscountRate>
-        </S.PriceInfo>
+        <S.ProductInfoContainer>
+          <S.Labels>{saleLabels}</S.Labels>
+          <S.Title typography="Regular">{titles[productId]}</S.Title>
+          <S.Brand forwardedAs="h4" color="grey3" typography="Light">
+            {brandName}
+          </S.Brand>
+          <S.PriceInfo>
+            <S.DiscountInfo>
+              <S.CurrentPrice color="secondary">
+                {prices[productId]}
+              </S.CurrentPrice>
+              {!!discountInfos[productId].length && (
+                <S.SaledPrice typography="Thin" color="grey3" forwardedAs="del">
+                  {salePrice[productId]}
+                </S.SaledPrice>
+              )}
+            </S.DiscountInfo>
+            {!!discountInfos[productId].length && (
+              <S.DiscountRate color="warning">{totalSaleRate}%</S.DiscountRate>
+            )}
+          </S.PriceInfo>
+        </S.ProductInfoContainer>
       </S.StyledCard>
     </S.Wrapper>
   );

@@ -4,8 +4,9 @@ import * as S from './index.style';
 
 export function SideTab() {
   const categoryLists = Object.keys(DATA.DUMMY_SIDEBAR_MODEL);
-  const test = categoryLists.map(key => (
+  const categories = categoryLists.map(key => (
     <Category
+      key={key}
       categoryLists={DATA.DUMMY_SIDEBAR_MODEL[key]}
       title={DATA.CATEGORY_TITLES[key]}
     />
@@ -13,7 +14,7 @@ export function SideTab() {
 
   return (
     <S.Wrapper>
-      <S.CategoryWrapper>{test}</S.CategoryWrapper>
+      <S.CategoryWrapper>{categories}</S.CategoryWrapper>
     </S.Wrapper>
   );
 }

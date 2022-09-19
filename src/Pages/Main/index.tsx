@@ -1,11 +1,13 @@
-import { useQuery } from '@tanstack/react-query';
-import { useResetRecoilState } from 'recoil';
+import {
+  useQuery,
+  useInfiniteQuery,
+  InfiniteData,
+} from '@tanstack/react-query';
 
 import * as API from '@/apis/mainProducts';
-import { SideTab } from '@/components/Filter/SideTab/SideTab';
-import { MainInput } from '@/components/Search/MainInput';
+import { SideTab } from '@/components/server/Filter/SideTab';
 import { Card } from '@/components/server/Product/Card/';
-import { popUpOpenState } from '@/recoils/popUp/popUp';
+import { MainInput } from '@/components/server/Search';
 
 import * as S from './style';
 
@@ -22,7 +24,6 @@ const getIds = (productData: API.ContentType[]) => {
 };
 
 export function Main() {
-  const closeWholePopUp = useResetRecoilState(popUpOpenState);
   const { data: ID } = useQuery<API.MainProductsType, Error, number[]>(
     ['productQueryKey'],
     getMainProducts,
@@ -33,12 +34,11 @@ export function Main() {
       },
     },
   );
-  const mainContents = ID?.map(id => <Card productId={id} />);
+  const mainContents = ID?.map(id => <Card key={id} productId={id} />);
 
   return (
-    <S.Wrapper onClick={closeWholePopUp}>
+    <S.Wrapper>
       <S.StyledMain>
-        <S.SearchSection>여기는</S.SearchSection>
         <MainInput />
         <S.MainContents>{mainContents}</S.MainContents>
       </S.StyledMain>
