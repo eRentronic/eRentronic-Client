@@ -4,20 +4,30 @@ import { Text } from '@/components/common/Text';
 
 import { LogoProps } from './types';
 
+const LOGO_SIZE = { small: '40px', large: '50px' };
+const LOGO_MARGIN = { small: '30px', large: '0' };
+
 export function Logo({ size, destination }: LogoProps) {
-  const fontSize = size === 'small' ? '40px' : '50px';
   const navigate = useNavigate();
-  const gotoHome = () => {
+
+  const logoSize = LOGO_SIZE[size];
+  const logoMargin = LOGO_MARGIN[size];
+
+  const gotoHome = (e: React.MouseEvent) => {
+    e.preventDefault();
+
     if (destination) {
       navigate(destination);
     }
   };
+
   return (
     <Text
+      as="a"
+      typography="Black"
       styles={{
-        fontWeight: `900`,
-        fontSize: `${fontSize}`,
-        marginRight: `${size === 'small' ? '30px' : '0'}`,
+        fontSize: logoSize,
+        marginRight: logoMargin,
         cursor: 'pointer',
       }}
       onClick={gotoHome}

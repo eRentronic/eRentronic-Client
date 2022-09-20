@@ -1,4 +1,4 @@
 export type LogoProps = {
-  size: string;
+  size: 'small' | 'large';
   destination?: string;
 };
