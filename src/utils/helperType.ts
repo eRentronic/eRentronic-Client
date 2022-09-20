@@ -11,3 +11,5 @@ export type CombineElementProps<T extends ElementType, K = unknown> = Combine<
 export type OverRidableProps<T extends ElementType, K = unknown> = {
   as?: T;
 } & CombineElementProps<T, K>;
+
+export type ValueOf<T> = T[keyof T];
