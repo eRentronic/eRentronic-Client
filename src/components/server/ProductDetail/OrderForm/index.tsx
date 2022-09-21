@@ -7,9 +7,13 @@ import { useRecoilState } from 'recoil';
 import * as API from '@/apis/mainProducts';
 import { Text } from '@/components/common';
 import { Caution } from '@/components/common/Caution';
+import { CautionType } from '@/components/common/Caution/types';
 import * as S from '@/components/server/ProductDetail/OrderForm/index.style';
 import { modalStore } from '@/recoils/modal/modal';
+import { Dig } from '@/utils/helperType';
 import { stopEventDelivery } from '@/utils/utils';
+
+type CautionMessage = Dig<CautionType, 'message'>;
 
 const getInfos = async (path: string) => {
   const result = await axios.get<API.ProductDetail>(path);
@@ -54,8 +58,7 @@ export function Purchase() {
   const [orderResponse, setOrderResponse] = useState(defaultOrderResponse);
   const [address, setAddress] = useState(defaultAddress);
   const [options, setOptions] = useState(defaultOptions);
-  const [caution, setCaution] = useState(false);
-  const [errMessage, setErrMessage] = useState('');
+  const [errMessage, setErrMessage] = useState<CautionMessage | ''>('');
   const location = useLocation();
   const param = new URLSearchParams(location.search);
   const productID = param.get('id');
@@ -173,12 +176,12 @@ export function Purchase() {
   const setAddressErrorMsg = (e: React.ChangeEvent) => {
     const { value } = e.target as HTMLInputElement;
     if (value.length < 5) {
-      setCaution(true);
       setErrMessage('wrongAddress');
     } else {
-      setCaution(false);
+      setErrMessage('');
     }
   };
+
   const content = '주소';
   return (
     <S.Dimmed isClicked={isClicked} onClick={closeModal}>
@@ -275,7 +278,7 @@ export function Purchase() {
                 setAddressErrorMsg(e);
               }}
             />
-            {caution && <Caution content={content} message={errMessage} />}
+            {errMessage && <Caution content={content} message={errMessage} />}
           </S.UserInfo>
         )}
         <S.PriceAndButton>

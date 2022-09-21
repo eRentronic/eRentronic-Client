@@ -5,8 +5,8 @@ export type CautionType = {
     | 'tooLong'
     | 'wrongChar'
     | 'alreadyExist'
-    | 'wrongAddress'
-    | '';
+    | 'wrongAddress';
+
   // TODO: keyof typeof 로 해보기!
 };
 export type MessageType = {
