@@ -6,6 +6,7 @@ import { useRecoilState } from 'recoil';
 
 import * as API from '@/apis/mainProducts';
 import { Text } from '@/components/common';
+import { Caution } from '@/components/common/Caution';
 import * as S from '@/components/server/ProductDetail/OrderForm/index.style';
 import { modalStore } from '@/recoils/modal/modal';
 import { stopEventDelivery } from '@/utils/utils';
@@ -53,7 +54,8 @@ export function Purchase() {
   const [orderResponse, setOrderResponse] = useState(defaultOrderResponse);
   const [address, setAddress] = useState(defaultAddress);
   const [options, setOptions] = useState(defaultOptions);
-
+  const [caution, setCaution] = useState(false);
+  const [errMessage, setErrMessage] = useState('');
   const location = useLocation();
   const param = new URLSearchParams(location.search);
   const productID = param.get('id');
@@ -168,6 +170,16 @@ export function Purchase() {
     }
   };
 
+  const setAddressErrorMsg = (e: React.ChangeEvent) => {
+    const { value } = e.target as HTMLInputElement;
+    if (value.length < 5) {
+      setCaution(true);
+      setErrMessage('wrongAddress');
+    } else {
+      setCaution(false);
+    }
+  };
+  const content = '주소';
   return (
     <S.Dimmed isClicked={isClicked} onClick={closeModal}>
       <S.PurchaseWrap
@@ -260,8 +272,10 @@ export function Purchase() {
               placeholder="상세주소를 입력해주세요"
               onChange={e => {
                 setAddress({ ...address, address2: e.target.value });
+                setAddressErrorMsg(e);
               }}
             />
+            {caution && <Caution content={content} message={errMessage} />}
           </S.UserInfo>
         )}
         <S.PriceAndButton>
