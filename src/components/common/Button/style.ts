@@ -1,3 +1,26 @@
 import styled from 'styled-components';
 
-export const StyledButton = styled.button``;
+import * as TYPE from '@/components/common/Button/types';
+
+const DEFAULT_BUTTON_DESIGN = {
+  width: { large: '200px', medium: '150px', small: '90px' },
+  height: { large: '60px', medium: '45px', small: '30px' },
+  radius: { large: '10px', medium: '7px', small: '5px' },
+};
+
+export const StyledButton = styled.button<TYPE.StyledButtonProps>(
+  ({ theme, color = 'primary', size = 'medium' }) => ({
+    backgroundColor: theme.pallete[color],
+    width: DEFAULT_BUTTON_DESIGN.width[size],
+    minHeight: DEFAULT_BUTTON_DESIGN.height[size],
+
+    wordBreak: 'break-word',
+    borderRadius: DEFAULT_BUTTON_DESIGN.radius[size],
+    border: 'none',
+
+    '&:hover': {
+      transform: 'scale(0.9)',
+      transition: '0.2s',
+    },
+  }),
+);
