@@ -6,7 +6,7 @@ const DEFAULT_BUTTON_DESIGN = {
   width: { large: '200px', medium: '150px', small: '90px' },
   height: { large: '60px', medium: '45px', small: '30px' },
   radius: { large: '10px', medium: '7px', small: '5px' },
-};
+} as const;
 
 export const StyledButton = styled.button<TYPE.StyledButtonProps>(
   ({ theme, color = 'primary', size = 'medium' }) => ({

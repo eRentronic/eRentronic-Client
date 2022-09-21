@@ -23,5 +23,3 @@ function Button<imcomeElement extends ElementType = 'button'>(
 const forwardedButton = forwardRef(Button) as typeof Button;
 
 export { forwardedButton as Button };
-
-const a = <Button as="div">1</Button>;
