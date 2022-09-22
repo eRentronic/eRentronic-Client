@@ -6,9 +6,14 @@ import { useRecoilState } from 'recoil';
 
 import * as API from '@/apis/mainProducts';
 import { Text } from '@/components/common';
+import { Caution } from '@/components/common/Caution';
+import { CautionType } from '@/components/common/Caution/types';
 import * as S from '@/components/server/ProductDetail/OrderForm/index.style';
 import { modalStore } from '@/recoils/modal/modal';
+import { Dig } from '@/utils/helperType';
 import { stopEventDelivery } from '@/utils/utils';
+
+type CautionMessage = Dig<CautionType, 'message'>;
 
 const getInfos = async (path: string) => {
   const result = await axios.get<API.ProductDetail>(path);
@@ -53,7 +58,7 @@ export function Purchase() {
   const [orderResponse, setOrderResponse] = useState(defaultOrderResponse);
   const [address, setAddress] = useState(defaultAddress);
   const [options, setOptions] = useState(defaultOptions);
-
+  const [errMessage, setErrMessage] = useState<CautionMessage | ''>('');
   const location = useLocation();
   const param = new URLSearchParams(location.search);
   const productID = param.get('id');
@@ -168,6 +173,16 @@ export function Purchase() {
     }
   };
 
+  const setAddressErrorMsg = (e: React.ChangeEvent) => {
+    const { value } = e.target as HTMLInputElement;
+    if (value.length < 5) {
+      setErrMessage('wrongAddress');
+    } else {
+      setErrMessage('');
+    }
+  };
+
+  const content = '주소';
   return (
     <S.Dimmed isClicked={isClicked} onClick={closeModal}>
       <S.PurchaseWrap
@@ -193,8 +208,8 @@ export function Purchase() {
               <S.PriceCompare>
                 {!!data.discountInfoResponse.discounts.length && (
                   <S.OriginPrice
-                    forwardedAs="del"
                     styles={{ color: 'grey', fontSize: '10px' }}
+                    forwardedAs="del"
                   >
                     {data.product.price.toLocaleString()}
                   </S.OriginPrice>
@@ -260,8 +275,10 @@ export function Purchase() {
               placeholder="상세주소를 입력해주세요"
               onChange={e => {
                 setAddress({ ...address, address2: e.target.value });
+                setAddressErrorMsg(e);
               }}
             />
+            {errMessage && <Caution content={content} message={errMessage} />}
           </S.UserInfo>
         )}
         <S.PriceAndButton>

@@ -7,7 +7,6 @@ const Text = <incomeElementType extends ElementType = 'span'>(
   {
     typography,
     className,
-    onClick,
     as,
     color,
     styles,
@@ -24,14 +23,14 @@ const Text = <incomeElementType extends ElementType = 'span'>(
       className={className}
       typography={typography}
       color={color}
-      onClick={onClick}
       styles={styles}
+      {...props}
     >
       {props.children}
     </StyledText>
   );
 };
 
-const ForwardedText = forwardRef(Text);
+const ForwardedText = forwardRef(Text) as typeof Text;
 
 export { ForwardedText as Text };
