@@ -13,7 +13,7 @@ import { modalStore } from '@/recoils/modal/modal';
 import { Dig } from '@/utils/helperType';
 import { stopEventDelivery } from '@/utils/utils';
 
-type CautionMessage = Dig<CautionType, 'message'>;
+export type CautionMessage = Dig<CautionType, 'message'>;
 
 const getInfos = async (path: string) => {
   const result = await axios.get<API.ProductDetail>(path);

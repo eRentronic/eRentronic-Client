@@ -1,11 +1,26 @@
+import { useState } from 'react';
+
 import { Button, Text } from '@/components/common';
 import { Caution } from '@/components/common/Caution';
 import { Logo } from '@/components/common/Logo';
 import { NavText } from '@/components/common/Navigation-text';
 import { UserInput } from '@/components/common/UserInput';
+import { CautionMessage } from '@/components/server/ProductDetail/OrderForm';
 import * as S from '@/Pages/Login/Signin.style';
 
 export function SignIn() {
+  const [loginErr, setLoginErr] = useState<CautionMessage | ''>('');
+  const checkIdInput = (e: React.ChangeEvent) => {
+    const { value } = e.target as HTMLInputElement;
+    if (value.length <= 8) {
+      setLoginErr('tooShort');
+    } else if (value.length > 20) {
+      setLoginErr('tooLong');
+    } else {
+      setLoginErr('');
+    }
+  };
+  const ID = '아이디';
   return (
     <S.Layout>
       <S.SignInSection>
@@ -15,7 +30,9 @@ export function SignIn() {
           iconSrc="PERSON"
           iconColor="grey4"
           placeholder="아이디"
+          onChange={checkIdInput}
         />
+        {loginErr && <Caution message={loginErr} content={ID} />}
         <S.PasswordsLayout>
           <UserInput
             size="medium"
