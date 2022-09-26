@@ -2,14 +2,15 @@ import { useState } from 'react';
 
 import { Button, Text } from '@/components/common';
 import { Caution } from '@/components/common/Caution';
+import { CautionMessage } from '@/components/common/Caution/types';
 import { Logo } from '@/components/common/Logo';
 import { NavText } from '@/components/common/Navigation-text';
 import { UserInput } from '@/components/common/UserInput';
-import { CautionMessage } from '@/components/server/ProductDetail/OrderForm';
 import * as S from '@/Pages/Login/Signin.style';
 
 export function SignIn() {
   const [loginErr, setLoginErr] = useState<CautionMessage | ''>('');
+  const [passwordErr, setPasswordErr] = useState<CautionMessage | ''>('');
   const checkIdInput = (e: React.ChangeEvent) => {
     const { value } = e.target as HTMLInputElement;
     if (value.length <= 8) {
@@ -20,7 +21,11 @@ export function SignIn() {
       setLoginErr('');
     }
   };
+  const checkPasswordInput = (e: React.ChangeEvent) => {
+    const { value } = e.target as HTMLInputElement;
+  };
   const ID = '아이디';
+  const PASSWORD = '비밀번호';
   return (
     <S.Layout>
       <S.SignInSection>
@@ -40,6 +45,7 @@ export function SignIn() {
             iconColor="grey4"
             placeholder="비밀번호"
           />
+          {passwordErr && <Caution message={passwordErr} content={PASSWORD} />}
           <UserInput size="medium" placeholder="비밀번호 재입력" />
         </S.PasswordsLayout>
 
