@@ -55,7 +55,6 @@ export function Purchase() {
   const [orderResponse, setOrderResponse] = useState(defaultOrderResponse);
   const [address, setAddress] = useState(defaultAddress);
   const [options, setOptions] = useState(defaultOptions);
-  const [errMessage, setErrMessage] = useState<CautionMessage | ''>('');
   const location = useLocation();
   const param = new URLSearchParams(location.search);
   const productID = param.get('id');
@@ -170,14 +169,10 @@ export function Purchase() {
     }
   };
 
-  const setAddressErrorMsg = (e: React.ChangeEvent) => {
-    const { value } = e.target as HTMLInputElement;
-    if (value.length < 5) {
-      setErrMessage('wrongAddress');
-    } else {
-      setErrMessage('');
-    }
-  };
+  const setAddressErrorMsg = (inputValue: string) =>
+    inputValue.length < 5 ? 'wrongAddress' : '';
+
+  const errMessage = setAddressErrorMsg(address.address2);
 
   const content = '주소';
   return (
@@ -272,7 +267,6 @@ export function Purchase() {
               placeholder="상세주소를 입력해주세요"
               onChange={e => {
                 setAddress({ ...address, address2: e.target.value });
-                setAddressErrorMsg(e);
               }}
             />
             {errMessage && <Caution content={content} message={errMessage} />}
