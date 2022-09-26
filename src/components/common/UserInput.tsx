@@ -13,7 +13,6 @@ type UserInputBaseProps = {
   size?: 'small' | 'medium' | 'large';
   iconSrc?: keyof typeof ICONS;
   iconColor?: keyof typeof globalTheme.pallete;
-  onClick?: number;
 };
 
 type UserInputProps<incomeElementType extends ElementType> = OverRidableProps<

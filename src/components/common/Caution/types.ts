@@ -1,3 +1,5 @@
+import { Dig } from '@/utils/helperType';
+
 export type CautionType = {
   content: '아이디' | '비밀번호' | '주소';
   message:
@@ -12,3 +14,5 @@ export type CautionType = {
 export type MessageType = {
   [key: string]: string;
 };
+
+export type CautionMessage = Dig<CautionType, 'message'>;

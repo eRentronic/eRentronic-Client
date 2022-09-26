@@ -7,13 +7,10 @@ import { useRecoilState } from 'recoil';
 import * as API from '@/apis/mainProducts';
 import { Text } from '@/components/common';
 import { Caution } from '@/components/common/Caution';
-import { CautionType } from '@/components/common/Caution/types';
+import { CautionMessage } from '@/components/common/Caution/types';
 import * as S from '@/components/server/ProductDetail/OrderForm/index.style';
 import { modalStore } from '@/recoils/modal/modal';
-import { Dig } from '@/utils/helperType';
 import { stopEventDelivery } from '@/utils/utils';
-
-type CautionMessage = Dig<CautionType, 'message'>;
 
 const getInfos = async (path: string) => {
   const result = await axios.get<API.ProductDetail>(path);

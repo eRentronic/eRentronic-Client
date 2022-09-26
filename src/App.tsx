@@ -11,6 +11,8 @@ import { Main } from '@/Pages/Main';
 import { DarkModeStore } from '@/recoils/dark/dark';
 import { darkMode, lightMode } from '@/styles/globalTheme';
 
+import { SignIn } from './Pages/Login/SignIn';
+
 export function App() {
   const isDarkmode = useRecoilValue(DarkModeStore);
 
@@ -19,7 +21,8 @@ export function App() {
       <Suspense fallback={<Spinner />}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<LoginPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signIn" element={<SignIn />} />
             <Route element={<MainLayout />}>
               <Route path="/Main" element={<Main />} />
               <Route path="/detail" element={<Detail />} />
