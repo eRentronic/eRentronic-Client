@@ -15,6 +15,7 @@ const getMainProducts = async () => {
   const result = await fetch(`${process.env.MAIN_PRODUCTS}`).then(data =>
     data.json(),
   );
+
   return result;
 };
 

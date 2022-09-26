@@ -19,7 +19,7 @@ export function App() {
       <Suspense fallback={<Spinner />}>
         <BrowserRouter>
           <Routes>
-            <Route path="/login" element={<LoginPage />} />
+            <Route path="/" element={<LoginPage />} />
             <Route element={<MainLayout />}>
               <Route path="/Main" element={<Main />} />
               <Route path="/detail" element={<Detail />} />
