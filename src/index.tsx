@@ -24,6 +24,7 @@ const queryClient = new QueryClient({
     },
   },
 });
+
 root.render(
   <React.StrictMode>
     <RecoilRoot>

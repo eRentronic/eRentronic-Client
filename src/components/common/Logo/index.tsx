@@ -10,7 +10,7 @@ const LOGO_MARGIN = { small: '0', medium: '30px', large: '0' };
 
 // TODO: 빈 패스일 경우 막을것인가 말것인가
 
-export function Logo({ size, destination }: LogoProps) {
+export function Logo({ size, destination, styles }: LogoProps) {
   const logoSize = LOGO_SIZE[size];
   const logoMargin = LOGO_MARGIN[size];
 
@@ -23,13 +23,18 @@ export function Logo({ size, destination }: LogoProps) {
   };
 
   return (
-    <Link to={destination || currentPage} onClick={validLink}>
+    <Link
+      to={destination || currentPage}
+      onClick={validLink}
+      style={{ ...styles }}
+    >
       <Text
         typography="Black"
         styles={{
           fontSize: logoSize,
           marginRight: logoMargin,
           cursor: 'pointer',
+          ...styles,
         }}
       >
         eRentronic
