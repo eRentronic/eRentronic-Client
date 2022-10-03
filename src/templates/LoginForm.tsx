@@ -1,13 +1,14 @@
 import { useState, Dispatch, ChangeEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { usePostInfos } from '@/apis/api';
 import { Button, Text } from '@/components/common';
 import { Caution } from '@/components/common/Caution';
 import { CautionMessage } from '@/components/common/Caution/types';
-import { NavText } from '@/components/common/Navigation-text';
+import { NavText } from '@/components/common/Text/Navigation';
 import { UserInput } from '@/components/common/UserInput';
-import { idValid, passwordValid } from '@/service/login';
+import { useMutationPost } from '@/hooks/useMutationPost';
+import { idValid, passwordValid, nameValid } from '@/service/login';
 
 const onChangeInput =
   (setterFunc: Dispatch<string>) => (e: ChangeEvent<HTMLInputElement>) => {
@@ -34,11 +35,12 @@ const PASSWORD = '비밀번호';
 const URL = `${process.env.LOG_IN}`;
 
 export function LoginForm() {
+  const navigate = useNavigate();
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [isIdBlur, setIsIdBlur] = useState(false);
   const [isPasswordBlur, setIsPasswordBlur] = useState(false);
-  const { mutate } = usePostInfos(URL, { email: id, password });
+  const { mutate } = useMutationPost(URL, { email: id, password });
 
   const idErrorMessages = idValid(id);
   const passwordErrorMessages = passwordValid(password);
@@ -61,6 +63,11 @@ export function LoginForm() {
       isPasswordBlur &&
       passwordError && <Caution content={PASSWORD} message={passwordError} />,
   );
+
+  // const onSuccessLogin = data => {
+  //   // setterFn(data); useLocalStorage setter함수 사용하면 됨
+  //   navigate('/');
+  // };
 
   return (
     <Content>

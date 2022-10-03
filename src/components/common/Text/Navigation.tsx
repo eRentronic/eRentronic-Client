@@ -4,8 +4,9 @@ import styled from 'styled-components';
 
 import { ValueOf } from '@/utils/helperType';
 
-import { Text } from './Text';
-import { TextProps } from './Text/types';
+import { TextProps } from './types';
+
+import { Text } from '.';
 
 type CautionProps = {
   children: ReactNode;
