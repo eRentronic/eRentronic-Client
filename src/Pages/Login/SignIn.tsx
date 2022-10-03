@@ -30,13 +30,11 @@ const ID = '아이디';
 const PASSWORD = '비밀번호';
 
 export function SignIn() {
-  const { reset, addressControll, address, setDetailAddress } = useAddressApi();
+  const { addressControll, address, setDetailAddress } = useAddressApi();
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [name, setName] = useState('');
-  // const [address, setAddress] = useState('');
-  const [addressDetail, setAddressDetail] = useState('');
   const [postNum, setPostNum] = useState('');
 
   const idErrorMessages = idValid(id);
@@ -52,7 +50,7 @@ export function SignIn() {
   const onChangeConfirmPassword = onChangeInput(setPasswordConfirm);
   const onChangeName = onChangeInput(setName);
   // const onChangeAddress = onChangeInput(setAddress);
-  const onChageAddressDetail = onChangeInput(setAddressDetail);
+  const onChageAddressDetail = onChangeInput(setDetailAddress);
   const onChangePostNum = onChangeInput(setPostNum);
   return (
     <S.Layout>
@@ -69,26 +67,11 @@ export function SignIn() {
           cautionContent={ID}
           inputErrorMessages={idErrorMessages}
         />
-        <S.PasswordsLayout>
-          <SignInInput
-            inputProps={{
-              size: 'medium',
-              iconSrc: 'LOCK',
-              placeholder: PASSWORD,
-              onChange: onChangePassword,
-            }}
-            inputErrorMessages={passwordErrorMessages}
-          />
-
-          <SignInInput
-            inputProps={{
-              size: 'medium',
-              placeholder: '비밀번호 재입력',
-              onChange: onChangeConfirmPassword,
-            }}
-            inputErrorMessages={confirmPasswordErrorMessages}
-          />
-        </S.PasswordsLayout>
+        <PasswordInput
+          onChangePassword={onChangePassword}
+          onChangeConfirmPassword={onChangeConfirmPassword}
+          passwordErrorMessages={confirmPasswordErrorMessages}
+        />
 
         <SignInInput
           inputProps={{
@@ -106,7 +89,13 @@ export function SignIn() {
           value={address.address1}
           style={{ caretColor: 'transparent' }}
         />
-        <UserInput size="large" placeholder="상세주소" />
+
+        <UserInput
+          size="large"
+          placeholder="상세주소"
+          onChange={onChageAddressDetail}
+          value={address.address2}
+        />
         <UserInput size="small" placeholder="우편번호" disabled />
 
         <S.BtnLayout>
@@ -147,12 +136,60 @@ function SignInInput<incomeElements extends ElementType = 'input'>({
 
   return (
     <>
-      <UserInput
-        {...inputProps}
-        onFocus={onFocusInput}
-        onBlurInput={onBlurInput}
-      />
+      <UserInput {...inputProps} onFocus={onFocusInput} onBlur={onBlurInput} />
       {inputCaution}
     </>
+  );
+}
+
+function PasswordInput({
+  onChangePassword,
+  onChangeConfirmPassword,
+  passwordErrorMessages,
+  cautionContent,
+}: {
+  onChangePassword: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChangeConfirmPassword: (e: ChangeEvent<HTMLInputElement>) => void;
+  passwordErrorMessages: (CautionMessage | false)[];
+  cautionContent?: CautionContent;
+}) {
+  const [isInputBlur, setIsInputBlur] = useState(false);
+
+  const onFocusInput = () => {
+    setIsInputBlur(true);
+  };
+
+  const onBlurInput = () => {
+    setIsInputBlur(false);
+  };
+
+  const passwordCaution = passwordErrorMessages.map(
+    PasswordError =>
+      isInputBlur &&
+      PasswordError && (
+        <Caution content={cautionContent} message={PasswordError} />
+      ),
+  );
+
+  return (
+    <S.PasswordsLayout>
+      <UserInput
+        size="medium"
+        iconSrc="LOCK"
+        placeholder={PASSWORD}
+        onChange={onChangePassword}
+        onFocus={onFocusInput}
+        onBlur={onBlurInput}
+      />
+
+      <UserInput
+        size="medium"
+        placeholder="비밀번호 재입력"
+        onChange={onChangeConfirmPassword}
+        onFocus={onFocusInput}
+        onBlur={onBlurInput}
+      />
+      {passwordCaution}
+    </S.PasswordsLayout>
   );
 }
