@@ -15,10 +15,8 @@ type UserInputBaseProps = {
   iconColor?: keyof typeof globalTheme.pallete;
 };
 
-type UserInputProps<incomeElementType extends ElementType> = OverRidableProps<
-  incomeElementType,
-  UserInputBaseProps
->;
+export type UserInputProps<incomeElementType extends ElementType> =
+  OverRidableProps<incomeElementType, UserInputBaseProps>;
 
 type StyledInputProps = {
   inputSize?: 'small' | 'medium' | 'large';

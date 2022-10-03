@@ -1,58 +1,113 @@
-import { useState } from 'react';
+import { useState, Dispatch, ChangeEvent, ElementType } from 'react';
 
 import { Button, Text } from '@/components/common';
 import { Caution } from '@/components/common/Caution';
-import { CautionMessage } from '@/components/common/Caution/types';
+import {
+  CautionMessage,
+  CautionContent,
+} from '@/components/common/Caution/types';
 import { Logo } from '@/components/common/Logo';
-import { NavText } from '@/components/common/Navigation-text';
-import { UserInput } from '@/components/common/UserInput';
+import { UserInput, UserInputProps } from '@/components/common/UserInput';
+import { useAddressApi } from '@/hooks/useAddressApi';
 import * as S from '@/Pages/Login/Signin.style';
+import {
+  idValid,
+  nameValid,
+  passwordValid,
+  confirmPasswordValid,
+} from '@/service/login';
+
+const onChangeInput =
+  (setterFunc: Dispatch<string>) => (e: ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { value },
+    } = e;
+
+    setterFunc(value);
+  };
+
+const ID = '아이디';
+const PASSWORD = '비밀번호';
 
 export function SignIn() {
-  const [loginErr, setLoginErr] = useState<CautionMessage | ''>('');
-  const [passwordErr, setPasswordErr] = useState<CautionMessage | ''>('');
-  const checkIdInput = (e: React.ChangeEvent) => {
-    const { value } = e.target as HTMLInputElement;
-    if (value.length <= 8) {
-      setLoginErr('tooShort');
-    } else if (value.length > 20) {
-      setLoginErr('tooLong');
-    } else {
-      setLoginErr('');
-    }
-  };
-  const checkPasswordInput = (e: React.ChangeEvent) => {
-    const { value } = e.target as HTMLInputElement;
-  };
-  const ID = '아이디';
-  const PASSWORD = '비밀번호';
+  const { reset, addressControll, address, setDetailAddress } = useAddressApi();
+  const [id, setId] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordConfirm, setPasswordConfirm] = useState('');
+  const [name, setName] = useState('');
+  // const [address, setAddress] = useState('');
+  const [addressDetail, setAddressDetail] = useState('');
+  const [postNum, setPostNum] = useState('');
+
+  const idErrorMessages = idValid(id);
+  const passwordErrorMessages = passwordValid(password);
+  const nameErrorMessges = nameValid(name);
+  const confirmPasswordErrorMessages = confirmPasswordValid({
+    first: password,
+    second: passwordConfirm,
+  });
+
+  const onChangeID = onChangeInput(setId);
+  const onChangePassword = onChangeInput(setPassword);
+  const onChangeConfirmPassword = onChangeInput(setPasswordConfirm);
+  const onChangeName = onChangeInput(setName);
+  // const onChangeAddress = onChangeInput(setAddress);
+  const onChageAddressDetail = onChangeInput(setAddressDetail);
+  const onChangePostNum = onChangeInput(setPostNum);
   return (
     <S.Layout>
       <S.SignInSection>
         <Logo size="small" />
-        <UserInput
-          size="large"
-          iconSrc="PERSON"
-          iconColor="grey4"
-          placeholder="아이디"
-          onChange={checkIdInput}
+
+        <SignInInput
+          inputProps={{
+            size: 'large',
+            iconSrc: 'PERSON',
+            placeholder: ID,
+            onChange: onChangeID,
+          }}
+          cautionContent={ID}
+          inputErrorMessages={idErrorMessages}
         />
-        {loginErr && <Caution message={loginErr} content={ID} />}
         <S.PasswordsLayout>
-          <UserInput
-            size="medium"
-            iconSrc="LOCK"
-            iconColor="grey4"
-            placeholder="비밀번호"
+          <SignInInput
+            inputProps={{
+              size: 'medium',
+              iconSrc: 'LOCK',
+              placeholder: PASSWORD,
+              onChange: onChangePassword,
+            }}
+            inputErrorMessages={passwordErrorMessages}
           />
-          {passwordErr && <Caution message={passwordErr} content={PASSWORD} />}
-          <UserInput size="medium" placeholder="비밀번호 재입력" />
+
+          <SignInInput
+            inputProps={{
+              size: 'medium',
+              placeholder: '비밀번호 재입력',
+              onChange: onChangeConfirmPassword,
+            }}
+            inputErrorMessages={confirmPasswordErrorMessages}
+          />
         </S.PasswordsLayout>
 
-        <UserInput size="small" placeholder="이름" />
-        <UserInput size="large" placeholder="주소" />
+        <SignInInput
+          inputProps={{
+            size: 'small',
+            placeholder: '이름',
+            onChange: onChangeName,
+          }}
+          inputErrorMessages={nameErrorMessges}
+        />
+
+        <UserInput
+          size="large"
+          placeholder="주소"
+          onClick={addressControll}
+          value={address.address1}
+          style={{ caretColor: 'transparent' }}
+        />
         <UserInput size="large" placeholder="상세주소" />
-        <UserInput size="small" placeholder="우편번호" />
+        <UserInput size="small" placeholder="우편번호" disabled />
 
         <S.BtnLayout>
           <Button>
@@ -63,5 +118,41 @@ export function SignIn() {
 
       <S.Introduce />
     </S.Layout>
+  );
+}
+
+function SignInInput<incomeElements extends ElementType = 'input'>({
+  inputProps,
+  cautionContent,
+  inputErrorMessages,
+}: {
+  inputProps: UserInputProps<incomeElements>;
+  cautionContent?: CautionContent;
+  inputErrorMessages: (CautionMessage | false)[];
+}) {
+  const [isInputBlur, setIsInputBlur] = useState(false);
+  const onFocusInput = () => {
+    setIsInputBlur(true);
+  };
+
+  const onBlurInput = () => {
+    setIsInputBlur(false);
+  };
+
+  const inputCaution = inputErrorMessages.map(
+    inputError =>
+      isInputBlur &&
+      inputError && <Caution content={cautionContent} message={inputError} />,
+  );
+
+  return (
+    <>
+      <UserInput
+        {...inputProps}
+        onFocus={onFocusInput}
+        onBlurInput={onBlurInput}
+      />
+      {inputCaution}
+    </>
   );
 }
