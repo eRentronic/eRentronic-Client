@@ -1,14 +1,16 @@
-import { CautionType, MessageType } from '@/components/common/Caution/types';
+import { CautionProps, MessageType } from '@/components/common/Caution/types';
 import { Text } from '@/components/common/Text';
 
 import { DEFAULT_CAUTION } from './constants';
 
-export function Caution({ content, message }: CautionType) {
-  const cautions: MessageType = {
-    ...DEFAULT_CAUTION,
-    tooShort: `${content}가 너무 짧습니다`,
-    tooLong: `${content}가 너무 깁니다`,
-  };
+export function Caution({ content, message }: CautionProps) {
+  const cautions: MessageType = content
+    ? {
+        ...DEFAULT_CAUTION,
+        tooShort: `${content}가 너무 짧습니다`,
+        tooLong: `${content}가 너무 깁니다`,
+      }
+    : DEFAULT_CAUTION;
 
   const getCautionMessage = (errorType: string) => {
     return cautions[errorType];
