@@ -1,18 +1,30 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Text, Button } from '@/components/common';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { LoginForm } from '@/templates/LoginForm';
 import { SignInForm } from '@/templates/SignInForm';
 
 export function LoginPage() {
+  const navigate = useNavigate();
   const [isDone, setIsDone] = useState(false);
   const [message, setMessage] = useState('');
   const [needSignIn, setNeedSignIn] = useState(false);
+  const { value } = useLocalStorage('loginState', {
+    isLogin: false,
+    loginToken: '',
+  });
+  const { isLogin } = value;
 
   const routeToAnotherForm = () => {
     setNeedSignIn(!needSignIn);
   };
+
+  useEffect(() => {
+    if (isLogin) navigate('/main');
+  }, [value]);
 
   return (
     <Layout>

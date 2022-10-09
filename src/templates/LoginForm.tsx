@@ -82,23 +82,17 @@ type LoginFormProps = {
 };
 
 export function LoginForm({ NeedSignInDispatch }: LoginFormProps) {
-  const navigate = useNavigate();
-
   const [loginState, loginDispatch] = useReducer(
     loginReducer,
     DEFAULT_LOGIN_STATE,
   );
 
-  const { getData, setValue } = useLocalStorage('loginState', {
-    isLogin: false,
-    loginToken: '',
-  });
+  const { setValue } = useLocalStorage('loginState');
 
   const { id, password } = loginState;
 
   const onLoginSuccess = (data: AxiosResponse) => {
     setValue({ isLogin: true, loginToken: data.headers['access-token'] });
-    navigate('/main');
   };
   const onLoginFail = () => {
     loginDispatch({ type: 'reset', payload: '' });
@@ -135,6 +129,7 @@ export function LoginForm({ NeedSignInDispatch }: LoginFormProps) {
         }}
         cautionContent={ID}
         inputErrorMessages={idErrorMessages}
+        key={ID}
       />
       <LoginInput
         inputProps={{
@@ -146,6 +141,7 @@ export function LoginForm({ NeedSignInDispatch }: LoginFormProps) {
         }}
         cautionContent={PASSWORD}
         inputErrorMessages={passwordErrorMessages}
+        key={PASSWORD}
       />
       <NavText linkPath="/" size="small">
         아이디/비밀번호를 잊어버렸나요?
