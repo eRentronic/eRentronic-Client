@@ -1,5 +1,5 @@
-import React, { Suspense } from 'react';
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom';
+import { Suspense } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { ThemeProvider } from 'styled-components';
 
@@ -11,8 +11,6 @@ import { Main } from '@/Pages/Main';
 import { DarkModeStore } from '@/recoils/dark/dark';
 import { darkMode, lightMode } from '@/styles/globalTheme';
 
-import { SignIn } from './Pages/Login/SignIn';
-
 export function App() {
   const isDarkmode = useRecoilValue(DarkModeStore);
 
@@ -22,7 +20,6 @@ export function App() {
         <BrowserRouter>
           <Routes>
             <Route path="/login" element={<LoginPage />} />
-            <Route path="/signIn" element={<SignIn />} />
             <Route element={<MainLayout />}>
               <Route path="/Main" element={<Main />} />
               <Route path="/detail" element={<Detail />} />
