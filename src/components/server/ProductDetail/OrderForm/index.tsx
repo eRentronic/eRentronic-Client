@@ -121,7 +121,7 @@ export function Purchase() {
         address: {
           fullAddress: address.address1 + address.address2,
           address1: address.address1,
-          address2: address.adress2,
+          address2: address.address2,
           zipCode: address.zipCode,
         },
         totalPrice: data.discountInfoResponse.salePrice * options.amount,

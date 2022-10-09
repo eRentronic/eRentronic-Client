@@ -61,6 +61,7 @@ const StyledInput = styled.input<StyledInputProps>(
     borderBottom: `1px solid ${theme.pallete.black}`,
     outline: 'none',
     paddingLeft: '20px',
+    boxSizing: 'border-box',
   }),
 );
 

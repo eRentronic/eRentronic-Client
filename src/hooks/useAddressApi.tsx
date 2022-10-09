@@ -1,7 +1,7 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 
-type DefaultAddressState = {
-  [key: string]: string;
+export type DefaultAddressState = {
   address1: string;
   address2: string;
   zipCode: string;
@@ -62,6 +62,7 @@ export function useAddressApi() {
 
   const setBuildingAddress = (APIaddress: any) => {
     const buildingAddress = getBuildingAddress(APIaddress);
+
     setAddress(buildingAddress);
   };
 
