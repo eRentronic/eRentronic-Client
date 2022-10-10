@@ -6,7 +6,6 @@ import {
   ElementType,
   useReducer,
 } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Button, Text } from '@/components/common';
@@ -15,9 +14,9 @@ import {
   CautionMessage,
   CautionContent,
 } from '@/components/common/Caution/types';
+import { UserInput, UserInputProps } from '@/components/common/Input/User';
 import { Logo } from '@/components/common/Logo';
 import { NavText } from '@/components/common/Text/Navigation';
-import { UserInput, UserInputProps } from '@/components/common/UserInput';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { useMutationPost } from '@/hooks/useMutationPost';
 import { idValid, passwordValid } from '@/service/login';
@@ -61,7 +60,10 @@ const getPasswordAction = (value: string) => ({
   payload: value,
 });
 
-const loginReducer = (state: typeof DEFAULT_LOGIN_STATE, action: Action) => {
+const loginReducer = (
+  state: typeof DEFAULT_LOGIN_STATE,
+  action: Action | { type: 'reset' },
+) => {
   switch (action.type) {
     case 'setID':
       return { ...state, id: action.payload };
@@ -94,8 +96,9 @@ export function LoginForm({ NeedSignInDispatch }: LoginFormProps) {
   const onLoginSuccess = (data: AxiosResponse) => {
     setValue({ isLogin: true, loginToken: data.headers['access-token'] });
   };
+
   const onLoginFail = () => {
-    loginDispatch({ type: 'reset', payload: '' });
+    loginDispatch({ type: 'reset' });
   };
 
   const { mutate } = useMutationPost(
