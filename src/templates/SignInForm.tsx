@@ -1,4 +1,3 @@
-import { AxiosResponse } from 'axios';
 import {
   useState,
   Dispatch,
@@ -14,8 +13,8 @@ import {
   CautionMessage,
   CautionContent,
 } from '@/components/common/Caution/types';
+import { UserInput, UserInputProps } from '@/components/common/Input/User';
 import { Logo } from '@/components/common/Logo';
-import { UserInput, UserInputProps } from '@/components/common/UserInput';
 import { useAddressApi, DefaultAddressState } from '@/hooks/useAddressApi';
 import { useMutationPost } from '@/hooks/useMutationPost';
 import {
@@ -50,6 +49,11 @@ type Action = {
   payload: string;
 };
 
+type SigninResponse = {
+  message: string;
+  error: unknown;
+};
+
 const getSignInDispatch =
   (
     dispatch: Dispatch<Action>,
@@ -77,8 +81,10 @@ const getPasswordConfirmAction = (value: string) => ({
   payload: value,
 });
 const getNameAction = (value: string) => ({ type: 'setName', payload: value });
-
-const signInReducer = (state: typeof DEFAULT_SIGNIN_STATE, action: Action) => {
+const signInReducer = (
+  state: typeof DEFAULT_SIGNIN_STATE,
+  action: Action | { type: 'reset' },
+) => {
   switch (action.type) {
     case 'setEmail':
       return { ...state, email: action.payload };
@@ -128,11 +134,14 @@ export function SignInForm({
   const { email, password, passwordConfirm, name } = signInState;
 
   const signInData = getSignInForm(address, signInState);
-  const onSignInFail = (data: AxiosResponse) => {
+  const onSignInFail = (res: SigninResponse) => {
     modalDisplayDispatch(true);
-    messageDispatch(data?.response.data.message);
+    messageDispatch(res.message);
   };
   const onSignInSuccess = () => {
+    signInDispatch({ type: 'reset' });
+    NeedSignInDispatch();
+
     // 스크롤 위로 가는 로직
   };
   const { mutate } = useMutationPost(
