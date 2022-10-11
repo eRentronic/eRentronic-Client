@@ -23,6 +23,17 @@ import {
   signInPasswordValid,
   confirmPasswordValid,
 } from '@/service/login';
+import {
+  getEmailAction,
+  getNameAction,
+  getPasswordAction,
+  getPasswordConfirmAction,
+  getSignInDispatch,
+} from '@/templates/SigninForm/Actions';
+import {
+  DEFAULT_SIGNIN_STATE,
+  signInReducer,
+} from '@/templates/SigninForm/Reducer';
 
 const onChangeInput =
   (setterFunc: Dispatch<string>) => (e: ChangeEvent<HTMLInputElement>) => {
@@ -37,73 +48,9 @@ const ID = '아이디';
 const PASSWORD = '비밀번호';
 const URL = `${process.env.SIGN_IN}`;
 
-const DEFAULT_SIGNIN_STATE = {
-  email: '',
-  password: '',
-  passwordConfirm: '',
-  name: '',
-};
-
-type Action = {
-  type: string;
-  payload: string;
-};
-
 type SigninResponse = {
   message: string;
   error: unknown;
-};
-
-const getSignInDispatch =
-  (
-    dispatch: Dispatch<Action>,
-    actionCreator:
-      | typeof getEmailAction
-      | typeof getPasswordAction
-      | typeof getPasswordConfirmAction
-      | typeof getNameAction,
-  ) =>
-  (value: string) => {
-    const action = actionCreator(value);
-    dispatch(action);
-  };
-
-const getEmailAction = (value: string) => ({
-  type: 'setEmail',
-  payload: value,
-});
-const getPasswordAction = (value: string) => ({
-  type: 'setPassword',
-  payload: value,
-});
-const getPasswordConfirmAction = (value: string) => ({
-  type: 'setPasswordConfirm',
-  payload: value,
-});
-const getNameAction = (value: string) => ({ type: 'setName', payload: value });
-const signInReducer = (
-  state: typeof DEFAULT_SIGNIN_STATE,
-  action: Action | { type: 'reset' },
-) => {
-  switch (action.type) {
-    case 'setEmail':
-      return { ...state, email: action.payload };
-
-    case 'setPassword':
-      return { ...state, password: action.payload };
-
-    case 'setPasswordConfirm':
-      return { ...state, passwordConfirm: action.payload };
-
-    case 'setName':
-      return { ...state, name: action.payload };
-
-    case 'reset':
-      return DEFAULT_SIGNIN_STATE;
-
-    default:
-      return state;
-  }
 };
 
 const getSignInForm = (

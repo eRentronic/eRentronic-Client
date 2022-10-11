@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import { Text, Button } from '@/components/common';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { LoginForm } from '@/templates/LoginForm';
-import { SignInForm } from '@/templates/SignInForm';
+import { SignInForm } from '@/templates/SigninForm';
 
 export function LoginPage() {
   const navigate = useNavigate();

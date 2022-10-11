@@ -20,6 +20,15 @@ import { NavText } from '@/components/common/Text/Navigation';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { useMutationPost } from '@/hooks/useMutationPost';
 import { idValid, passwordValid } from '@/service/login';
+import {
+  getIdAction,
+  getLoginDispatch,
+  getPasswordAction,
+} from '@/templates/LoginForm/Actions';
+import {
+  DEFAULT_LOGIN_STATE,
+  loginReducer,
+} from '@/templates/LoginForm/Reducer';
 
 const onChangeInput =
   (dispatch: Dispatch<string>) => (e: ChangeEvent<HTMLInputElement>) => {
@@ -33,51 +42,6 @@ const onChangeInput =
 const ID = '아이디';
 const PASSWORD = '비밀번호';
 const URL = `${process.env.LOG_IN}`;
-
-const DEFAULT_LOGIN_STATE = {
-  id: '',
-  password: '',
-};
-
-type Action = {
-  type: string;
-  payload: string;
-};
-
-const getLoginDispatch =
-  (
-    dispatch: Dispatch<Action>,
-    actionCreator: typeof getIdAction | typeof getPasswordAction,
-  ) =>
-  (value: string) => {
-    const action = actionCreator(value);
-    dispatch(action);
-  };
-
-const getIdAction = (value: string) => ({ type: 'setID', payload: value });
-const getPasswordAction = (value: string) => ({
-  type: 'setPassword',
-  payload: value,
-});
-
-const loginReducer = (
-  state: typeof DEFAULT_LOGIN_STATE,
-  action: Action | { type: 'reset' },
-) => {
-  switch (action.type) {
-    case 'setID':
-      return { ...state, id: action.payload };
-
-    case 'setPassword':
-      return { ...state, password: action.payload };
-
-    case 'reset':
-      return DEFAULT_LOGIN_STATE;
-
-    default:
-      return state;
-  }
-};
 
 type LoginFormProps = {
   NeedSignInDispatch: () => void;
