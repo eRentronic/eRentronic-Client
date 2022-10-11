@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import {
   useState,
   Dispatch,
@@ -125,7 +126,12 @@ export function SignInForm({
   modalDisplayDispatch,
   NeedSignInDispatch,
 }: SignInProps) {
-  const { addressControll, address, setDetailAddress } = useAddressApi();
+  const {
+    addressControll,
+    address,
+    setDetailAddress,
+    reset: resetAddress,
+  } = useAddressApi();
   const [signInState, signInDispatch] = useReducer(
     signInReducer,
     DEFAULT_SIGNIN_STATE,
@@ -134,12 +140,17 @@ export function SignInForm({
   const { email, password, passwordConfirm, name } = signInState;
 
   const signInData = getSignInForm(address, signInState);
-  const onSignInFail = (res: SigninResponse) => {
+
+  // TODO: AxiosError 타입 제대로 주었는데 왜 undefined로 추론 되는것 인지?
+  const onSignInFail = (
+    error: AxiosError<SigninResponse, typeof signInData>,
+  ) => {
     modalDisplayDispatch(true);
-    messageDispatch(res.message);
+    messageDispatch(error.response.data.message);
   };
   const onSignInSuccess = () => {
     signInDispatch({ type: 'reset' });
+    resetAddress();
     NeedSignInDispatch();
 
     // 스크롤 위로 가는 로직
