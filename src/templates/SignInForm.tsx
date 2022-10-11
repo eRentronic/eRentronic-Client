@@ -140,13 +140,12 @@ export function SignInForm({
   const { email, password, passwordConfirm, name } = signInState;
 
   const signInData = getSignInForm(address, signInState);
-
-  // TODO: AxiosError 타입 제대로 주었는데 왜 undefined로 추론 되는것 인지?
   const onSignInFail = (
     error: AxiosError<SigninResponse, typeof signInData>,
   ) => {
     modalDisplayDispatch(true);
-    messageDispatch(error.response.data.message);
+    const res = error.response!;
+    messageDispatch(res.data.message);
   };
   const onSignInSuccess = () => {
     signInDispatch({ type: 'reset' });
