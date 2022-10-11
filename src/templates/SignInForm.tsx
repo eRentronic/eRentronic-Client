@@ -294,10 +294,10 @@ function SignInInput<incomeElements extends ElementType = 'input'>({
   );
 
   return (
-    <>
+    <SignInInputLayout>
       <UserInput {...inputProps} onFocus={onFocusInput} onBlur={onBlurInput} />
       {inputCaution}
-    </>
+    </SignInInputLayout>
   );
 }
 
@@ -307,7 +307,10 @@ const SignInLayout = styled.div`
   align-items: flex-start;
   gap: 20px;
 `;
-
+const SignInInputLayout = styled(SignInLayout)`
+  align-items: flex-end;
+  gap: 5px;
+`;
 const PasswordsLayout = styled.div`
   width: 100%;
   display: flex;
