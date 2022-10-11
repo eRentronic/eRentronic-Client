@@ -141,8 +141,6 @@ export function SignInForm({
   const onSignInSuccess = () => {
     signInDispatch({ type: 'reset' });
     NeedSignInDispatch();
-
-    // 스크롤 위로 가는 로직
   };
   const { mutate } = useMutationPost(
     URL,
@@ -263,6 +261,9 @@ export function SignInForm({
           disabled={isSignInFilled || isAddressFilled || hasWrongInput}
         >
           <Text>회원 가입 완료</Text>
+        </Button>
+        <Button onClick={NeedSignInDispatch}>
+          <Text>로그인 페이지 이동</Text>
         </Button>
       </BtnLayout>
     </SignInLayout>
