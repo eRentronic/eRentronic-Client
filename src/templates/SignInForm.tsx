@@ -191,16 +191,21 @@ export function SignInForm({
   return (
     <SignInLayout>
       <Logo size="small" />
-      <SignInInput
-        inputProps={{
-          size: 'large',
-          iconSrc: 'PERSON',
-          placeholder: ID,
-          onChange: onChangeID,
-        }}
-        cautionContent={ID}
-        inputErrorMessages={idErrorMessages}
-      />
+      <EmailWrap>
+        <SignInInput
+          inputProps={{
+            size: 'medium',
+            iconSrc: 'PERSON',
+            placeholder: ID,
+            onChange: onChangeID,
+          }}
+          cautionContent={ID}
+          inputErrorMessages={idErrorMessages}
+        />
+        <Button size="small">
+          <Text>중복 확인</Text>
+        </Button>
+      </EmailWrap>
       <PasswordsLayout>
         <PasswordWrap>
           <SignInInput
@@ -322,6 +327,10 @@ const PasswordWrap = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+`;
+const EmailWrap = styled.div`
+  display: flex;
+  gap: 15px;
 `;
 
 const BtnLayout = styled(PasswordsLayout)`
