@@ -32,6 +32,10 @@ const getErrorMessages =
 
 const idShortValid = validShort(SHORT_ID_LENGHT);
 const idLongValid = validLong(LONG_ID_LENGTH);
+const idReg =
+  /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+const idRegValid = idReg.test.bind(idReg);
+const idWrongCharValid = validWrongChar(idRegValid);
 
 const passwordShortValid = validShort(SHORT_PASSWORD_LENGTH);
 const passwordLongValid = validLong(LONG_PASSWORD_LENGHT);
@@ -45,7 +49,11 @@ const nameRegValid = nameReg.test.bind(nameReg);
 
 const nameWrongCharValid = validWrongChar(nameRegValid);
 
-export const idValid = getErrorMessages(idShortValid, idLongValid);
+export const idValid = getErrorMessages(
+  idShortValid,
+  idLongValid,
+  idWrongCharValid,
+);
 
 export const passwordValid = getErrorMessages(
   passwordShortValid,
