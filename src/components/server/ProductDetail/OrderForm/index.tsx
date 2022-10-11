@@ -1,33 +1,20 @@
 import { useQuery } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
-import { MouseEvent, useEffect, useState } from 'react';
+import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
 import * as API from '@/apis/mainProducts';
 import { Text } from '@/components/common';
 import { Caution } from '@/components/common/Caution';
-import { CautionMessage } from '@/components/common/Caution/types';
 import * as S from '@/components/server/ProductDetail/OrderForm/index.style';
+import { useAddressApi } from '@/hooks/useAddressApi';
 import { modalStore } from '@/recoils/modal/modal';
 import { stopEventDelivery } from '@/utils/utils';
 
 const getInfos = async (path: string) => {
   const result = await axios.get<API.ProductDetail>(path);
   return result.data;
-};
-
-type DefaultAddressState = {
-  [key: string]: string;
-  address1: string;
-  address2: string;
-  zipCode: string;
-};
-
-const defaultAddress: DefaultAddressState = {
-  address1: '',
-  address2: '',
-  zipCode: '',
 };
 
 type DefaultOptionsState = {
@@ -48,17 +35,17 @@ const defaultOrderResponse: OrderResponseState = {
   message: '',
 };
 
+const getValue = (e: ChangeEvent<HTMLInputElement>) => e.target.value;
+
 export function Purchase() {
-  const { daum } = window;
   const [isDisplay, setIsDisplay] = useState(false);
   const [isClicked, setIsClicked] = useRecoilState(modalStore);
   const [orderResponse, setOrderResponse] = useState(defaultOrderResponse);
-  const [address, setAddress] = useState(defaultAddress);
   const [options, setOptions] = useState(defaultOptions);
-  const [errMessage, setErrMessage] = useState<CautionMessage | ''>('');
   const location = useLocation();
   const param = new URLSearchParams(location.search);
   const productID = param.get('id');
+  const { address, reset, addressControll, setDetailAddress } = useAddressApi();
 
   const detailPath = `${process.env.PRODUCT}/${productID}`;
   // const recommendPath = `${process.env.MAIN_PRODUCTS}/${productID}/recommendations`;
@@ -67,10 +54,15 @@ export function Purchase() {
     getInfos(detailPath),
   );
 
+  const onChangeAddress2 = (e: ChangeEvent<HTMLInputElement>) => {
+    const inputValue = getValue(e);
+    setDetailAddress(inputValue);
+  };
+
   useEffect(() => {
     setTimeout(() => {
       setOptions(defaultOptions);
-      setAddress(defaultAddress);
+      reset();
       setOrderResponse(defaultOrderResponse);
       setIsClicked(false);
     }, 2000);
@@ -109,35 +101,6 @@ export function Purchase() {
     }
   };
 
-  const onClickAddress = () => {
-    new daum.Postcode({
-      oncomplete(userAddress: any) {
-        if (userAddress.buildingName === '' && userAddress.apartment === 'N') {
-          setAddress({
-            ...address,
-            address1: userAddress.roadAddress,
-            zipCode: userAddress.zonecode,
-          });
-          return;
-        }
-
-        if (userAddress.bname !== '') {
-          setAddress({
-            ...address,
-            address1: `${userAddress.roadAddress}${userAddress.roadAddress} ${userAddress.buildingName}`,
-            zipCode: userAddress.zonecode,
-          });
-        } else {
-          setAddress({
-            ...address,
-            address1: userAddress.roadAddress + userAddress.buildingName,
-            zipCode: userAddress.zonecode,
-          });
-        }
-      },
-    }).open();
-  };
-
   const isFormFilled =
     !Object.keys(address).find(key => !address[key]) &&
     !Object.keys(options).find(key => !options[key]);
@@ -158,7 +121,7 @@ export function Purchase() {
         address: {
           fullAddress: address.address1 + address.address2,
           address1: address.address1,
-          address2: address.adress2,
+          address2: address.address2,
           zipCode: address.zipCode,
         },
         totalPrice: data.discountInfoResponse.salePrice * options.amount,
@@ -170,14 +133,10 @@ export function Purchase() {
     }
   };
 
-  const setAddressErrorMsg = (e: React.ChangeEvent) => {
-    const { value } = e.target as HTMLInputElement;
-    if (value.length < 5) {
-      setErrMessage('wrongAddress');
-    } else {
-      setErrMessage('');
-    }
-  };
+  const setAddressErrorMsg = (inputValue: string) =>
+    inputValue.length < 5 ? 'wrongAddress' : '';
+
+  const errMessage = setAddressErrorMsg(address.address2);
 
   const content = '주소';
   return (
@@ -263,17 +222,14 @@ export function Purchase() {
             <S.UserInfoTitle>사용자정보</S.UserInfoTitle>
             <S.UserInfoContent>
               주소
-              <S.ChangeAddressBtn type="button" onClick={onClickAddress}>
+              <S.ChangeAddressBtn type="button" onClick={addressControll}>
                 {address.address1 ? '주소변경' : '주소선택'}
               </S.ChangeAddressBtn>
             </S.UserInfoContent>
             <S.Address1>{address.address1}</S.Address1>
             <S.Address2
               placeholder="상세주소를 입력해주세요"
-              onChange={e => {
-                setAddress({ ...address, address2: e.target.value });
-                setAddressErrorMsg(e);
-              }}
+              onChange={onChangeAddress2}
             />
             {errMessage && <Caution content={content} message={errMessage} />}
           </S.UserInfo>

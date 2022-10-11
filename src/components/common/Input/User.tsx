@@ -15,10 +15,8 @@ type UserInputBaseProps = {
   iconColor?: keyof typeof globalTheme.pallete;
 };
 
-type UserInputProps<incomeElementType extends ElementType> = OverRidableProps<
-  incomeElementType,
-  UserInputBaseProps
->;
+export type UserInputProps<incomeElementType extends ElementType> =
+  OverRidableProps<incomeElementType, UserInputBaseProps>;
 
 type StyledInputProps = {
   inputSize?: 'small' | 'medium' | 'large';
@@ -63,6 +61,7 @@ const StyledInput = styled.input<StyledInputProps>(
     borderBottom: `1px solid ${theme.pallete.black}`,
     outline: 'none',
     paddingLeft: '20px',
+    boxSizing: 'border-box',
   }),
 );
 

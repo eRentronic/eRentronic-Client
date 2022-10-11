@@ -209,4 +209,7 @@ export const handlers = [
       }),
     );
   }),
+  rest.post(`/login`, (req, res, ctx) => {
+    return res(ctx.status(200), ctx.delay(2000), ctx.json({ login: true }));
+  }),
 ];
