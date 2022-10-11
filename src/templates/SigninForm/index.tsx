@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import {
   useState,
   Dispatch,
@@ -72,7 +73,12 @@ export function SignInForm({
   modalDisplayDispatch,
   NeedSignInDispatch,
 }: SignInProps) {
-  const { addressControll, address, setDetailAddress } = useAddressApi();
+  const {
+    addressControll,
+    address,
+    setDetailAddress,
+    reset: resetAddress,
+  } = useAddressApi();
   const [signInState, signInDispatch] = useReducer(
     signInReducer,
     DEFAULT_SIGNIN_STATE,
@@ -81,12 +87,16 @@ export function SignInForm({
   const { email, password, passwordConfirm, name } = signInState;
 
   const signInData = getSignInForm(address, signInState);
-  const onSignInFail = (res: SigninResponse) => {
+  const onSignInFail = (
+    error: AxiosError<SigninResponse, typeof signInData>,
+  ) => {
     modalDisplayDispatch(true);
-    messageDispatch(res.message);
+    const res = error.response!;
+    messageDispatch(res.data.message);
   };
   const onSignInSuccess = () => {
     signInDispatch({ type: 'reset' });
+    resetAddress();
     NeedSignInDispatch();
   };
   const { mutate } = useMutationPost(

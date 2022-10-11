@@ -6,6 +6,7 @@ import {
   ElementType,
   useReducer,
 } from 'react';
+import { Navigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Button, Text } from '@/components/common';
@@ -53,7 +54,8 @@ export function LoginForm({ NeedSignInDispatch }: LoginFormProps) {
     DEFAULT_LOGIN_STATE,
   );
 
-  const { setValue } = useLocalStorage('loginState');
+  const { value, setValue } = useLocalStorage('loginState');
+  const { isLogin } = value;
 
   const { id, password } = loginState;
 
@@ -83,6 +85,7 @@ export function LoginForm({ NeedSignInDispatch }: LoginFormProps) {
 
   return (
     <Content>
+      {isLogin && <Navigate to="/Main" />}
       <LogoLayout>
         <Logo size="small" destination="/" />
       </LogoLayout>
