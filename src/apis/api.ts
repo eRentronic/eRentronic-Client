@@ -13,6 +13,6 @@ import axios from 'axios';
 // };
 
 export const postData = async <T>(URL: string, updatedData: T) => {
-  const { data } = await axios.post<T>(URL, updatedData);
+  const data = await axios.post<T>(URL, updatedData);
   return data;
 };
