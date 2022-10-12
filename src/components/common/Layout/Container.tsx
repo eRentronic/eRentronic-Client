@@ -1,15 +1,15 @@
 /* eslint-disable react/no-unused-prop-types */
 import { ReactNode, forwardRef, Ref } from 'react';
-import styled from 'styled-components';
+import styled, { CSSProperties } from 'styled-components';
 
 type ContainerProps<T extends RegionalElements> = {
-  children: ReactNode;
+  children?: ReactNode;
   as?: T;
   layout?: Layout;
   justifyContents?: FlexLayout;
   alignItems?: FlexLayout;
   flexWrap?: Wrap;
-  color?: string;
+  color?: CSSProperties['color'];
 };
 
 type RegionalElements =
@@ -34,13 +34,14 @@ type Wrap = 'wrap' | 'nowrap';
 
 const DEFAULT_CONTAINER_PARAMS: Pick<
   ContainerProps<'div'>,
-  'layout' | 'justifyContents' | 'alignItems' | 'flexWrap' | 'color'
+  'layout' | 'justifyContents' | 'alignItems' | 'flexWrap' | 'color' | 'as'
 > = {
   layout: 'row',
   justifyContents: 'flex-start',
   alignItems: 'flex-start',
   flexWrap: 'wrap',
-  color: 'transParent',
+  color: 'transparent',
+  as: 'div',
 };
 
 function Container<T extends RegionalElements = 'div'>(
@@ -52,29 +53,26 @@ function Container<T extends RegionalElements = 'div'>(
     ...props,
   };
 
-  delete containerProperty.as;
-
-  const { children, as } = containerProperty;
-
-  const target = as ?? 'div';
+  const { children } = containerProperty;
 
   return (
-    <StyledContainer {...containerProperty} as={target} ref={ref}>
+    <StyledContainer {...containerProperty} ref={ref}>
       {children}
     </StyledContainer>
   );
 }
 
 const StyledContainer = styled.div<ContainerProps<RegionalElements>>(
-  ({ layout, justifyContents, alignItems, flexWrap }) => ({
+  ({ layout, justifyContents, alignItems, flexWrap, color }) => ({
     display: 'flex',
     flexDirection: layout,
     justifyContents,
     alignItems,
     flexWrap,
+    color,
   }),
 );
 
-const frowardedContainer = forwardRef(Container);
+const ForWardedContainer = forwardRef(Container);
 
-export { frowardedContainer };
+export { ForWardedContainer as Container };
