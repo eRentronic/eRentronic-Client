@@ -147,7 +147,7 @@ export function Card({ productId }: CardProps) {
     >
       <S.StyledCard
         onClick={() => {
-          navigate(`detail?id=${productId}`);
+          navigate(`/detail?id=${productId}`);
         }}
       >
         <Content isDisplay={isHover} content={contents[productId]} />
