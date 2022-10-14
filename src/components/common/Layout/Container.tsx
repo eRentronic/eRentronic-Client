@@ -6,10 +6,11 @@ type ContainerProps<T extends RegionalElements> = {
   children?: ReactNode;
   as?: T;
   layout?: Layout;
-  justifyContents?: FlexLayout;
-  alignItems?: FlexLayout;
+  justifyContent?: FlexLayout;
+  alignItem?: FlexLayout;
   flexWrap?: Wrap;
-  color?: CSSProperties['color'];
+  backgroundColor?: CSSProperties['backgroundColor'];
+  gap?: CSSProperties['gap'];
 };
 
 type RegionalElements =
@@ -21,7 +22,7 @@ type RegionalElements =
   | 'footer'
   | 'aside';
 
-type Layout = 'row' | 'column';
+type Layout = 'row' | 'column' | 'row-reverse' | 'column-reverse';
 
 type FlexLayout =
   | 'center'
@@ -32,18 +33,12 @@ type FlexLayout =
 
 type Wrap = 'wrap' | 'nowrap';
 
-const DEFAULT_CONTAINER_PARAMS: Pick<
-  ContainerProps<'div'>,
-  'layout' | 'justifyContents' | 'alignItems' | 'flexWrap' | 'color' | 'as'
-> = {
-  layout: 'row',
-  justifyContents: 'flex-start',
-  alignItems: 'flex-start',
-  flexWrap: 'wrap',
-  color: 'transparent',
+const DEFAULT_CONTAINER_PARAMS: Pick<ContainerProps<'div'>, 'as'> = {
   as: 'div',
 };
 
+// TODO: Ref에 여러 HTML엘리먼트 타입이 경우에 따라 들어가야하는데...
+// div, span 처럼 as의 값이 추론되어서 해당HTMLElement 타입을 반환해주는 타입이 없을까
 function Container<T extends RegionalElements = 'div'>(
   props: ContainerProps<T>,
   ref: Ref<any>,
@@ -63,13 +58,14 @@ function Container<T extends RegionalElements = 'div'>(
 }
 
 const StyledContainer = styled.div<ContainerProps<RegionalElements>>(
-  ({ layout, justifyContents, alignItems, flexWrap, color }) => ({
+  ({ layout, justifyContent, alignItem, flexWrap, backgroundColor, gap }) => ({
     display: 'flex',
     flexDirection: layout,
-    justifyContents,
-    alignItems,
+    justifyContent,
+    alignItem,
     flexWrap,
-    color,
+    backgroundColor,
+    gap,
   }),
 );
 
