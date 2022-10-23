@@ -2,7 +2,7 @@
 import { ReactNode, forwardRef, Ref } from 'react';
 import styled, { CSSProperties } from 'styled-components';
 
-type ContainerProps<T extends RegionalElements> = {
+export type ContainerProps<T extends RegionalElements> = {
   children?: ReactNode;
   as?: T;
   layout?: Layout;
@@ -33,7 +33,7 @@ type FlexLayout =
 
 type Wrap = 'wrap' | 'nowrap';
 
-const DEFAULT_CONTAINER_PARAMS: Pick<ContainerProps<'div'>, 'as'> = {
+export const DEFAULT_CONTAINER_PARAMS: Pick<ContainerProps<'div'>, 'as'> = {
   as: 'div',
 };
 
