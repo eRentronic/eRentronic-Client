@@ -11,8 +11,16 @@ import axios from 'axios';
 //     zipCode: string;
 //   };
 // };
+export type HeaderType = {
+  'Access-Token': any;
+  withCredentials: boolean;
+};
 
-export const postData = async <T>(URL: string, updatedData: T) => {
-  const data = await axios.post<T>(URL, updatedData);
+export const postData = async <T>(
+  URL: string,
+  updatedData: T,
+  headers?: HeaderType,
+) => {
+  const data = await axios.post<T>(URL, updatedData, { headers });
   return data;
 };
