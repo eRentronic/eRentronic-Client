@@ -4,11 +4,14 @@ import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
+import { HeaderType } from '@/apis/api';
 import * as API from '@/apis/mainProducts';
 import { Text } from '@/components/common';
 import { Caution } from '@/components/common/Caution';
 import * as S from '@/components/server/ProductDetail/OrderForm/index.style';
 import { useAddressApi } from '@/hooks/useAddressApi';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
+import { useMutationPost } from '@/hooks/useMutationPost';
 import { modalStore } from '@/recoils/modal/modal';
 import { stopEventDelivery } from '@/utils/utils';
 
@@ -37,6 +40,8 @@ const defaultOrderResponse: OrderResponseState = {
 
 const getValue = (e: ChangeEvent<HTMLInputElement>) => e.target.value;
 
+const URL = `${process.env.ORDER_PRODUCTS}`;
+
 export function Purchase() {
   const [isDisplay, setIsDisplay] = useState(false);
   const [isClicked, setIsClicked] = useRecoilState(modalStore);
@@ -59,6 +64,14 @@ export function Purchase() {
     setDetailAddress(inputValue);
   };
 
+  const { value } = useLocalStorage('loginState');
+  const { loginToken } = value;
+  // TODO: value를 string으로 바꿔보기!
+  const headers: HeaderType = {
+    'Access-Token': loginToken,
+    withCredentials: true,
+  };
+
   useEffect(() => {
     setTimeout(() => {
       setOptions(defaultOptions);
@@ -69,8 +82,37 @@ export function Purchase() {
   }, [orderResponse]);
 
   if (!data) {
-    return <>에러</>;
+    throw new Error('데이터 없음');
   }
+
+  const { product, discountInfoResponse } = data;
+  const { id: productId, price: productTotalPrice } = product;
+  const { amount } = options;
+  const { salePrice } = discountInfoResponse;
+  const totalPrice = salePrice * amount;
+  const { address1, address2, zipCode } = address;
+
+  const { mutate } = useMutationPost(
+    URL,
+    {
+      purchases: [
+        {
+          productId,
+          quantity: amount,
+          productTotalPrice,
+        },
+      ],
+      rentals: [],
+      address: {
+        fullAddress: address1 + address2,
+        address1,
+        address2,
+        zipCode,
+      },
+      totalPrice,
+    },
+    headers,
+  );
 
   const optionLists = data?.keyboardSwitches.map(({ id, name }) => (
     <S.Option
@@ -105,32 +147,8 @@ export function Purchase() {
     !Object.keys(address).find(key => !address[key]) &&
     !Object.keys(options).find(key => !options[key]);
 
-  const postOrder = async () => {
-    try {
-      const {
-        data: { id, message },
-      } = await axios.post(`${process.env.ORDER_PRODUCTS}`, {
-        purchases: [
-          {
-            productId: data.product.id,
-            quantity: options.amount,
-            productTotalPrice: data.product.price,
-          },
-        ],
-        rentals: [],
-        address: {
-          fullAddress: address.address1 + address.address2,
-          address1: address.address1,
-          address2: address.address2,
-          zipCode: address.zipCode,
-        },
-        totalPrice: data.discountInfoResponse.salePrice * options.amount,
-      });
-
-      setOrderResponse({ id, message });
-    } catch (e) {
-      console.error(e);
-    }
+  const postOrder = () => {
+    mutate();
   };
 
   const setAddressErrorMsg = (inputValue: string) =>
@@ -139,6 +157,7 @@ export function Purchase() {
   const errMessage = setAddressErrorMsg(address.address2);
 
   const content = '주소';
+
   return (
     <S.Dimmed isClicked={isClicked} onClick={closeModal}>
       <S.PurchaseWrap

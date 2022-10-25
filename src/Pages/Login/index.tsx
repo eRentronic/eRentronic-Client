@@ -14,6 +14,10 @@ export function LoginPage() {
     setNeedSignIn(!needSignIn);
   };
 
+  const closeModal = () => {
+    setIsDone(false);
+  };
+
   return (
     <Layout>
       <LoginSection routeToSignIn={needSignIn}>
@@ -27,13 +31,8 @@ export function LoginPage() {
 
       <Introduce />
       <AlertModal isDone={isDone}>
-        <Text>{message}메시지 들어감</Text>
-        <Button
-          size="medium"
-          onClick={() => {
-            setIsDone(false);
-          }}
-        >
+        <Text>{message}</Text>
+        <Button size="medium" onClick={closeModal}>
           모달창 닫기
         </Button>
       </AlertModal>
