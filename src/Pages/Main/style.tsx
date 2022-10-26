@@ -5,11 +5,6 @@ export const Wrapper = styled.div`
   height: 100%;
 `;
 
-export const StyledMain = styled.main`
-  display: flex;
-  flex-direction: column;
-`;
-
 export const StyledAside = styled.aside`
   position: fixed;
   width: 15%;
