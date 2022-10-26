@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { Text } from '@/components/common';
-import { StyledTextProps } from '@/components/common/Text/types';
+import { StyledTextProps, TextProps } from '@/components/common/Text/types';
 
 export const StyledCard = styled.div`
   display: flex;
@@ -20,20 +20,7 @@ export const Wrapper = styled.div`
   max-height: 235px;
 `;
 
-export const ThumbnailContainer = styled.figure`
-  width: 100%;
-  min-width: 150px;
-  height: 100px;
-`;
-
-export const Thumbnail = styled.img`
-  width: 100%;
-  height: 100%;
-  /* max-height: 150px; */
-  object-fit: contain;
-`;
-
-export const Title = styled(Text)`
+export const Title = styled(Text)<TextProps<'span'>>`
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
@@ -44,10 +31,9 @@ export const Title = styled(Text)`
   color: ${({ theme }) => theme.pallete.normalFont};
 `;
 
-export const Brand = styled(Text)`
+export const Brand = styled(Text)<TextProps<'h4'>>`
   font-size: 13px;
   margin: 5px 0;
-  /* color: ${({ theme }) => theme.pallete.normalFont}; */
 `;
 
 export const Labels = styled.div`
@@ -73,10 +59,3 @@ export const SaledPrice = styled(Text)<StyledTextProps>``;
 export const CurrentPrice = styled(Text)``;
 
 export const DiscountRate = styled(Text)``;
-
-export const ProductInfoContainer = styled.section`
-  display: flex;
-  box-sizing: border-box;
-  flex-direction: column;
-  justify-content: space-between;
-`;
