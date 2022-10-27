@@ -20,6 +20,7 @@ export function SignInInput<incomeElements extends ElementType = 'input'>({
   inputErrorMessages: (CautionMessage | false)[];
 }) {
   const [isInputBlur, setIsInputBlur] = useState(false);
+
   const onFocusInput = () => {
     setIsInputBlur(false);
   };
