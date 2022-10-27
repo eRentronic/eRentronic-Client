@@ -14,7 +14,7 @@ export const Dimmed = styled.div<{ isClicked: boolean }>`
   height: 100vh;
   background: rgba(0, 0, 0, 0.5);
 `;
-
+export const DiscountedPrice = styled(Text)<TextProps<'span'>>``;
 export const PurchaseWrap = styled.div<{ isClicked: boolean }>`
   display: ${({ isClicked }) => (isClicked ? 'flex' : 'none')};
   position: fixed;
@@ -35,66 +35,6 @@ export const ProductDetail = styled.section`
   width: 100%;
   justify-content: space-between;
 `;
-
-export const DiscountRate = styled(Text)<TextProps<'span'>>``;
-
-export const InfoWrap = styled.div`
-  width: 100%;
-  display: flex;
-  gap: 10px;
-`;
-
-export const InfoLeft = styled.div`
-  display: flex;
-  padding: 10px 0px;
-  gap: 10px;
-  height: 100px; ;
-`;
-
-export const ProductImage = styled.img`
-  width: 150px;
-  height: 100px;
-`;
-
-export const ProductInfo = styled.div`
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  gap: 5px;
-`;
-
-export const Title = styled(Text)`
-  font-size: 10px;
-  font-weight: 300;
-  color: ${({ theme }) => theme.pallete.grey3};
-`;
-
-export const Brand = styled(Text)`
-  font-size: 10px;
-  font-weight: 300;
-  color: ${({ theme }) => theme.pallete.grey3};
-`;
-
-export const InfoRight = styled.div`
-  display: flex;
-  padding: 10px 0px;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 5px;
-`;
-
-export const PriceCompare = styled.div`
-  display: flex;
-  gap: 5px;
-`;
-
-export const OriginPrice = styled(Text)<TextProps<'del'>>`
-  margin-bottom: 10px;
-  font-weight: 500;
-`;
-
-export const DiscountedPrice = styled(Text)<TextProps<'span'>>``;
 
 export const SelectWrap = styled.section`
   width: 100%;
