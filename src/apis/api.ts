@@ -24,3 +24,8 @@ export const postData = async <T>(
   const data = await axios.post<T>(URL, updatedData, { headers });
   return data;
 };
+
+export const getData = async (path: string) => {
+  const result = await axios.get(path);
+  return result.data;
+};
