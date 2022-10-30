@@ -16,16 +16,11 @@ import { modalStore } from '@/recoils/modal/modal';
 import { stopEventDelivery } from '@/utils/utils';
 
 import { Info } from './Info';
+import { DefaultOptionsState, Option } from './option';
 
 const getInfos = async (path: string) => {
   const result = await axios.get<API.ProductDetail>(path);
   return result.data;
-};
-
-type DefaultOptionsState = {
-  [key: string]: string | number;
-  keyboardSwitch: string;
-  amount: number;
 };
 
 const defaultOptions: DefaultOptionsState = {
@@ -62,11 +57,6 @@ export function Purchase() {
   const { data } = useQuery<API.ProductDetail, AxiosError>(['getInfos'], () =>
     getInfos(detailPath),
   );
-
-  const onChangeAddress2 = (e: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = getValue(e);
-    setDetailAddress(inputValue);
-  };
 
   const { value } = useLocalStorage('loginState');
   const { loginToken } = value;
@@ -105,7 +95,6 @@ export function Purchase() {
   const salePriceWithComma = salePrice.toLocaleString();
   const finalPrice = (salePrice * amount).toLocaleString();
   const { address1, address2, zipCode } = address;
-  const ADDRESS = '주소';
 
   const infoProps = {
     imageUrl,
@@ -116,15 +105,6 @@ export function Purchase() {
     productTotalPrice,
   };
 
-  const optionProps = {
-    keyboardSwitches,
-    keyboardSwitch,
-    amount,
-    address1,
-    ADDRESS,
-    quantity,
-    options,
-  };
   const { mutate } = useMutationPost(
     URL,
     {
@@ -153,64 +133,22 @@ export function Purchase() {
     setIsDisplay(false);
   };
 
-  const increaseAmount = () => {
-    if (options.amount < data?.product.quantity) {
-      setOptions({ ...options, amount: options.amount + 1 });
-    }
-  };
-
-  const decreaseAmount = () => {
-    if (options.amount > 1) {
-      setOptions({ ...options, amount: options.amount - 1 });
-    }
-  };
-
   const postOrder = () => {
     mutate();
   };
 
-  const setAddressErrorMsg = (inputValue: string) =>
-    inputValue.length < 5 ? 'wrongAddress' : '';
-  const errMessage = setAddressErrorMsg(address.address2);
-  const optionLists = data?.keyboardSwitches.map(({ id, name }) => (
-    <S.Option
-      key={id}
-      onClick={() => {
-        setOptions({ ...options, switch: name });
-      }}
-    >
-      {name}
-    </S.Option>
-  ));
-
-  const optionList = isDisplay && (
-    <S.OptionList isDisplay={isDisplay}>{optionLists}</S.OptionList>
-  );
-  const chooseAmount = keyboardSwitch && (
-    <S.AmountWrap>
-      <S.PlusBtn onClick={increaseAmount}>+</S.PlusBtn>
-      <Text styles={{ fontSize: '15px' }}>{amount}</Text>
-      <S.MinusBtn onClick={decreaseAmount}>-</S.MinusBtn>
-    </S.AmountWrap>
-  );
-
-  const userInfo = amount && keyboardSwitch && (
-    <S.UserInfo>
-      <S.UserInfoTitle>사용자정보</S.UserInfoTitle>
-      <S.UserInfoContent>
-        주소
-        <S.ChangeAddressBtn type="button" onClick={}>
-          {address.address1 ? '주소변경' : '주소선택'}
-        </S.ChangeAddressBtn>
-      </S.UserInfoContent>
-      <S.Address1>{address.address1}</S.Address1>
-      <S.Address2
-        placeholder="상세주소를 입력해주세요"
-        onChange={onChangeAddress2}
-      />
-      {errMessage && <Caution content={ADDRESS} message={errMessage} />}
-    </S.UserInfo>
-  );
+  const optionProps = {
+    keyboardSwitches,
+    keyboardSwitch,
+    amount,
+    quantity,
+    options,
+    setOptions,
+    address,
+    address2,
+    addressControll,
+    setDetailAddress,
+  };
 
   const orderResponseModal = !!message && (
     <S.OrderConfirmation>{message}</S.OrderConfirmation>
@@ -231,22 +169,7 @@ export function Purchase() {
       >
         {orderResponseModal}
         <Info info={infoProps} />
-        <S.OptionZone>
-          <S.DetailOptionBtn
-            onClick={e => {
-              setIsDisplay(true);
-              e.stopPropagation();
-            }}
-          >
-            <Text typography="Light" styles={{ fontSize: '9px' }}>
-              option
-            </Text>
-          </S.DetailOptionBtn>
-          <Text typography="Light">{keyboardSwitch}</Text>
-          {optionList}
-          {chooseAmount}
-        </S.OptionZone>
-        {userInfo}
+        <Option option={optionProps} />
         <S.PriceAndButton>
           <S.DiscountedPrice>{`총 ${finalPrice} 원`}</S.DiscountedPrice>
           <S.PurchaseButton
