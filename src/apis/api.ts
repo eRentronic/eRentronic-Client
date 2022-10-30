@@ -13,7 +13,7 @@ import axios from 'axios';
 // };
 export type HeaderType = {
   'Access-Token': any;
-  withCredentials: boolean;
+  withCredentials?: boolean;
 };
 
 export const postData = async <T>(

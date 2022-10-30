@@ -1,28 +1,84 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, Dispatch, useState } from 'react';
 import styled from 'styled-components';
 
 import { Text } from '@/components/common';
 import { Caution } from '@/components/common/Caution';
 import { TextProps } from '@/components/common/Text/types';
-import { useAddressApi } from '@/hooks/useAddressApi';
+import { DefaultAddressState } from '@/hooks/useAddressApi';
 
-export function Option({ option }) {
-  const { amount, keyboardSwitch, keyboardSwitches, ADDRESS, quantity } =
-    option;
-  const [options, setOptions] = useState(defaultOptions);
-  const { address, reset, addressControll, setDetailAddress } = useAddressApi();
+type OptionType = {
+  amount: number;
+  keyboardSwitch: string;
+  keyboardSwitches: {
+    id: number;
+    name: string;
+  }[];
+  quantity: number;
+  options: DefaultOptionsState;
+  setOptions: Dispatch<DefaultOptionsState>;
+  address: DefaultAddressState;
+  address2: string;
+  addressControll: () => void;
+  setDetailAddress: (value: string) => void;
+};
+
+type OptionProps = {
+  option: OptionType;
+};
+
+export type DefaultOptionsState = {
+  [key: string]: string | number;
+  keyboardSwitch: string;
+  amount: number;
+};
+
+export function Option({ option }: OptionProps) {
+  const {
+    amount,
+    keyboardSwitch,
+    keyboardSwitches,
+    quantity,
+    options,
+    setOptions,
+    address,
+    address2,
+    addressControll,
+    setDetailAddress,
+  } = option;
   const [isDisplay, setIsDisplay] = useState(false); // 모달
+  const ADDRESS = '주소';
 
-  const optionLists = data?.keyboardSwitches.map(({ id, name }) => (
-    <Option
+  const setAddressErrorMsg = (inputValue: string) =>
+    inputValue.length < 5 ? 'wrongAddress' : '';
+  const errMessage = setAddressErrorMsg(address2);
+
+  const optionLists = keyboardSwitches.map(({ id, name }) => (
+    <SwitchOption
       key={id}
       onClick={() => {
-        setOptions({ ...options, switch: name });
+        setOptions({ ...options, keyboardSwitch: name });
       }}
     >
       {name}
-    </Option>
+    </SwitchOption>
   ));
+
+  const increaseAmount = () => {
+    if (amount < quantity) {
+      setOptions({ ...options, amount: amount + 1 });
+    }
+  };
+
+  const decreaseAmount = () => {
+    if (amount > 1) {
+      setOptions({ ...options, amount: amount - 1 });
+    }
+  };
+
+  const onChangeAddress2 = (e: ChangeEvent<HTMLInputElement>) => {
+    const inputValue = getValue(e);
+    setDetailAddress(inputValue);
+  };
 
   const optionList = isDisplay && (
     <OptionList isDisplay={isDisplay}>{optionLists}</OptionList>
@@ -53,22 +109,8 @@ export function Option({ option }) {
     </UserInfo>
   );
 
-  const increaseAmount = () => {
-    if (options.amount < data?.product.quantity) {
-      setOptions({ ...options, amount: options.amount + 1 });
-    }
-  };
+  const getValue = (e: ChangeEvent<HTMLInputElement>) => e.target.value;
 
-  const decreaseAmount = () => {
-    if (options.amount > 1) {
-      setOptions({ ...options, amount: options.amount - 1 });
-    }
-  };
-
-  const onChangeAddress2 = (e: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = getValue(e);
-    setDetailAddress(inputValue);
-  };
   return (
     <>
       <OptionZone>
@@ -125,7 +167,7 @@ const OptionList = styled.ul<{ isDisplay: boolean }>`
   border-radius: 10px;
 `;
 
-const Option = styled.li`
+const SwitchOption = styled.li`
   padding: 5px 10px;
 `;
 
