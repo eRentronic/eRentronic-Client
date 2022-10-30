@@ -89,8 +89,14 @@ export function Purchase() {
     throw new Error('데이터 없음');
   }
 
-  const { product, discountInfoResponse, vendor } = data;
-  const { id: productId, price: productTotalPrice, imageUrl, title } = product;
+  const { product, discountInfoResponse, vendor, keyboardSwitches } = data;
+  const {
+    id: productId,
+    price: productTotalPrice,
+    imageUrl,
+    title,
+    quantity,
+  } = product;
   const { keyboardSwitch, amount } = options;
   const { message } = orderResponse;
   const { name: brandName } = vendor;
@@ -101,7 +107,7 @@ export function Purchase() {
   const { address1, address2, zipCode } = address;
   const ADDRESS = '주소';
 
-  const productInfo = {
+  const infoProps = {
     imageUrl,
     title,
     brandName,
@@ -110,6 +116,15 @@ export function Purchase() {
     productTotalPrice,
   };
 
+  const optionProps = {
+    keyboardSwitches,
+    keyboardSwitch,
+    amount,
+    address1,
+    ADDRESS,
+    quantity,
+    options,
+  };
   const { mutate } = useMutationPost(
     URL,
     {
@@ -184,7 +199,7 @@ export function Purchase() {
       <S.UserInfoTitle>사용자정보</S.UserInfoTitle>
       <S.UserInfoContent>
         주소
-        <S.ChangeAddressBtn type="button" onClick={addressControll}>
+        <S.ChangeAddressBtn type="button" onClick={}>
           {address.address1 ? '주소변경' : '주소선택'}
         </S.ChangeAddressBtn>
       </S.UserInfoContent>
@@ -215,7 +230,7 @@ export function Purchase() {
         isClicked={isClicked}
       >
         {orderResponseModal}
-        <Info info={productInfo} />
+        <Info info={infoProps} />
         <S.OptionZone>
           <S.DetailOptionBtn
             onClick={e => {
