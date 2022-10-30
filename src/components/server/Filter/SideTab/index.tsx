@@ -1,15 +1,36 @@
 import { Category } from './Category';
-import * as DATA from './dummy';
 import * as S from './index.style';
 
-export function SideTab() {
-  const categoryLists = Object.keys(DATA.DUMMY_SIDEBAR_MODEL);
-  const categories = categoryLists.map(key => (
-    <Category
-      key={key}
-      categoryLists={DATA.DUMMY_SIDEBAR_MODEL[key]}
-      title={DATA.CATEGORY_TITLES[key]}
-    />
+type SideTapProps = {
+  keyboardConnections: {
+    id: 0;
+    name: 'string';
+  }[];
+  layouts: {
+    id: 0;
+    name: 'string';
+  }[];
+  switches: {
+    id: 0;
+    name: 'string';
+  }[];
+
+  vendors: {
+    id: 0;
+    name: 'string';
+  }[];
+};
+
+export function SideTab({
+  keyboardConnections,
+  layouts,
+  switches,
+  vendors,
+}: SideTapProps) {
+  const productFilterData = { keyboardConnections, layouts, switches, vendors };
+  const categoryLists = Object.entries(productFilterData);
+  const categories = categoryLists.map(([key, value]) => (
+    <Category key={key} categoryLists={value} title={key} />
   ));
 
   return (
