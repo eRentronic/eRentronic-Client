@@ -4,9 +4,8 @@ import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
-import { HeaderType } from '@/apis/api';
+import { getData, HeaderType } from '@/apis/api';
 import * as API from '@/apis/mainProducts';
-import { Text } from '@/components/common';
 import * as S from '@/components/server/ProductDetail/OrderForm/index.style';
 import { useAddressApi } from '@/hooks/useAddressApi';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
@@ -14,6 +13,7 @@ import { useMutationPost } from '@/hooks/useMutationPost';
 import { modalStore } from '@/recoils/modal/modal';
 import { stopEventDelivery } from '@/utils/utils';
 
+import { Decide } from './Decide/Decide';
 import { Info } from './Info';
 import { DefaultOptionsState, Option, OptionType } from './Option';
 
@@ -53,8 +53,9 @@ export function Purchase() {
   const detailPath = `${process.env.PRODUCT}/${productID}`;
   // const recommendPath = `${process.env.MAIN_PRODUCTS}/${productID}/recommendations`;
   // 서버 구현중
-  const { data } = useQuery<API.ProductDetail, AxiosError>(['getInfos'], () =>
-    getInfos(detailPath),
+  const { data } = useQuery<API.ProductDetail, AxiosError>(
+    ['getInfos'],
+    getData<API.ProductDetail>(detailPath),
   );
 
   const { value } = useLocalStorage('loginState');
@@ -122,6 +123,10 @@ export function Purchase() {
     closeModal();
   };
 
+  const onClickPurChaseWrap = (e: MouseEvent) => {
+    e.stopPropagation();
+  };
+
   const closeModal = () => {
     setIsClicked(!isClicked);
     setIsDisplay(false);
@@ -178,7 +183,7 @@ export function Purchase() {
       keyboardSwitches,
       keyboardSwitch,
       amount,
-      address,
+      address1,
       isDisplay,
       errMessage,
     },
@@ -204,26 +209,11 @@ export function Purchase() {
 
   return (
     <S.Dimmed isClicked={isClicked} onClick={onClickDimmed}>
-      <S.PurchaseWrap
-        onClick={e => {
-          stopEventDelivery(e);
-          setIsDisplay(false);
-        }}
-        isClicked={isClicked}
-      >
+      <S.PurchaseWrap onClick={onClickPurChaseWrap} isClicked={isClicked}>
         {orderResponseModal}
         <Info info={infoProps} />
         <Option option={optionProps} />
-        <S.PriceAndButton>
-          <S.DiscountedPrice>{`총 ${finalPrice} 원`}</S.DiscountedPrice>
-          <S.PurchaseButton
-            disabled={!isFormFilled}
-            isFormFilled={isFormFilled}
-            onClick={postOrder}
-          >
-            <Text>구매</Text>
-          </S.PurchaseButton>
-        </S.PriceAndButton>
+        <Decide decide={decideProps} />
       </S.PurchaseWrap>
     </S.Dimmed>
   );
