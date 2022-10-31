@@ -2,6 +2,7 @@
 import { useState } from 'react';
 
 export type DefaultAddressState = {
+  [key: string]: string | number;
   address1: string;
   address2: string;
   zipCode: string;
