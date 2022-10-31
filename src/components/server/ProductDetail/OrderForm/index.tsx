@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -11,16 +11,10 @@ import { useAddressApi } from '@/hooks/useAddressApi';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { useMutationPost } from '@/hooks/useMutationPost';
 import { modalStore } from '@/recoils/modal/modal';
-import { stopEventDelivery } from '@/utils/utils';
 
 import { Decide } from './Decide/Decide';
 import { Info } from './Info';
 import { DefaultOptionsState, Option, OptionType } from './Option';
-
-const getInfos = async (path: string) => {
-  const result = await axios.get<API.ProductDetail>(path);
-  return result.data;
-};
 
 const defaultOptions: DefaultOptionsState = {
   keyboardSwitch: '',
