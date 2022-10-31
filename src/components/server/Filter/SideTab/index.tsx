@@ -152,7 +152,7 @@ export function SideTab({
     sideTabToggleStateDispatch,
   );
 
-  const onClickCategory =
+  const getCategoryHandler =
     (action: actionType, dispatch: React.Dispatch<actionType>) => () => {
       dispatch(action);
     };
@@ -164,8 +164,8 @@ export function SideTab({
       categoryLists={value}
       title={key}
       view={value.view}
-      onClickTitle={onClickCategory(value.popUpAction, value.toggleDispatch)}
-      onClickViewMoreButton={onClickCategory(
+      onClickTitle={getCategoryHandler(value.popUpAction, value.toggleDispatch)}
+      onClickViewMoreButton={getCategoryHandler(
         value.viewMoreAction,
         value.toggleDispatch,
       )}
