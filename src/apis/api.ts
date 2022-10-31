@@ -25,7 +25,9 @@ export const postData = async <T>(
   return data;
 };
 
-export const getData = async (path: string) => {
-  const result = await axios.get(path);
-  return result.data;
-};
+export const getData =
+  <T>(path: string) =>
+  async () => {
+    const result = await axios.get(path);
+    return result.data as T;
+  };
