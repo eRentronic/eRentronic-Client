@@ -4,22 +4,28 @@ import styled from 'styled-components';
 import { Text } from '@/components/common';
 import { Caution } from '@/components/common/Caution';
 import { TextProps } from '@/components/common/Text/types';
-import { DefaultAddressState } from '@/hooks/useAddressApi';
 
-type OptionType = {
-  amount: number;
-  keyboardSwitch: string;
-  keyboardSwitches: {
-    id: number;
-    name: string;
-  }[];
-  quantity: number;
-  options: DefaultOptionsState;
-  setOptions: Dispatch<DefaultOptionsState>;
-  address: DefaultAddressState;
-  address2: string;
-  addressControll: () => void;
-  setDetailAddress: (value: string) => void;
+export type OptionType = {
+  state: {
+    amount: number;
+    keyboardSwitch: string;
+    keyboardSwitches: {
+      id: number;
+      name: string;
+    }[];
+    address1: string;
+    isDisplay: boolean;
+    errMessage: 'wrongAddress' | '';
+  };
+  func: {
+    addressControll: () => void;
+    setDetailAddress: (value: string) => void;
+    setIsDisplay: Dispatch<boolean>;
+    onClickPlusBtn: () => void;
+    onClickMinusBtn: () => void;
+    onChangeAddress2: (e: ChangeEvent<HTMLInputElement>) => void;
+    getOptionHandler: (name: string) => () => void;
+  };
 };
 
 type OptionProps = {
@@ -33,61 +39,39 @@ export type DefaultOptionsState = {
 };
 
 export function Option({ option }: OptionProps) {
+  const { state, func } = option;
   const {
     amount,
     keyboardSwitch,
     keyboardSwitches,
-    quantity,
-    options,
-    setOptions,
-    address,
-    address2,
+    address1,
+    isDisplay,
+    errMessage,
+  } = state;
+  const {
     addressControll,
-    setDetailAddress,
-  } = option;
-  const [isDisplay, setIsDisplay] = useState(false); // 모달
+    setIsDisplay,
+    onClickMinusBtn,
+    onClickPlusBtn,
+    onChangeAddress2,
+    getOptionHandler,
+  } = func;
   const ADDRESS = '주소';
 
-  const setAddressErrorMsg = (inputValue: string) =>
-    inputValue.length < 5 ? 'wrongAddress' : '';
-  const errMessage = setAddressErrorMsg(address2);
-
   const optionLists = keyboardSwitches.map(({ id, name }) => (
-    <SwitchOption
-      key={id}
-      onClick={() => {
-        setOptions({ ...options, keyboardSwitch: name });
-      }}
-    >
+    <SwitchOption key={id} onClick={getOptionHandler(name)}>
       {name}
     </SwitchOption>
   ));
-
-  const increaseAmount = () => {
-    if (amount < quantity) {
-      setOptions({ ...options, amount: amount + 1 });
-    }
-  };
-
-  const decreaseAmount = () => {
-    if (amount > 1) {
-      setOptions({ ...options, amount: amount - 1 });
-    }
-  };
-
-  const onChangeAddress2 = (e: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = getValue(e);
-    setDetailAddress(inputValue);
-  };
 
   const optionList = isDisplay && (
     <OptionList isDisplay={isDisplay}>{optionLists}</OptionList>
   );
   const chooseAmount = keyboardSwitch && (
     <AmountWrap>
-      <PlusBtn onClick={increaseAmount}>+</PlusBtn>
+      <PlusBtn onClick={onClickPlusBtn}>+</PlusBtn>
       <Text styles={{ fontSize: '15px' }}>{amount}</Text>
-      <MinusBtn onClick={decreaseAmount}>-</MinusBtn>
+      <MinusBtn onClick={onClickMinusBtn}>-</MinusBtn>
     </AmountWrap>
   );
 
@@ -97,10 +81,10 @@ export function Option({ option }: OptionProps) {
       <UserInfoContent>
         주소
         <ChangeAddressBtn type="button" onClick={addressControll}>
-          {address.address1 ? '주소변경' : '주소선택'}
+          {address1 ? '주소변경' : '주소선택'}
         </ChangeAddressBtn>
       </UserInfoContent>
-      <Address1>{address.address1}</Address1>
+      <Address1>{address1}</Address1>
       <Address2
         placeholder="상세주소를 입력해주세요"
         onChange={onChangeAddress2}
@@ -108,8 +92,6 @@ export function Option({ option }: OptionProps) {
       {errMessage && <Caution content={ADDRESS} message={errMessage} />}
     </UserInfo>
   );
-
-  const getValue = (e: ChangeEvent<HTMLInputElement>) => e.target.value;
 
   return (
     <>

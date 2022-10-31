@@ -7,7 +7,6 @@ import { useRecoilState } from 'recoil';
 import { HeaderType } from '@/apis/api';
 import * as API from '@/apis/mainProducts';
 import { Text } from '@/components/common';
-import { Caution } from '@/components/common/Caution';
 import * as S from '@/components/server/ProductDetail/OrderForm/index.style';
 import { useAddressApi } from '@/hooks/useAddressApi';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
@@ -16,7 +15,7 @@ import { modalStore } from '@/recoils/modal/modal';
 import { stopEventDelivery } from '@/utils/utils';
 
 import { Info } from './Info';
-import { DefaultOptionsState, Option } from './option';
+import { DefaultOptionsState, Option, OptionType } from './Option';
 
 const getInfos = async (path: string) => {
   const result = await axios.get<API.ProductDetail>(path);
@@ -63,7 +62,7 @@ export function Purchase() {
   // TODO: value를 string으로 바꿔보기!
   const headers: HeaderType = {
     'Access-Token': loginToken,
-    withCredentials: true,
+    // withCredentials: true,
   };
 
   useEffect(() => {
@@ -96,15 +95,6 @@ export function Purchase() {
   const finalPrice = (salePrice * amount).toLocaleString();
   const { address1, address2, zipCode } = address;
 
-  const infoProps = {
-    imageUrl,
-    title,
-    brandName,
-    salePriceWithComma,
-    discounts,
-    productTotalPrice,
-  };
-
   const { mutate } = useMutationPost(
     URL,
     {
@@ -127,39 +117,93 @@ export function Purchase() {
     headers,
   );
 
-  const closeModal = (e: MouseEvent) => {
+  const onClickDimmed = (e: MouseEvent) => {
     e.stopPropagation();
+    closeModal();
+  };
+
+  const closeModal = () => {
     setIsClicked(!isClicked);
     setIsDisplay(false);
   };
 
+  const isFormFilled =
+    !Object.keys(address).find(key => !address[key]) &&
+    !Object.keys(options).find(key => !options[key]);
+
   const postOrder = () => {
     mutate();
   };
+  const onClickPlusBtn = () => {
+    if (amount < quantity) {
+      increaseAmount();
+    }
+  };
+  const onClickMinusBtn = () => {
+    if (amount > 1) {
+      decreaseAmount();
+    }
+  };
+  const increaseAmount = () => {
+    setOptions({ ...options, amount: amount + 1 });
+  };
 
-  const optionProps = {
-    keyboardSwitches,
-    keyboardSwitch,
-    amount,
-    quantity,
-    options,
-    setOptions,
-    address,
-    address2,
-    addressControll,
-    setDetailAddress,
+  const decreaseAmount = () => {
+    setOptions({ ...options, amount: amount - 1 });
+  };
+
+  const setAddressErrorMsg = (inputValue: string) =>
+    inputValue.length < 5 ? 'wrongAddress' : '';
+  const errMessage = setAddressErrorMsg(address2);
+
+  const onChangeAddress2 = (e: ChangeEvent<HTMLInputElement>) => {
+    const inputValue = getValue(e);
+    setDetailAddress(inputValue);
+  };
+
+  const getOptionHandler = (name: string) => () => {
+    setOptions({ ...options, keyboardSwitch: name });
+  };
+
+  const infoProps = {
+    imageUrl,
+    title,
+    brandName,
+    salePriceWithComma,
+    discounts,
+    productTotalPrice,
+  };
+  const optionProps: OptionType = {
+    state: {
+      keyboardSwitches,
+      keyboardSwitch,
+      amount,
+      address,
+      isDisplay,
+      errMessage,
+    },
+    func: {
+      addressControll,
+      setDetailAddress,
+      setIsDisplay,
+      onClickPlusBtn,
+      onClickMinusBtn,
+      onChangeAddress2,
+      getOptionHandler,
+    },
+  };
+  const decideProps = {
+    finalPrice,
+    isFormFilled,
+    postOrder,
   };
 
   const orderResponseModal = !!message && (
     <S.OrderConfirmation>{message}</S.OrderConfirmation>
   );
 
-  const isFormFilled =
-    !Object.keys(address).find(key => !address[key]) &&
-    !Object.keys(options).find(key => !options[key]);
-
   return (
-    <S.Dimmed isClicked={isClicked} onClick={closeModal}>
+    <S.Dimmed isClicked={isClicked} onClick={onClickDimmed}>
       <S.PurchaseWrap
         onClick={e => {
           stopEventDelivery(e);
