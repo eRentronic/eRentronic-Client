@@ -4,16 +4,22 @@ import { Text } from '@/components/common';
 import { TextProps } from '@/components/common/Text/types';
 
 type decideType = {
-  finalPrice: string;
-  isFormFilled: boolean;
-  postOrder: () => void;
+  state: {
+    finalPrice: string;
+    isFormFilled: boolean;
+  };
+  func: {
+    postOrder: () => void;
+  };
 };
 
 type decideProps = {
   decide: decideType;
 };
 export function Decide({ decide }: decideProps) {
-  const { finalPrice, isFormFilled, postOrder } = decide;
+  const { state, func } = decide;
+  const { finalPrice, isFormFilled } = state;
+  const { postOrder } = func;
 
   return (
     <PriceAndButton>

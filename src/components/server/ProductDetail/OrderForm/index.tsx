@@ -192,9 +192,13 @@ export function Purchase() {
     },
   };
   const decideProps = {
-    finalPrice,
-    isFormFilled,
-    postOrder,
+    state: {
+      finalPrice,
+      isFormFilled,
+    },
+    func: {
+      postOrder,
+    },
   };
 
   const orderResponseModal = !!message && (
