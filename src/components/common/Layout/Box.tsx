@@ -5,7 +5,7 @@ import {
   Container,
   ContainerProps,
   DEFAULT_CONTAINER_PARAMS,
-} from '@/components/common/Layout/Container';
+} from '@/components/common/Layout/Core';
 
 type BoxBaseProps = {
   position?: 'static' | 'absolute' | 'relative' | 'fixed';

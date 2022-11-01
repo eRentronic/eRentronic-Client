@@ -5,7 +5,7 @@ import styled, { CSSProperties } from 'styled-components';
 export type ContainerProps<T extends RegionalElements> = {
   children?: ReactNode;
   as?: T;
-  layout?: Layout;
+  flexDirection?: Layout;
   justifyContent?: FlexLayout;
   alignItem?: FlexLayout;
   flexWrap?: Wrap;
@@ -37,8 +37,6 @@ export const DEFAULT_CONTAINER_PARAMS: Pick<ContainerProps<'div'>, 'as'> = {
   as: 'div',
 };
 
-// TODO: Ref에 여러 HTML엘리먼트 타입이 경우에 따라 들어가야하는데...
-// div, span 처럼 as의 값이 추론되어서 해당HTMLElement 타입을 반환해주는 타입이 없을까
 function Container<T extends RegionalElements = 'div'>(
   props: ContainerProps<T>,
   ref: Ref<any>,
@@ -58,14 +56,22 @@ function Container<T extends RegionalElements = 'div'>(
 }
 
 const StyledContainer = styled.div<ContainerProps<RegionalElements>>(
-  ({ layout, justifyContent, alignItem, flexWrap, backgroundColor, gap }) => ({
-    display: 'flex',
-    flexDirection: layout,
+  ({
+    flexDirection,
     justifyContent,
     alignItem,
     flexWrap,
     backgroundColor,
     gap,
+  }) => ({
+    display: 'flex',
+    flexDirection,
+    justifyContent,
+    alignItem,
+    flexWrap,
+    backgroundColor,
+    gap,
+    boxSizing: 'border-box',
   }),
 );
 
