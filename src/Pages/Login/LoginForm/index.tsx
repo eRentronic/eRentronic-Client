@@ -8,7 +8,7 @@ import { useMutationPost } from '@/hooks/useMutationPost';
 import {
   LoginLogo,
   UserIdentifyForm,
-  Panel,
+  LoginPanel,
 } from '@/Pages/Login/LoginForm/components';
 
 import { useLogin } from './hook';
@@ -87,7 +87,7 @@ export function LoginForm({ routeToPassword }: LoginFormProps) {
       {isLogin && <Navigate to="/Main" />}
       <LoginLogo />
       <UserIdentifyForm {...loginFormProps} />
-      <Panel {...panelProps} />
+      <LoginPanel {...panelProps} />
     </Content>
   );
 }

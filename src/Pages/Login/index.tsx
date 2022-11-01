@@ -2,8 +2,8 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 import { Text, Button } from '@/components/common';
-import { LoginForm } from '@/templates/LoginForm';
-import { SignInForm } from '@/templates/SigninForm';
+import { LoginForm } from '@/Pages/Login/LoginForm';
+import { SignInForm } from '@/Pages/Login/SignInForm';
 
 export function LoginPage() {
   const [isDone, setIsDone] = useState(false);
@@ -21,11 +21,11 @@ export function LoginPage() {
   return (
     <Layout>
       <LoginSection routeToSignIn={needSignIn}>
-        <LoginForm NeedSignInDispatch={routeToAnotherForm} />
+        <LoginForm routeToPassword={routeToAnotherForm} />
         <SignInForm
           messageDispatch={setMessage}
           modalDisplayDispatch={setIsDone}
-          NeedSignInDispatch={routeToAnotherForm}
+          routeToLogin={routeToAnotherForm}
         />
       </LoginSection>
 

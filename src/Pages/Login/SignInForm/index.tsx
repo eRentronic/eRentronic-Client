@@ -6,7 +6,7 @@ import { Logo } from '@/components/common/Logo';
 import { useAddressApi } from '@/hooks/useAddressApi';
 import { useMutationPost } from '@/hooks/useMutationPost';
 import {
-  Panel,
+  SignInPanel,
   PasswordForm,
   EmailForm,
   NameForm,
@@ -73,11 +73,13 @@ export function SignInForm({
     const res = error.response!;
     messageDispatch(res.data.message);
   };
+
   const onSignInSuccess = () => {
     signInDispatch({ type: 'reset' });
     resetAddress();
     routeToLogin();
   };
+
   const { mutate } = useMutationPost(
     URL,
     signInData,
@@ -99,7 +101,7 @@ export function SignInForm({
     routeToLogin();
   };
 
-  const panelProps = {
+  const SignInPanelProps = {
     onClickSignIn,
     onClickLoginRouteButton,
     isSignInFilled,
@@ -128,7 +130,7 @@ export function SignInForm({
       <PasswordForm {...passwordFormProps} />
       <NameForm {...nameFormProps} />
       <AddressForm {...addressFormProps} />
-      <Panel {...panelProps} />
+      <SignInPanel {...SignInPanelProps} />
     </SignInLayout>
   );
 }

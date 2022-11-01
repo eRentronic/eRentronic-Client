@@ -19,6 +19,7 @@ export const getIdAction = (value: string) => ({
   type: 'setID',
   payload: value,
 });
+
 export const getPasswordAction = (value: string) => ({
   type: 'setPassword',
   payload: value,
