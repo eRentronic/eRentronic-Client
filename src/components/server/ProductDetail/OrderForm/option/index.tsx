@@ -2,7 +2,7 @@ import { ChangeEvent, Dispatch, useState } from 'react';
 import styled from 'styled-components';
 
 import { Text } from '@/components/common';
-import { Caution } from '@/components/common/Caution';
+import { Caution } from '@/components/common/Text/Caution';
 import { TextProps } from '@/components/common/Text/types';
 
 export type OptionType = {
