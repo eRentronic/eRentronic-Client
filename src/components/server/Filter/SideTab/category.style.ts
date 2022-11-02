@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
 import { Text, Button } from '@/components/common';
+import { ButtonProps } from '@/components/common/Button/types';
+import { TextProps } from '@/components/common/Text/types';
 
 import * as TYPE from './category.type';
 
@@ -26,7 +28,7 @@ export const CategoryList = styled.ul<TYPE.CategoryListProps>`
   border-bottom: 1px solid ${({ theme }) => theme.pallete.grey4};
 `;
 
-export const CategoryTitle = styled(Text)`
+export const CategoryTitle = styled(Text)<TextProps<'h4'>>`
   padding: 10px;
   font-size: 16px;
   border-bottom: 1px solid ${({ theme }) => theme.pallete.grey4};
@@ -36,8 +38,11 @@ export const CategoryTitle = styled(Text)`
   }
 `;
 
-export const ViewMoreBtn = styled(Button)<TYPE.ViewMoreBtnProps>`
+export const ViewMoreBtn = styled(Button)<
+  ButtonProps<'button'> & TYPE.ViewMoreBtnProps
+>`
   display: ${({ isDisplay }) => (!isDisplay ? 'flex' : 'none')};
+  padding: 3px;
   justify-content: center;
   align-items: center;
   position: absolute;
@@ -49,8 +54,4 @@ export const ViewMoreBtn = styled(Button)<TYPE.ViewMoreBtnProps>`
   bottom: 5px;
   border: none;
   overflow: hidden;
-`;
-
-export const ViewMoreText = styled(Text)`
-  font-size: 1px;
 `;

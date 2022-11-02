@@ -11,9 +11,15 @@ export const useMutationPost = <
 >(
   URL: string,
   info: RequestBody,
-  header?: HeaderType,
-  onSuccessCallback?: onSuccessCallBackFn,
-  onErrorCallback?: onErrorCallbackFn,
+  {
+    header,
+    onSuccessCallback,
+    onErrorCallback,
+  }: {
+    header?: HeaderType;
+    onSuccessCallback?: onSuccessCallBackFn;
+    onErrorCallback?: onErrorCallbackFn;
+  },
 ) => {
   return useMutation(() => postData(URL, info, header), {
     onSuccess: data => {

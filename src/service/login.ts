@@ -1,4 +1,4 @@
-import { CautionMessage } from '@/components/common/Caution/types';
+import { CautionMessage } from '@/components/common/Text/Caution/types';
 
 const SHORT_ID_LENGHT = 8;
 const LONG_ID_LENGTH = 20;

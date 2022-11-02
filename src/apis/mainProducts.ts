@@ -90,3 +90,16 @@ export type Discount = {
   title: '이벤트 할인' | '신제품 할인';
   saleRate: string;
 }[];
+
+export const getMainProducts = async () => {
+  const result = await fetch(`${process.env.MAIN_PRODUCTS}`).then(data =>
+    data.json(),
+  );
+
+  return result;
+};
+
+export const getIds = (productData: ContentType[]) => {
+  const productIdList = productData.map(({ product: { id } }) => id);
+  return productIdList;
+};

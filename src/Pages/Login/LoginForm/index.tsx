@@ -55,8 +55,7 @@ export function LoginForm({ routeToPassword }: LoginFormProps) {
   const { mutate } = useMutationPost(
     URL,
     { email: id, password },
-    onLoginSuccess,
-    onLoginFail,
+    { onSuccessCallback: onLoginSuccess, onErrorCallback: onLoginFail },
   );
 
   const idValidate = onChangeInput(idDispatch);

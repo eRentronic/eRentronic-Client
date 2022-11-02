@@ -12,7 +12,7 @@ export const StyledButton = styled.button<TYPE.StyledButtonProps>(
   ({ theme, color = 'primary', size = 'medium' }) => ({
     backgroundColor: theme.pallete[color],
     width: DEFAULT_BUTTON_DESIGN.width[size],
-    minHeight: DEFAULT_BUTTON_DESIGN.height[size],
+    height: DEFAULT_BUTTON_DESIGN.height[size],
 
     wordBreak: 'break-word',
     borderRadius: DEFAULT_BUTTON_DESIGN.radius[size],
