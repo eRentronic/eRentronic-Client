@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
 import { useMutation } from '@tanstack/react-query';
 
-import { postData } from '@/apis/api';
+import { HeaderType, postData } from '@/apis/api';
 
 // TODO: Funtion타입 활용해도 되는가?
 export const useMutationPost = <
@@ -11,10 +11,17 @@ export const useMutationPost = <
 >(
   URL: string,
   info: RequestBody,
-  onSuccessCallback?: onSuccessCallBackFn,
-  onErrorCallback?: onErrorCallbackFn,
+  {
+    header,
+    onSuccessCallback,
+    onErrorCallback,
+  }: {
+    header?: HeaderType;
+    onSuccessCallback?: onSuccessCallBackFn;
+    onErrorCallback?: onErrorCallbackFn;
+  },
 ) => {
-  return useMutation(() => postData(URL, info), {
+  return useMutation(() => postData(URL, info, header), {
     onSuccess: data => {
       if (onSuccessCallback) {
         onSuccessCallback(data);

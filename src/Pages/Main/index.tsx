@@ -3,29 +3,25 @@ import {
   useInfiniteQuery,
   InfiniteData,
 } from '@tanstack/react-query';
+import axios, { AxiosError } from 'axios';
 
 import * as API from '@/apis/mainProducts';
-import { SideTab } from '@/components/server/Filter/SideTab';
-import { Card } from '@/components/server/Product/Card/';
+import { getMainProducts, getIds } from '@/apis/mainProducts';
+import { Container } from '@/components/common/Layout/Core';
 import { MainInput } from '@/components/server/Search';
+import { filterModelType } from '@/service/filter';
 
+import { Aside } from './Aside';
+import { MainContents } from './Contents';
 import * as S from './style';
 
-const getMainProducts = async () => {
-  const result = await fetch(`${process.env.MAIN_PRODUCTS}`).then(data =>
-    data.json(),
-  );
-
-  return result;
-};
-
-const getIds = (productData: API.ContentType[]) => {
-  const productIdList = productData.map(({ product: { id } }) => id);
-  return productIdList;
+const getProductsFilter = async () => {
+  const { data } = await axios(`${process.env.PRODUCTS_FILTER}`);
+  return data;
 };
 
 export function Main() {
-  const { data: ID } = useQuery<API.MainProductsType, Error, number[]>(
+  const { data: ID } = useQuery<API.MainProductsType, AxiosError, number[]>(
     ['productQueryKey'],
     getMainProducts,
     {
@@ -35,17 +31,20 @@ export function Main() {
       },
     },
   );
-  const mainContents = ID?.map(id => <Card key={id} productId={id} />);
+
+  const { data: filterData } = useQuery<
+    filterModelType,
+    AxiosError,
+    filterModelType
+  >(['productFilterQueryKey'], getProductsFilter);
 
   return (
     <S.Wrapper>
-      <S.StyledMain>
+      <Container flexDirection="column" as="main">
         <MainInput />
-        <S.MainContents>{mainContents}</S.MainContents>
-      </S.StyledMain>
-      <S.StyledAside>
-        <SideTab />
-      </S.StyledAside>
+        <MainContents idList={ID!} />
+      </Container>
+      <Aside {...filterData} />
     </S.Wrapper>
   );
 }

@@ -1,5 +1,8 @@
-import { CautionProps, MessageType } from '@/components/common/Caution/types';
 import { Text } from '@/components/common/Text';
+import {
+  CautionProps,
+  MessageType,
+} from '@/components/common/Text/Caution/types';
 
 import { DEFAULT_CAUTION } from './constants';
 

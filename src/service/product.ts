@@ -1,3 +1,5 @@
+import { normalize, mergeNormazliedArr } from '@/utils/utils';
+
 export type MainProductsType = {
   content: ContentType[];
   pageable: {
@@ -91,15 +93,17 @@ export type Discount = {
   saleRate: string;
 }[];
 
-export const getMainProducts = async () => {
-  const result = await fetch(`${process.env.MAIN_PRODUCTS}`).then(data =>
-    data.json(),
-  );
-
-  return result;
-};
-
-export const getIds = (productData: ContentType[]) => {
-  const productIdList = productData.map(({ product: { id } }) => id);
-  return productIdList;
+export const normalizeProduct = (productList: MainProductsType) => {
+  const { content } = productList;
+  const listWithId = content.map(value => {
+    const { product, vendor, discountInfo } = value;
+    const normalizedValue = {
+      ...product,
+      vendor: { ...vendor },
+      discountInfo: { ...discountInfo },
+    };
+    return normalizedValue;
+  });
+  const normalizedArr = listWithId.map(normalize);
+  return mergeNormazliedArr(normalizedArr);
 };

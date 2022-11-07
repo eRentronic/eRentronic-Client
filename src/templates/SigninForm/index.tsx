@@ -1,4 +1,4 @@
-import { AxiosError } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import {
   useState,
   Dispatch,
@@ -94,11 +94,15 @@ export function SignInForm({
     const res = error.response!;
     messageDispatch(res.data.message);
   };
-  const onSignInSuccess = () => {
+  const onSignInSuccess = (res: AxiosResponse) => {
+    const { message } = res.data;
     signInDispatch({ type: 'reset' });
     resetAddress();
+    messageDispatch(message);
+    modalDisplayDispatch(true);
     NeedSignInDispatch();
   };
+  
   const { mutate } = useMutationPost(
     URL,
     signInData,
@@ -155,6 +159,7 @@ export function SignInForm({
             iconSrc: 'PERSON',
             placeholder: ID,
             onChange: onChangeID,
+            value: email,
           }}
           cautionContent={ID}
           inputErrorMessages={idErrorMessages}
@@ -172,6 +177,7 @@ export function SignInForm({
               onChange: onChangePassword,
               iconSrc: 'LOCK',
               type: 'password',
+              value: password,
             }}
             cautionContent={PASSWORD}
             inputErrorMessages={passwordErrorMessages}
@@ -184,6 +190,7 @@ export function SignInForm({
               placeholder: '비밀번호 재입력',
               onChange: onChangeConfirmPassword,
               type: 'password',
+              value: passwordConfirm,
             }}
             cautionContent={PASSWORD}
             inputErrorMessages={confirmPasswordErrorMessages}
@@ -195,6 +202,7 @@ export function SignInForm({
           size: 'small',
           placeholder: '이름',
           onChange: onChangeName,
+          value: name,
         }}
         inputErrorMessages={nameErrorMessges}
       />
