@@ -13,8 +13,7 @@ type ProgressBarProps = {
   styles?: CSSObject;
 };
 
-const DEFAULT_PROGRESS_BAR_PROPS: ProgressBarProps = {
-  progressRate: 20,
+const DEFAULT_PROGRESS_BAR_PROPS: Omit<ProgressBarProps, 'progressRate'> = {
   backgroundColor: 'grey5',
   barColor: 'primary',
   height: 20,
