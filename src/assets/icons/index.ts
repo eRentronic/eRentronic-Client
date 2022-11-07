@@ -1,3 +1,4 @@
+import CLOSE from './close.svg?component';
 import HEART from './heart.svg?component';
 import LOCK from './lock.svg?component';
 import MENU from './menu.svg?component';
@@ -20,4 +21,5 @@ export {
   NEXT,
   PREV,
   LOCK,
+  CLOSE,
 };
