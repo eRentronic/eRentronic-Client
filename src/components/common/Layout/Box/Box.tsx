@@ -6,12 +6,16 @@ import {
   ContainerProps,
   DEFAULT_CONTAINER_PARAMS,
 } from '@/components/common/Layout/Core';
+import { globalTheme } from '@/styles/globalTheme';
 
 type BoxBaseProps = {
   position?: 'static' | 'absolute' | 'relative' | 'fixed';
-  left?: number | 'none';
-  right?: number | 'none';
+  left?: number;
+  right?: number;
   size?: 'small' | 'medium' | 'large';
+  boxColor?: keyof typeof globalTheme.pallete;
+  boderWeight?: number;
+  borderColor?: keyof typeof globalTheme.pallete;
 };
 
 type BoxProps = ContainerProps<'div'> &
@@ -20,9 +24,12 @@ type BoxProps = ContainerProps<'div'> &
 const DEFAULT_PARAM: BoxProps = {
   ...DEFAULT_CONTAINER_PARAMS,
   position: 'static',
-  left: 'none',
-  right: 'none',
+  left: undefined,
+  right: undefined,
   size: 'medium',
+  boxColor: 'primary',
+  boderWeight: 1,
+  borderColor: 'primary',
 };
 
 const BOX_PADDING = {
@@ -34,11 +41,28 @@ const BOX_PADDING = {
 export const Box = forwardRef<HTMLDivElement, BoxProps>(
   (props: BoxProps, ref) => {
     const containerProperty = { ...DEFAULT_PARAM, ...props };
-    const { children, position, left, right, size } = containerProperty;
-    const boxStyle: BoxBaseProps = { position, left, right, size };
+    const {
+      children,
+      position,
+      left,
+      right,
+      size,
+      boxColor,
+      borderColor,
+      boderWeight,
+    } = containerProperty;
+    const boxStyle: BoxBaseProps = {
+      position,
+      left,
+      right,
+      size,
+      boxColor,
+      borderColor,
+      boderWeight,
+    };
 
     return (
-      <BoxWrapper {...{ boxStyle }}>
+      <BoxWrapper {...boxStyle}>
         <Container ref={ref} {...containerProperty}>
           {children}
         </Container>
@@ -48,11 +72,22 @@ export const Box = forwardRef<HTMLDivElement, BoxProps>(
 );
 
 const BoxWrapper = styled.div<BoxBaseProps>(
-  ({ position, left, right, size }) => ({
+  ({
     position,
     left,
     right,
-    padding: BOX_PADDING[size!],
+    size = 'medium',
+    boxColor = 'white',
+    borderColor = 'primary',
+    boderWeight,
+    theme,
+  }) => ({
+    position,
+    left,
+    right,
+    padding: BOX_PADDING[size],
     borderRadius: '15px',
+    border: `${boderWeight}px solid ${theme.pallete[borderColor]}`,
+    backgroundColor: theme.pallete[boxColor],
   }),
 );
