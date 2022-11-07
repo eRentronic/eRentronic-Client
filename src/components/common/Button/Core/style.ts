@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import * as TYPE from '@/components/common/Button/types';
+import * as TYPE from '@/components/common/Button/Core/types';
 
 const DEFAULT_BUTTON_DESIGN = {
   width: { large: '200px', medium: '150px', small: '90px' },
@@ -9,7 +9,11 @@ const DEFAULT_BUTTON_DESIGN = {
 } as const;
 
 export const StyledButton = styled.button<TYPE.StyledButtonProps>(
-  ({ theme, color = 'primary', size = 'medium' }) => ({
+  ({ theme, color = 'primary', size = 'medium', styles }) => ({
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+
     backgroundColor: theme.pallete[color],
     width: DEFAULT_BUTTON_DESIGN.width[size],
     height: DEFAULT_BUTTON_DESIGN.height[size],
@@ -22,5 +26,7 @@ export const StyledButton = styled.button<TYPE.StyledButtonProps>(
       transform: 'scale(0.9)',
       transition: '0.2s',
     },
+
+    ...styles,
   }),
 );
