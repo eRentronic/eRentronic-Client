@@ -13,11 +13,9 @@ type ModalProps = {
 export function Modal({ modal }: ModalProps) {
   const { width, height } = modal;
   const [isClicked, setIsClicked] = useState(false);
-  const [isDisplay, setIsDisplay] = useState(false); // 모달
 
   const closeModal = () => {
     setIsClicked(!isClicked);
-    setIsDisplay(false);
   };
 
   const onClickDimmed = (e: MouseEvent) => {

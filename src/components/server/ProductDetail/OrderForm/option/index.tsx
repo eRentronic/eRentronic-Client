@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, useState } from 'react';
+import { ChangeEvent, MouseEvent } from 'react';
 import styled from 'styled-components';
 
 import { Text } from '@/components/common';
@@ -14,13 +14,13 @@ export type OptionType = {
       name: string;
     }[];
     address1: string;
-    isDisplay: boolean;
+    isOptionDisplay: boolean;
     errMessage: 'wrongAddress' | '';
   };
   func: {
     addressControll: () => void;
     setDetailAddress: (value: string) => void;
-    setIsDisplay: Dispatch<boolean>;
+    onClickDetailOptionBtn: (e: MouseEvent) => void;
     onClickPlusBtn: () => void;
     onClickMinusBtn: () => void;
     onChangeAddress2: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -45,12 +45,12 @@ export function Option({ option }: OptionProps) {
     keyboardSwitch,
     keyboardSwitches,
     address1,
-    isDisplay,
+    isOptionDisplay,
     errMessage,
   } = state;
   const {
     addressControll,
-    setIsDisplay,
+    onClickDetailOptionBtn,
     onClickMinusBtn,
     onClickPlusBtn,
     onChangeAddress2,
@@ -64,9 +64,10 @@ export function Option({ option }: OptionProps) {
     </SwitchOption>
   ));
 
-  const optionList = isDisplay && (
-    <OptionList isDisplay={isDisplay}>{optionLists}</OptionList>
+  const optionList = isOptionDisplay && (
+    <OptionList isOptionDisplay={isOptionDisplay}>{optionLists}</OptionList>
   );
+
   const chooseAmount = keyboardSwitch && (
     <AmountWrap>
       <PlusBtn onClick={onClickPlusBtn}>+</PlusBtn>
@@ -96,12 +97,7 @@ export function Option({ option }: OptionProps) {
   return (
     <>
       <OptionZone>
-        <DetailOptionBtn
-          onClick={e => {
-            setIsDisplay(true);
-            e.stopPropagation();
-          }}
-        >
+        <DetailOptionBtn onClick={onClickDetailOptionBtn}>
           <Text typography="Light" styles={{ fontSize: '9px' }}>
             option
           </Text>
@@ -140,10 +136,10 @@ const DetailOptionBtn = styled.button`
   transition: 0.2s;
 `;
 
-const OptionList = styled.ul<{ isDisplay: boolean }>`
+const OptionList = styled.ul<{ isOptionDisplay: boolean }>`
   position: absolute;
   left: 20%;
-  display: ${({ isDisplay }) => (isDisplay ? 'flex' : 'none')};
+  display: ${({ isOptionDisplay }) => (isOptionDisplay ? 'flex' : 'none')};
   border: 1px solid black;
   width: fit-content;
   border-radius: 10px;

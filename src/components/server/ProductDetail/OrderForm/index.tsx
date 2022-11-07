@@ -35,8 +35,8 @@ const getValue = (e: ChangeEvent<HTMLInputElement>) => e.target.value;
 const URL = `${process.env.ORDER_PRODUCTS}`;
 
 export function Purchase() {
-  const [isDisplay, setIsDisplay] = useState(false); // 모달
   const [isClicked, setIsClicked] = useRecoilState(modalStore); // 모달
+  const [isOptionDisplay, setIsOptionDisplay] = useState(false);
   const [orderResponse, setOrderResponse] = useState(defaultOrderResponse);
   const [options, setOptions] = useState(defaultOptions);
   const location = useLocation();
@@ -123,7 +123,6 @@ export function Purchase() {
 
   const closeModal = () => {
     setIsClicked(!isClicked);
-    setIsDisplay(false);
   };
 
   const isFormFilled =
@@ -164,6 +163,11 @@ export function Purchase() {
     setOptions({ ...options, keyboardSwitch: name });
   };
 
+  const onClickDetailOptionBtn = (e: MouseEvent) => {
+    setIsOptionDisplay(true);
+    e.stopPropagation();
+  };
+
   const infoProps = {
     imageUrl,
     title,
@@ -178,13 +182,13 @@ export function Purchase() {
       keyboardSwitch,
       amount,
       address1,
-      isDisplay,
+      isOptionDisplay,
       errMessage,
     },
     func: {
       addressControll,
       setDetailAddress,
-      setIsDisplay,
+      onClickDetailOptionBtn,
       onClickPlusBtn,
       onClickMinusBtn,
       onChangeAddress2,
