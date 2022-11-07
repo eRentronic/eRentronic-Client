@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { IconButton } from './IconButton';
 
 export default {
-  title: 'View/IconButton',
+  title: 'View/Button/Icon',
   component: IconButton,
   argTypes: {
     size: {

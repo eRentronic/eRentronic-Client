@@ -9,7 +9,7 @@ import { Button } from '.';
 
 export default {
   component: Button,
-  title: 'View/Button',
+  title: 'View/Button/Core',
   args: { size: 'medium' },
   argTypes: {
     size: {
