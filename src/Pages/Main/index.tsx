@@ -7,7 +7,8 @@ import axios, { AxiosError } from 'axios';
 
 import * as API from '@/apis/mainProducts';
 import { getMainProducts, getIds } from '@/apis/mainProducts';
-import { Container } from '@/components/common/Layout/Core';
+import { IconButton } from '@/components/common/Button/Icon';
+import { Container } from '@/components/common/Layout/Core/Core';
 import { MainInput } from '@/components/server/Search';
 import { filterModelType } from '@/service/filter';
 

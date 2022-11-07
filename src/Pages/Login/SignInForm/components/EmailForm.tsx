@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 
 import { Button, Text } from '@/components/common';
-import { Container } from '@/components/common/Layout/Core';
+import { Container } from '@/components/common/Layout/Core/Core';
 import { CautionMessage } from '@/components/common/Text/Caution/types';
 import { SignInInput } from '@/Pages/Login/SignInForm/components/SinginInput';
 

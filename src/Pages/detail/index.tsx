@@ -7,27 +7,31 @@ import { useRecoilState } from 'recoil';
 import * as API from '@/apis/mainProducts';
 import { Icon } from '@/components/common';
 import { Purchase } from '@/components/server/ProductDetail/OrderForm';
+import { useLocalStorage } from '@/hooks/useLocalStorage';
 import * as S from '@/Pages/Detail/index.style';
 import { modalStore } from '@/recoils/modal/modal';
 
-const getInfos = (path: string) => async () => {
+const getInfos = (path: string, token: string) => async () => {
   // id를 살려야 하나? 의논해보기
-  const result = await axios.get<API.ProductDetail>(path);
+  const result = await axios.get<API.ProductDetail>(path, {
+    // headers: { 'Access-Token': token },
+  });
   return result.data;
 };
+
 export function Detail() {
   const [isClicked, setIsClicked] = useRecoilState(modalStore);
   const [showDetail, setShowDetail] = useState(false);
   const location = useLocation();
   const param = new URLSearchParams(location.search);
   const productID = param.get('id');
-
+  const { value } = useLocalStorage('loginState');
+  const { loginToken } = value;
   const detailPath = `${process.env.PRODUCT}/${productID}`;
   // const recommendPath = `${process.env.MAIN_PRODUCTS}/${productID}/recommendations`;
-
   const { data } = useQuery<API.ProductDetail, AxiosError>(
     ['getInfos'],
-    getInfos(detailPath),
+    getInfos(detailPath, loginToken),
   );
   // const recommend = useQuery<API.ProductDetail, AxiosError>(
   //   ['getRecommend'],

@@ -109,7 +109,7 @@ export function Purchase() {
       },
       totalPrice,
     },
-    headers,
+    { header: headers },
   );
 
   const onClickDimmed = (e: MouseEvent) => {
