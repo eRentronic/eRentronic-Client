@@ -2,10 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 import { getData, HeaderType } from '@/apis/api';
 import * as API from '@/apis/mainProducts';
+import { Modal } from '@/components/common/Modal';
 import * as S from '@/components/server/ProductDetail/OrderForm/index.style';
 import { useAddressApi } from '@/hooks/useAddressApi';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
@@ -35,7 +36,7 @@ const getValue = (e: ChangeEvent<HTMLInputElement>) => e.target.value;
 const URL = `${process.env.ORDER_PRODUCTS}`;
 
 export function Purchase() {
-  const [isClicked, setIsClicked] = useRecoilState(modalStore); // 모달
+  const setIsClicked = useSetRecoilState(modalStore); // 모달
   const [isOptionDisplay, setIsOptionDisplay] = useState(false);
   const [orderResponse, setOrderResponse] = useState(defaultOrderResponse);
   const [options, setOptions] = useState(defaultOptions);
@@ -111,19 +112,6 @@ export function Purchase() {
     },
     { header: headers },
   );
-
-  const onClickDimmed = (e: MouseEvent) => {
-    e.stopPropagation();
-    closeModal();
-  };
-
-  const onClickPurChaseWrap = (e: MouseEvent) => {
-    e.stopPropagation();
-  };
-
-  const closeModal = () => {
-    setIsClicked(!isClicked);
-  };
 
   const isFormFilled =
     !Object.keys(address).find(key => !address[key]) &&
@@ -210,13 +198,11 @@ export function Purchase() {
   );
 
   return (
-    <S.Dimmed isClicked={isClicked} onClick={onClickDimmed}>
-      <S.PurchaseWrap onClick={onClickPurChaseWrap} isClicked={isClicked}>
-        {orderResponseModal}
-        <Info info={infoProps} />
-        <Option option={optionProps} />
-        <Decide decide={decideProps} />
-      </S.PurchaseWrap>
-    </S.Dimmed>
+    <Modal>
+      {orderResponseModal}
+      <Info info={infoProps} />
+      <Option option={optionProps} />
+      <Decide decide={decideProps} />
+    </Modal>
   );
 }
