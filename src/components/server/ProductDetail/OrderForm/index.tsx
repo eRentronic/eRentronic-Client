@@ -1,21 +1,22 @@
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
+import { ChangeEvent, Dispatch, MouseEvent, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useSetRecoilState } from 'recoil';
 
 import { getData, HeaderType } from '@/apis/api';
 import * as API from '@/apis/mainProducts';
 import { Modal } from '@/components/common/Modal';
+import { Decide } from '@/components/server/ProductDetail/OrderForm/Decide/Decide';
 import * as S from '@/components/server/ProductDetail/OrderForm/index.style';
+import { Info } from '@/components/server/ProductDetail/OrderForm/Info';
+import {
+  DefaultOptionsState,
+  Option,
+  OptionType,
+} from '@/components/server/ProductDetail/OrderForm/Option';
 import { useAddressApi } from '@/hooks/useAddressApi';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { useMutationPost } from '@/hooks/useMutationPost';
-import { modalStore } from '@/recoils/modal/modal';
-
-import { Decide } from './Decide/Decide';
-import { Info } from './Info';
-import { DefaultOptionsState, Option, OptionType } from './Option';
 
 const defaultOptions: DefaultOptionsState = {
   keyboardSwitch: '',
@@ -35,8 +36,12 @@ const getValue = (e: ChangeEvent<HTMLInputElement>) => e.target.value;
 
 const URL = `${process.env.ORDER_PRODUCTS}`;
 
-export function Purchase() {
-  const setIsClicked = useSetRecoilState(modalStore); // 모달
+type PurchaseType = {
+  isClicked: boolean;
+  setIsClicked: Dispatch<boolean>;
+};
+
+export function Purchase({ isClicked, setIsClicked }: PurchaseType) {
   const [isOptionDisplay, setIsOptionDisplay] = useState(false);
   const [orderResponse, setOrderResponse] = useState(defaultOrderResponse);
   const [options, setOptions] = useState(defaultOptions);
@@ -198,7 +203,7 @@ export function Purchase() {
   );
 
   return (
-    <Modal>
+    <Modal isClicked={isClicked} setIsClicked={setIsClicked}>
       {orderResponseModal}
       <Info info={infoProps} />
       <Option option={optionProps} />

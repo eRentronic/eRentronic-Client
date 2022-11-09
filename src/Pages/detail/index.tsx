@@ -2,14 +2,12 @@ import { useQuery } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
 
 import * as API from '@/apis/mainProducts';
 import { Icon } from '@/components/common';
 import { Purchase } from '@/components/server/ProductDetail/OrderForm';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import * as S from '@/Pages/Detail/index.style';
-import { modalStore } from '@/recoils/modal/modal';
 
 const getInfos = (path: string, token: string) => async () => {
   // id를 살려야 하나? 의논해보기
@@ -20,7 +18,7 @@ const getInfos = (path: string, token: string) => async () => {
 };
 
 export function Detail() {
-  const [isClicked, setIsClicked] = useRecoilState(modalStore);
+  const [isClicked, setIsClicked] = useState(false);
   const [showDetail, setShowDetail] = useState(false);
   const location = useLocation();
   const param = new URLSearchParams(location.search);
@@ -106,7 +104,7 @@ export function Detail() {
             </S.BuyBtn>
           </S.DecisionBtns>
         </S.InfoRight>
-        <Purchase />
+        <Purchase isClicked={isClicked} setIsClicked={setIsClicked} />
       </S.InfoWrap>
       {data!.keyboardInfoImages.map(({ id, imageUrl }) => {
         return (

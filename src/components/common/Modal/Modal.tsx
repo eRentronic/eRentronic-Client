@@ -1,17 +1,21 @@
-import { MouseEvent, ReactNode } from 'react';
-import { useRecoilState } from 'recoil';
+import { Dispatch, MouseEvent, ReactNode } from 'react';
 import styled from 'styled-components';
-
-import { modalStore } from '@/recoils/modal/modal';
 
 type ModalType = {
   radius?: boolean | string;
   width?: string;
   children: ReactNode;
+  isClicked: boolean;
+  setIsClicked: Dispatch<boolean>;
 };
 
-export function Modal({ radius = false, width = '50%', children }: ModalType) {
-  const [isClicked, setIsClicked] = useRecoilState(modalStore);
+export function Modal({
+  radius = false,
+  width = '50%',
+  children,
+  isClicked,
+  setIsClicked,
+}: ModalType) {
   const closeModal = () => {
     setIsClicked(!isClicked);
   };
