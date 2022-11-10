@@ -11,7 +11,7 @@ type ModalType = {
 
 export function Modal({
   radius = false,
-  width = '50%',
+  width,
   children,
   isClicked,
   setIsClicked,
@@ -20,8 +20,7 @@ export function Modal({
     setIsClicked(!isClicked);
   };
 
-  const onClickDimmed = (e: MouseEvent) => {
-    e.stopPropagation();
+  const onClickDimmed = () => {
     closeModal();
   };
 
@@ -61,7 +60,8 @@ const ModalWrap = styled.div<{
   width: string;
 }>`
   display: ${({ isClicked }) => (isClicked ? 'flex' : 'none')};
-  width: ${({ width }) => `${width}`};
+  /* width: ${({ width }) => `${width}`}; */
+  width: ${({ width }) => width};
   position: fixed;
   flex-direction: column;
   align-items: center;
