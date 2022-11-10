@@ -1,7 +1,9 @@
 import { ThemeProvider } from 'styled-components';
-
+import { globalTheme } from '@/styles/globalTheme';
 import { lightMode } from '@/styles/globalTheme';
 import { BrowserRouter } from 'react-router-dom';
+
+const { pallete } = globalTheme;
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -24,3 +26,11 @@ export const decorators = [
     );
   },
 ];
+
+export const argTypes = {
+  color: {
+    description: '버튼 배경 색상',
+    control: 'select',
+    options: Object.keys(pallete),
+  },
+};

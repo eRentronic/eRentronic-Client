@@ -1,3 +1,5 @@
+import React from 'react';
+
 import * as ICONS from '@/assets/icons';
 
 export type IconTypes = keyof typeof ICONS;
@@ -9,4 +11,6 @@ export type IconProps = {
   stroke?: string;
   fill?: string;
   viewBox?: string;
+  onClick?: React.MouseEventHandler;
+  className?: string;
 };

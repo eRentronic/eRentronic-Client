@@ -1,4 +1,5 @@
 import CLOSE from './close.svg?component';
+import EDIT from './edit.svg?component';
 import HEART from './heart.svg?component';
 import LOCK from './lock.svg?component';
 import MENU from './menu.svg?component';
@@ -12,6 +13,7 @@ import SUN from './sun.svg?component';
 
 export {
   MENU,
+  EDIT,
   PERSON,
   SHOPPING_CART,
   HEART,
