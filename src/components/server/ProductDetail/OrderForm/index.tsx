@@ -203,7 +203,7 @@ export function Purchase({ isClicked, setIsClicked }: PurchaseType) {
   );
 
   return (
-    <Modal isClicked={isClicked} setIsClicked={setIsClicked}>
+    <Modal isClicked={isClicked} setIsClicked={setIsClicked} width="50%">
       {orderResponseModal}
       <Info info={infoProps} />
       <Option option={optionProps} />
