@@ -1,7 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
-import { ChangeEvent, Dispatch, MouseEvent, useEffect, useState } from 'react';
+import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useSetRecoilState } from 'recoil';
 
 import { getData, HeaderType } from '@/apis/api';
 import * as API from '@/apis/mainProducts';
@@ -17,6 +18,7 @@ import {
 import { useAddressApi } from '@/hooks/useAddressApi';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { useMutationPost } from '@/hooks/useMutationPost';
+import { purchaseModalStore } from '@/recoils/modal/Purchase';
 
 const defaultOptions: DefaultOptionsState = {
   keyboardSwitch: '',
@@ -36,12 +38,8 @@ const getValue = (e: ChangeEvent<HTMLInputElement>) => e.target.value;
 
 const URL = `${process.env.ORDER_PRODUCTS}`;
 
-type PurchaseType = {
-  isClicked: boolean;
-  setIsClicked: Dispatch<boolean>;
-};
-
-export function Purchase({ isClicked, setIsClicked }: PurchaseType) {
+export function Purchase() {
+  const setIsClicked = useSetRecoilState(purchaseModalStore);
   const [isOptionDisplay, setIsOptionDisplay] = useState(false);
   const [orderResponse, setOrderResponse] = useState(defaultOrderResponse);
   const [options, setOptions] = useState(defaultOptions);
@@ -203,7 +201,7 @@ export function Purchase({ isClicked, setIsClicked }: PurchaseType) {
   );
 
   return (
-    <Modal isClicked={isClicked} setIsClicked={setIsClicked} width="50%">
+    <Modal store={purchaseModalStore} width="50%">
       {orderResponseModal}
       <Info info={infoProps} />
       <Option option={optionProps} />

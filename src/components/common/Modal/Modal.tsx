@@ -1,21 +1,21 @@
-import { Dispatch, MouseEvent, ReactNode } from 'react';
+import { MouseEvent, ReactNode } from 'react';
+import { RecoilState, useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
 type ModalType = {
-  radius?: boolean | string;
+  radius?: string;
   width?: string;
   children: ReactNode;
-  isClicked: boolean;
-  setIsClicked: Dispatch<boolean>;
+  store: RecoilState<boolean>;
 };
 
 export function Modal({
-  radius = false,
+  radius = 'false',
   width = '',
   children,
-  isClicked,
-  setIsClicked,
+  store,
 }: ModalType) {
+  const [isClicked, setIsClicked] = useRecoilState(store);
   const closeModal = () => {
     setIsClicked(!isClicked);
   };
@@ -67,7 +67,7 @@ const ModalWrap = styled.div<{
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  border-radius: ${({ radius }) => (!radius ? 0 : `${radius}`)};
+  border-radius: ${({ radius }) => (radius === 'false' ? 0 : `${radius}`)};
   background: ${({ theme }) => theme.pallete.normalBg};
   padding: 10px;
   gap: 15px;
