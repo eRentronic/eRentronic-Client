@@ -11,7 +11,7 @@ type ModalType = {
 
 export function Modal({
   radius = false,
-  width,
+  width = '',
   children,
   isClicked,
   setIsClicked,
@@ -60,7 +60,6 @@ const ModalWrap = styled.div<{
   width: string;
 }>`
   display: ${({ isClicked }) => (isClicked ? 'flex' : 'none')};
-  /* width: ${({ width }) => `${width}`}; */
   width: ${({ width }) => width};
   position: fixed;
   flex-direction: column;
