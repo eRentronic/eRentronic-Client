@@ -2,19 +2,23 @@ import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { ChangeEvent, MouseEvent, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 
 import { getData, HeaderType } from '@/apis/api';
 import * as API from '@/apis/mainProducts';
+import { Modal } from '@/components/common/Modal';
+import { Decide } from '@/components/server/ProductDetail/OrderForm/Decide/Decide';
 import * as S from '@/components/server/ProductDetail/OrderForm/index.style';
+import { Info } from '@/components/server/ProductDetail/OrderForm/Info';
+import {
+  DefaultOptionsState,
+  Option,
+  OptionType,
+} from '@/components/server/ProductDetail/OrderForm/Option';
 import { useAddressApi } from '@/hooks/useAddressApi';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { useMutationPost } from '@/hooks/useMutationPost';
-import { modalStore } from '@/recoils/modal/modal';
-
-import { Decide } from './Decide/Decide';
-import { Info } from './Info';
-import { DefaultOptionsState, Option, OptionType } from './Option';
+import { purchaseModalStore } from '@/recoils/modal/Purchase';
 
 const defaultOptions: DefaultOptionsState = {
   keyboardSwitch: '',
@@ -35,8 +39,8 @@ const getValue = (e: ChangeEvent<HTMLInputElement>) => e.target.value;
 const URL = `${process.env.ORDER_PRODUCTS}`;
 
 export function Purchase() {
-  const [isDisplay, setIsDisplay] = useState(false); // 모달
-  const [isClicked, setIsClicked] = useRecoilState(modalStore); // 모달
+  const setIsClicked = useSetRecoilState(purchaseModalStore);
+  const [isOptionDisplay, setIsOptionDisplay] = useState(false);
   const [orderResponse, setOrderResponse] = useState(defaultOrderResponse);
   const [options, setOptions] = useState(defaultOptions);
   const location = useLocation();
@@ -112,20 +116,6 @@ export function Purchase() {
     { header: headers },
   );
 
-  const onClickDimmed = (e: MouseEvent) => {
-    e.stopPropagation();
-    closeModal();
-  };
-
-  const onClickPurChaseWrap = (e: MouseEvent) => {
-    e.stopPropagation();
-  };
-
-  const closeModal = () => {
-    setIsClicked(!isClicked);
-    setIsDisplay(false);
-  };
-
   const isFormFilled =
     !Object.keys(address).find(key => !address[key]) &&
     !Object.keys(options).find(key => !options[key]);
@@ -164,6 +154,11 @@ export function Purchase() {
     setOptions({ ...options, keyboardSwitch: name });
   };
 
+  const onClickDetailOptionBtn = (e: MouseEvent) => {
+    setIsOptionDisplay(true);
+    e.stopPropagation();
+  };
+
   const infoProps = {
     imageUrl,
     title,
@@ -178,13 +173,13 @@ export function Purchase() {
       keyboardSwitch,
       amount,
       address1,
-      isDisplay,
+      isOptionDisplay,
       errMessage,
     },
     func: {
       addressControll,
       setDetailAddress,
-      setIsDisplay,
+      onClickDetailOptionBtn,
       onClickPlusBtn,
       onClickMinusBtn,
       onChangeAddress2,
@@ -206,13 +201,11 @@ export function Purchase() {
   );
 
   return (
-    <S.Dimmed isClicked={isClicked} onClick={onClickDimmed}>
-      <S.PurchaseWrap onClick={onClickPurChaseWrap} isClicked={isClicked}>
-        {orderResponseModal}
-        <Info info={infoProps} />
-        <Option option={optionProps} />
-        <Decide decide={decideProps} />
-      </S.PurchaseWrap>
-    </S.Dimmed>
+    <Modal store={purchaseModalStore} width="50%">
+      {orderResponseModal}
+      <Info info={infoProps} />
+      <Option option={optionProps} />
+      <Decide decide={decideProps} />
+    </Modal>
   );
 }

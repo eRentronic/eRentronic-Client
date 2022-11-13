@@ -9,7 +9,7 @@ import { Icon } from '@/components/common';
 import { Purchase } from '@/components/server/ProductDetail/OrderForm';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import * as S from '@/Pages/Detail/index.style';
-import { modalStore } from '@/recoils/modal/modal';
+import { purchaseModalStore } from '@/recoils/modal/Purchase';
 
 const getInfos = (path: string, token: string) => async () => {
   // id를 살려야 하나? 의논해보기
@@ -20,7 +20,7 @@ const getInfos = (path: string, token: string) => async () => {
 };
 
 export function Detail() {
-  const [isClicked, setIsClicked] = useRecoilState(modalStore);
+  const [isClicked, setIsClicked] = useRecoilState(purchaseModalStore);
   const [showDetail, setShowDetail] = useState(false);
   const location = useLocation();
   const param = new URLSearchParams(location.search);
