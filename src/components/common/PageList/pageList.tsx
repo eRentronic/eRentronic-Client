@@ -1,8 +1,10 @@
 import styled from 'styled-components';
 
-import { Box } from '../Layout/Box';
+import { Container } from '@/components/common/Layout/Core';
 
-conTainer;
+import { Box } from '../Layout/Box';
+import { Text } from '../Text';
+
 type PageListType = {
   state: {
     start: number;
@@ -25,7 +27,12 @@ export function PageList({ pageListProps }: PageListProps) {
   const { previous, next, onClickPage } = func;
   return (
     <Box>
-      <></>
+      <Container>
+        <Text>{start}</Text>
+      </Container>
+      <Container>
+        <Text>{end}</Text>
+      </Container>
     </Box>
   );
 }
