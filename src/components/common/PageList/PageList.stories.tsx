@@ -12,3 +12,22 @@ const Template: ComponentStory<typeof PageList> = args => (
 );
 
 export const Default = Template.bind({});
+Default.args = {
+  pageListProps: {
+    state: {
+      start: 1,
+      end: 10,
+      isSkipPage: false,
+    },
+  },
+};
+export const Skip = Template.bind({});
+Skip.args = {
+  pageListProps: {
+    state: {
+      start: 1,
+      end: 10,
+      isSkipPage: true,
+    },
+  },
+};
