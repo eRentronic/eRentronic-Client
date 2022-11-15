@@ -18,6 +18,7 @@ const DEFAULT_LINE_PROPS: LineProps = {
   height: 1,
   color: 'grey3',
   isColumn: false,
+  margin: 0,
 };
 
 export function Line(props: Partial<LineProps>) {
@@ -30,14 +31,14 @@ export function Line(props: Partial<LineProps>) {
   return <StyledLine {...lineProps} width={lineWidth} height={lineHeight} />;
 }
 
-const StyledLine = styled.span<LineProps>(
+const StyledLine = styled.hr<LineProps>(
   ({ width, height, styles, margin, color, theme }) => ({
-    display: 'block',
     margin,
     width,
     height,
     backgroundColor: theme.pallete[color],
     borderRadius: 9999999,
+    border: 'none',
     ...styles,
   }),
 );

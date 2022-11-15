@@ -12,7 +12,7 @@ import axios from 'axios';
 //   };
 // };
 export type HeaderType = {
-  'Access-Token': any;
+  'Access-Token': string;
   withCredentials?: boolean;
 };
 

@@ -1,7 +1,11 @@
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 import styled from 'styled-components';
 
+import { globalTheme } from '@/styles/globalTheme';
+
 import { Button } from '.';
+
+const { pallete } = globalTheme;
 
 /** !! Button이 export 할때 typeof Button으로
  * 타입 단언을 하여서 export하는 형식이라
@@ -24,19 +28,7 @@ export default {
     color: {
       description: '버튼 배경 색상',
       control: 'select',
-      options: [
-        'primary',
-        'secondary',
-        'warning',
-        'grey1',
-        'grey2',
-        'grey3',
-        'grey4',
-        'grey5',
-        'grey6',
-        'black',
-        'white',
-      ],
+      options: Object.keys(pallete),
     },
     styles: {
       description: '스타일 옵션 객체',

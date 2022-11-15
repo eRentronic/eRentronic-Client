@@ -18,6 +18,7 @@ export default {
       options: [...Object.keys(globalTheme.pallete)],
       description: '박스 외각선 색상 설정.',
     },
+    color: { table: { disable: true } },
   },
 } as ComponentMeta<typeof Box>;
 
