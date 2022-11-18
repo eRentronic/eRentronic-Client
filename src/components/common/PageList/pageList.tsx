@@ -1,25 +1,17 @@
-import styled from 'styled-components';
+import { useState } from 'react';
 
 import { PageNumber } from './PageNumber';
 
 import { Icon } from '../Icon';
 import { Container } from '../Layout/Core';
 
-type PageListType = {
-  state: {
-    start: number;
-    end: number;
-    isSkipPage: boolean;
-  };
-  // func: {
-  //   previous: () => void;
-  //   next: () => void;
-  //   onClickPage: () => void;
-  // };
-};
 type PageListProps = {
-  pageListProps: PageListType;
+  start?: number;
+  end: number;
+  focus: number;
+  skipNumber?: number;
 };
+
 const makePageNumberArr = (start: number, end: number) => {
   const pageNumArr = [];
   for (let i = start; i <= end; i += 1) {
@@ -27,26 +19,74 @@ const makePageNumberArr = (start: number, end: number) => {
   }
   return pageNumArr;
 };
-export function PageList({ pageListProps }: PageListProps) {
-  const { state, func } = pageListProps;
-  const { start, end, isSkipPage } = state;
-  // const { previous, next, onClickPage } = func;
-  const mid = Math.floor((start + end) / 2);
-
+export function PageList({
+  start = 1,
+  end,
+  focus,
+  skipNumber = end,
+}: PageListProps) {
+  const [list, setList] = useState({ listStart: start, listEnd: skipNumber });
+  const { listStart, listEnd } = list;
+  const [listStartNext, listEndPrev] = [listStart + 1, listEnd - 1];
+  const mid = Math.floor((listStart + listEnd) / 2);
   const pageNumberArr = makePageNumberArr(start, end);
-  const pages = !isSkipPage ? (
-    pageNumberArr.map(num => <PageNumber content={num} />)
-  ) : (
-    <>
-      <PageNumber content={start} />
-      <PageNumber content={start + 1} />
-      <PageNumber content="..." />
-      <PageNumber content={mid} />
-      <PageNumber content="..." />
-      <PageNumber content={end - 1} />
-      <PageNumber content={end} />
-    </>
-  );
+
+  const increaseList = (num: number) => {
+    setList({
+      ...list,
+      listStart: listStart + num,
+      listEnd: listEnd + num,
+    });
+  };
+
+  const decreaseList = (num: number) => {
+    setList({
+      ...list,
+      listStart: listStart - num,
+      listEnd: listEnd - num,
+    });
+  };
+
+  const selectModification = (num: number) => {
+    const difference = Math.abs(focus - num);
+    if (num > focus) {
+      increaseList(difference);
+    } else if (num < focus) {
+      decreaseList(difference);
+    }
+  };
+  const onClickPageNumber = (num: number) => () => {
+    if (num !== focus) {
+      selectModification(num);
+    }
+  };
+
+  const pages =
+    skipNumber >= end ? (
+      pageNumberArr.map((num, idx) =>
+        idx + 1 === focus ? (
+          <PageNumber content={num} isFocus />
+        ) : (
+          <PageNumber content={num} onClickPageNumber={onClickPageNumber} />
+        ),
+      )
+    ) : (
+      <>
+        <PageNumber content={listStart} onClickPageNumber={onClickPageNumber} />
+        <PageNumber
+          content={listStartNext}
+          onClickPageNumber={onClickPageNumber}
+        />
+        <PageNumber content="..." />
+        <PageNumber content={mid} isFocus />
+        <PageNumber content="..." />
+        <PageNumber
+          content={listEndPrev}
+          onClickPageNumber={onClickPageNumber}
+        />
+        <PageNumber content={listEnd} onClickPageNumber={onClickPageNumber} />
+      </>
+    );
   return (
     <Container
       backgroundColor="none"
