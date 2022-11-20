@@ -61,6 +61,9 @@ export function PageList({
     }
   };
 
+  const checkFirstPageList = () => listStart !== 1;
+  const checkLastPageList = () => listEnd !== end;
+
   const pages =
     skipNumber >= end ? (
       pageNumberArr.map((num, idx) =>
@@ -87,16 +90,19 @@ export function PageList({
         <PageNumber content={listEnd} onClickPageNumber={onClickPageNumber} />
       </>
     );
+
+  const prevBtn = checkFirstPageList() && <Icon iconSrc="PREV" />;
+  const nextBtn = checkLastPageList() && <Icon iconSrc="NEXT" />;
   return (
     <Container
       backgroundColor="none"
       justifyContent="center"
       alignItem="center"
-      gap={10}
+      gap={15}
     >
-      <Icon iconSrc="PREV" />
+      {prevBtn}
       {pages}
-      <Icon iconSrc="NEXT" />
+      {nextBtn}
     </Container>
   );
 }
