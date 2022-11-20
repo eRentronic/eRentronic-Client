@@ -91,8 +91,12 @@ export function PageList({
       </>
     );
 
-  const prevBtn = checkFirstPageList() && <Icon iconSrc="PREV" />;
-  const nextBtn = checkLastPageList() && <Icon iconSrc="NEXT" />;
+  const prevBtn = checkFirstPageList() && (
+    <Icon iconSrc="PREV" width={30} height={30} />
+  );
+  const nextBtn = checkLastPageList() && (
+    <Icon iconSrc="NEXT" width={30} height={30} />
+  );
   return (
     <Container
       backgroundColor="none"
