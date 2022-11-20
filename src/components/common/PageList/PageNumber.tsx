@@ -15,18 +15,7 @@ export function PageNumber({
   onClickPageNumber,
 }: PageNumberProps) {
   const showingContent = isFocus ? (
-    <Text
-      style={{
-        borderRadius: '999px',
-        backgroundColor: 'black',
-        color: 'white',
-        aspectRatio: '1 / 1',
-        display: 'flex',
-        justifyContent: 'center',
-      }}
-    >
-      {content}
-    </Text>
+    <Text typography="Bold">{content}</Text>
   ) : (
     <Text>{content}</Text>
   );
@@ -38,9 +27,14 @@ export function PageNumber({
         </EventContainer>
       </Container>
     );
-  return <Container>{showingContent}</Container>;
+  return (
+    <Container>
+      <EventContainer>{showingContent}</EventContainer>
+    </Container>
+  );
 }
 const EventContainer = styled.div`
-  width: 100%;
-  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
