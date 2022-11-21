@@ -7,6 +7,7 @@ import { useSetRecoilState } from 'recoil';
 import { getData, HeaderType } from '@/apis/api';
 import * as API from '@/apis/mainProducts';
 import { Modal } from '@/components/common/Modal';
+import { PageList } from '@/components/common/PageList';
 import { Decide } from '@/components/server/ProductDetail/OrderForm/Decide/Decide';
 import * as S from '@/components/server/ProductDetail/OrderForm/index.style';
 import { Info } from '@/components/server/ProductDetail/OrderForm/Info';
@@ -199,6 +200,9 @@ export function Purchase() {
   const orderResponseModal = !!message && (
     <S.OrderConfirmation>{message}</S.OrderConfirmation>
   );
+  const end = 10;
+  const skipNumber = 4;
+  const [focus, setFocus] = useState(1);
 
   return (
     <Modal store={purchaseModalStore} width="50%">
@@ -206,6 +210,12 @@ export function Purchase() {
       <Info info={infoProps} />
       <Option option={optionProps} />
       <Decide decide={decideProps} />
+      <PageList
+        end={end}
+        focus={focus}
+        setFocus={setFocus}
+        skipNumber={skipNumber}
+      />
     </Modal>
   );
 }

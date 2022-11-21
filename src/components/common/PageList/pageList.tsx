@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Dispatch, useState } from 'react';
 
 import { PageNumber } from './PageNumber';
 
@@ -9,6 +9,7 @@ type PageListProps = {
   start?: number;
   end: number;
   focus: number;
+  setFocus: Dispatch<number>;
   skipNumber?: number;
 };
 
@@ -19,83 +20,97 @@ const makePageNumberArr = (start: number, end: number) => {
   }
   return pageNumArr;
 };
+
 export function PageList({
   start = 1,
   end,
   focus,
   skipNumber = end,
+  setFocus,
 }: PageListProps) {
-  const [list, setList] = useState({ listStart: start, listEnd: skipNumber });
-  const { listStart, listEnd } = list;
-  const [listStartNext, listEndPrev] = [listStart + 1, listEnd - 1];
-  const mid = Math.floor((listStart + listEnd) / 2);
-  const pageNumberArr = makePageNumberArr(start, end);
+  const [list, setList] = useState({
+    listStart: start,
+    listEnd: skipNumber,
+    listArr: makePageNumberArr(start, skipNumber),
+  });
 
-  const increaseList = (num: number) => {
-    setList({
-      ...list,
-      listStart: listStart + num,
-      listEnd: listEnd + num,
-    });
-  };
-
-  const decreaseList = (num: number) => {
-    setList({
-      ...list,
-      listStart: listStart - num,
-      listEnd: listEnd - num,
-    });
-  };
-
-  const selectModification = (num: number) => {
-    const difference = Math.abs(focus - num);
-    if (num > focus) {
-      increaseList(difference);
-    } else if (num < focus) {
-      decreaseList(difference);
-    }
-  };
+  const { listStart, listEnd, listArr } = list;
+  const fullPageNumberArr = makePageNumberArr(start, end);
   const onClickPageNumber = (num: number) => () => {
-    if (num !== focus) {
-      selectModification(num);
-    }
+    setFocus(num);
+  };
+
+  const onclickPrevBtn = () => {
+    goPrevList();
+  };
+  const onClickNextBtn = () => {
+    goNextList();
   };
 
   const checkFirstPageList = () => listStart !== 1;
   const checkLastPageList = () => listEnd !== end;
 
+  const goNextList = () => {
+    const newListStart = listStart + skipNumber;
+    const newListEnd = listEnd + skipNumber > end ? end : listEnd + skipNumber;
+    setList({
+      ...list,
+      listStart: newListStart,
+      listEnd: newListEnd,
+      listArr: makePageNumberArr(newListStart, newListEnd),
+    });
+    setFocus(newListStart);
+  };
+  const goPrevList = async () => {
+    const newListStart = listStart - skipNumber;
+    const newListEnd =
+      listEnd === end
+        ? listEnd - skipNumber + (end % skipNumber)
+        : listEnd - skipNumber;
+    setList({
+      ...list,
+      listStart: newListStart,
+      listEnd: newListEnd,
+      listArr: makePageNumberArr(newListStart, newListEnd),
+    });
+    setFocus(newListEnd);
+  };
+  const getPageList = (arr: number[]) =>
+    arr.map((num, idx) =>
+      idx + 1 === focus ? (
+        <PageNumber content={num} isFocus />
+      ) : (
+        <PageNumber content={num} onClickPageNumber={onClickPageNumber} />
+      ),
+    );
+  const skipPageList = getPageList(listArr);
+  console.log(focus, listStart, listEnd);
   const pages =
     skipNumber >= end ? (
-      pageNumberArr.map((num, idx) =>
-        idx + 1 === focus ? (
-          <PageNumber content={num} isFocus />
-        ) : (
-          <PageNumber content={num} onClickPageNumber={onClickPageNumber} />
-        ),
-      )
+      getPageList(fullPageNumberArr)
+    ) : listStart === 1 ? (
+      <>
+        {skipPageList}
+        <PageNumber content="..." />
+      </>
+    ) : listEnd === end ? (
+      <>
+        <PageNumber content="..." />
+        {skipPageList}
+      </>
     ) : (
       <>
-        <PageNumber content={listStart} onClickPageNumber={onClickPageNumber} />
-        <PageNumber
-          content={listStartNext}
-          onClickPageNumber={onClickPageNumber}
-        />
         <PageNumber content="..." />
-        <PageNumber content={mid} isFocus />
+        {skipPageList}
         <PageNumber content="..." />
-        <PageNumber
-          content={listEndPrev}
-          onClickPageNumber={onClickPageNumber}
-        />
-        <PageNumber content={listEnd} onClickPageNumber={onClickPageNumber} />
       </>
     );
 
-  const prevBtn = checkFirstPageList() && (
-    <Icon iconSrc="PREV" width={30} height={30} />
+  const prevBtn = checkFirstPageList() && skipNumber !== end && (
+    <Icon iconSrc="PREV" width={30} height={30} onClick={onclickPrevBtn} />
   );
-  const nextBtn = checkLastPageList() && (
-    <Icon iconSrc="NEXT" width={30} height={30} />
+  const nextBtn = checkLastPageList() && skipNumber !== end && (
+    <Icon iconSrc="NEXT" width={30} height={30} onClick={onClickNextBtn} />
   );
   return (
     <Container
@@ -104,9 +119,11 @@ export function PageList({
       alignItem="center"
       gap={15}
     >
-      {prevBtn}
-      {pages}
-      {nextBtn}
+      <>
+        {prevBtn}
+        {pages}
+        {nextBtn}
+      </>
     </Container>
   );
 }
