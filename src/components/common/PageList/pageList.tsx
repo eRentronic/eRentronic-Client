@@ -75,16 +75,16 @@ export function PageList({
     });
     setFocus(newListEnd);
   };
-  const getPageList = (arr: number[]) =>
-    arr.map((num, idx) =>
-      idx + 1 === focus ? (
+  const getPageList = (arr: number[]) => {
+    return arr.map(num =>
+      num === focus ? (
         <PageNumber content={num} isFocus />
       ) : (
         <PageNumber content={num} onClickPageNumber={onClickPageNumber} />
       ),
     );
+  };
   const skipPageList = getPageList(listArr);
-  console.log(focus, listStart, listEnd);
   const pages =
     skipNumber >= end ? (
       getPageList(fullPageNumberArr)

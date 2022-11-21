@@ -11,7 +11,7 @@ type PageNumberProps = {
 
 export function PageNumber({
   content,
-  isFocus,
+  isFocus = false,
   onClickPageNumber,
 }: PageNumberProps) {
   const showingContent = isFocus ? (
