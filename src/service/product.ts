@@ -1,20 +1,5 @@
 import { normalize, mergeNormazliedArr } from '@/utils/utils';
 
-export const normalizeProduct = (productList: MainProductsType) => {
-  const { content } = productList;
-  const listWithId = content.map(value => {
-    const { product, vendor, discountInfo } = value;
-    const normalizedValue = {
-      ...product,
-      vendor: { ...vendor },
-      discountInfo: { ...discountInfo },
-    };
-    return normalizedValue;
-  });
-  const normalizedArr = listWithId.map(normalize);
-  return mergeNormazliedArr(normalizedArr);
-};
-
 export type MainProductsType = {
   content: ContentType[];
   pageable: {
@@ -107,3 +92,23 @@ export type Discount = {
   title: '이벤트 할인' | '신제품 할인';
   saleRate: string;
 }[];
+
+export const normalizeProduct = (productList: MainProductsType) => {
+  const { content } = productList;
+  const listWithId = content.map(value => {
+    const { product, vendor, discountInfo } = value;
+    const normalizedValue = {
+      ...product,
+      vendor: { ...vendor },
+      discountInfo: { ...discountInfo },
+    };
+    return normalizedValue;
+  });
+  const normalizedArr = listWithId.map(normalize);
+  return mergeNormazliedArr(normalizedArr);
+};
+
+export const getIds = (productData: ContentType[]) => {
+  const productIdList = productData.map(({ product: { id } }) => id);
+  return productIdList;
+};
