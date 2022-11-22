@@ -9,23 +9,26 @@ import { Container } from '@/components/common/Layout/Core';
 import { EditableImageContainer } from '@/components/common/Layout/ImageContainer/Editable';
 
 export function UserInfo() {
-  const [value, setValue] = useState();
+  const [value, setValue] = useState<string>();
 
-  console.log(value, typeof value);
   return (
     <Box
       size="medium"
-      borderWeight="3px"
+      borderWeight={3}
       boxColor="white"
       borderColor="primary"
       flexDirection="column"
+      styles={{ width: '600px' }}
+      gap={10}
     >
-      <EditableImageContainer size="medium" />
-      <Container style={{ width: '500px' }} flexDirection="column" gap={5}>
-        <UserInput />
-        <UserInput />
-        <UserInput />
-        <UserInput />
+      <Container gap={10}>
+        <EditableImageContainer size="medium" />
+        <Container flexDirection="column" gap={5} justifyContent="center">
+          <UserInput iconSrc="EMAIL" />
+          <UserInput iconSrc="KEY" />
+          <UserInput iconSrc="ADDRESS" />
+          <UserInput iconSrc="ADDRESS" />
+        </Container>
       </Container>
       <ReactQuill theme="snow" value={value} onChange={setValue} />
     </Box>
