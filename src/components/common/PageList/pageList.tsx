@@ -61,7 +61,7 @@ export function PageList({
     });
     setFocus(newListStart);
   };
-  const goPrevList = async () => {
+  const goPrevList = () => {
     const newListStart = listStart - skipNumber;
     const newListEnd =
       listEnd === end
