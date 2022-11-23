@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { ThemeProvider } from 'styled-components';
 
+import { ErrorBoundary } from '@/components/client/ErrorBoundary';
 import { AuthorizeRoute } from '@/components/client/Navigate/AuthorizeRoute';
 import { Spinner } from '@/components/common';
 import { Detail } from '@/Pages/Detail';
@@ -17,18 +18,20 @@ export function App() {
 
   return (
     <ThemeProvider theme={isDarkmode ? darkMode : lightMode}>
-      <Suspense fallback={<Spinner />}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<AuthorizeRoute />} />
-            <Route element={<MainLayout />}>
-              <Route path="/Main" element={<Main />} />
-              <Route path="/detail" element={<Detail />} />
-            </Route>
-            <Route path="/login" element={<LoginPage />} />
-          </Routes>
-        </BrowserRouter>
-      </Suspense>
+      <ErrorBoundary fallback={<div>테스트</div>}>
+        <Suspense fallback={<Spinner />}>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<AuthorizeRoute />} />
+              <Route element={<MainLayout />}>
+                <Route path="/Main" element={<Main />} />
+                <Route path="/detail" element={<Detail />} />
+              </Route>
+              <Route path="/login" element={<LoginPage />} />
+            </Routes>
+          </BrowserRouter>
+        </Suspense>
+      </ErrorBoundary>
     </ThemeProvider>
   );
 }
