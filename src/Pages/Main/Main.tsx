@@ -8,7 +8,7 @@ import { Aside } from './Aside';
 import { MainContents } from './Contents';
 import * as S from './style';
 
-export function Main() {
+export default function Main() {
   const ID = useMainProducts<number[]>({
     select: data => {
       const pure = data.content;
@@ -18,7 +18,7 @@ export function Main() {
   })!;
 
   const filterData = useProductsFilter()!;
-
+  console.log(filterData);
   return (
     <S.Wrapper>
       <Container flexDirection="column" as="main">
