@@ -1,7 +1,7 @@
 import { ElementType, useState } from 'react';
 
 import { UserInput, UserInputProps } from '@/components/common/Input/User';
-import { Container } from '@/components/common/Layout/Core';
+import { Container } from '@/components/common/Layout/Core/Core';
 import { Caution } from '@/components/common/Text/Caution';
 import {
   CautionMessage,

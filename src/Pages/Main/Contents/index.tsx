@@ -1,10 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
-import { getMainProducts } from '@/apis/mainProducts';
-import * as API from '@/apis/mainProducts';
 import { Card } from '@/components/server/Product/Card/';
-import { normalizeProduct } from '@/service/product';
+import { useMainProducts } from '@/hooks/useMainProducts';
+import { normalizeProduct, Discount } from '@/service/product';
 
 import * as S from './style';
 
@@ -24,7 +22,7 @@ type normalizedProductType = {
   saleRentalPrice: { [key: number]: number };
   discountInfo: {
     [key: number]: {
-      discounts: API.Discount;
+      discounts: Discount;
       salePrice: number;
       saleRentalPrice: number;
     };
@@ -33,13 +31,9 @@ type normalizedProductType = {
 
 export function MainContents({ idList }: MainContentsProps) {
   const navigate = useNavigate();
-  const { data } = useQuery<API.MainProductsType, Error, normalizedProductType>(
-    ['normalizedProducts'],
-    getMainProducts,
-    {
-      select: normalizeProduct,
-    },
-  );
+  const data = useMainProducts<normalizedProductType>({
+    select: normalizeProduct,
+  });
 
   const {
     title,

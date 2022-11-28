@@ -5,7 +5,7 @@ import { Text, Button } from '@/components/common';
 import { LoginForm } from '@/Pages/Login/LoginForm';
 import { SignInForm } from '@/Pages/Login/SignInForm';
 
-export function LoginPage() {
+export default function LoginPage() {
   const [isDone, setIsDone] = useState(false);
   const [message, setMessage] = useState('');
   const [needSignIn, setNeedSignIn] = useState(false);

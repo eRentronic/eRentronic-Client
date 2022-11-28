@@ -10,6 +10,8 @@ export const Icon = (props: IconProps) => {
     stroke = 'none',
     fill = 'none',
     viewBox = '0 0 32 32',
+    onClick,
+    className,
   } = props;
 
   const SVGIcon = ICONS[iconSrc];
@@ -21,6 +23,8 @@ export const Icon = (props: IconProps) => {
       stroke={stroke}
       fill={fill}
       viewBox={viewBox}
+      onClick={onClick}
+      className={className}
     />
   );
 };

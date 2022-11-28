@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { Text, Button } from '@/components/common';
-import { ButtonProps } from '@/components/common/Button/types';
+import { ButtonProps } from '@/components/common/Button/Core/types';
 import { TextProps } from '@/components/common/Text/types';
 
 import * as TYPE from './category.type';

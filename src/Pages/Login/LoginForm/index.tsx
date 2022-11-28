@@ -64,6 +64,7 @@ export function LoginForm({ routeToPassword }: LoginFormProps) {
   const onClickLogin = () => {
     mutate();
   };
+
   const onClickSignin = () => {
     routeToPassword();
   };

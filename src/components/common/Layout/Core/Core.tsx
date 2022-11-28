@@ -7,9 +7,10 @@ export type ContainerProps<T extends RegionalElements> = {
   as?: T;
   flexDirection?: Layout;
   justifyContent?: FlexLayout;
-  alignItem?: FlexLayout;
+  alignItems?: FlexLayout;
   flexWrap?: Wrap;
   backgroundColor?: CSSProperties['backgroundColor'];
+  onClick?: React.MouseEventHandler;
   gap?: CSSProperties['gap'];
 };
 
@@ -59,19 +60,21 @@ const StyledContainer = styled.div<ContainerProps<RegionalElements>>(
   ({
     flexDirection,
     justifyContent,
-    alignItem,
+    alignItems,
     flexWrap,
     backgroundColor,
     gap,
+    onClick,
   }) => ({
     display: 'flex',
     flexDirection,
     justifyContent,
-    alignItem,
+    alignItems,
     flexWrap,
     backgroundColor,
     gap,
     boxSizing: 'border-box',
+    cursor: onClick ? 'pointer' : undefined,
   }),
 );
 

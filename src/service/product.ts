@@ -107,3 +107,8 @@ export const normalizeProduct = (productList: MainProductsType) => {
   const normalizedArr = listWithId.map(normalize);
   return mergeNormazliedArr(normalizedArr);
 };
+
+export const getIds = (productData: ContentType[]) => {
+  const productIdList = productData.map(({ product: { id } }) => id);
+  return productIdList;
+};
