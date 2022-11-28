@@ -10,7 +10,12 @@ type State = {
 };
 
 export class ErrorBoundary extends Component<Props, State> {
-  static getDerivedStateFromError(): State {
+  constructor(props: Props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  public static getDerivedStateFromError(): State {
     return { hasError: true };
   }
 
