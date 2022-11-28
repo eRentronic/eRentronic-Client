@@ -12,7 +12,7 @@ import axios from 'axios';
 //   };
 // };
 export type HeaderType = {
-  'Access-Token': any;
+  'Access-Token': string;
   withCredentials?: boolean;
 };
 
@@ -21,7 +21,9 @@ export const postData = async <T>(
   updatedData: T,
   headers?: HeaderType,
 ) => {
-  const data = await axios.post<T>(URL, updatedData, { headers });
+  const data = await axios.post<T>(URL, updatedData, {
+    headers,
+  });
   return data;
 };
 

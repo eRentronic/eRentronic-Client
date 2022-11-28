@@ -1,4 +1,9 @@
+import ADDRESS from './address.svg?component';
+import CLOSE from './close.svg?component';
+import EDIT from './edit.svg?component';
+import EMAIL from './eMail.svg?component';
 import HEART from './heart.svg?component';
+import KEY from './key.svg?component';
 import LOCK from './lock.svg?component';
 import MENU from './menu.svg?component';
 import MOON from './moon.svg?component';
@@ -11,6 +16,7 @@ import SUN from './sun.svg?component';
 
 export {
   MENU,
+  EDIT,
   PERSON,
   SHOPPING_CART,
   HEART,
@@ -20,4 +26,8 @@ export {
   NEXT,
   PREV,
   LOCK,
+  CLOSE,
+  ADDRESS,
+  EMAIL,
+  KEY,
 };

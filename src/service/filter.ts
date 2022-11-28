@@ -38,7 +38,6 @@ export const getFilterData = (
   sideTabToggleStateDispatch: Dispatch<actionType>,
 ) => {
   const { connection, layout, keyboardSwitch, vendor } = sideTabToggleState;
-  console.log({ ...connection, popup: !connection.popUp });
   return {
     keyboardConnections: {
       data: keyboardConnections,

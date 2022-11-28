@@ -1,18 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from 'react';
 
-export type DefaultAddressState = {
-  [key: string]: string | number;
+export type AddressType = {
   address1: string;
   address2: string;
-  zipCode: string;
+  zipCode: string | number;
 };
 
-type validFnType = (address: any) => boolean;
+type validFnType = (address: AddressType) => boolean;
 
-type setterFnType = (address: any) => void;
+type dispatchType = (address: AddressType) => void;
 
-const DEFAULT_ADDRESS: DefaultAddressState = {
+const DEFAULT_ADDRESS: AddressType = {
   address1: '',
   address2: '',
   zipCode: '',
@@ -27,27 +26,27 @@ const isApartment = (address: any) =>
   !(isHouse(address) && isBuilding(address));
 
 const effectAddress =
-  (validFn: validFnType) => (address: any, setterFn: setterFnType) =>
-    validFn(address) && setterFn(address);
+  (validFn: validFnType) => (address: AddressType, dispatch: dispatchType) =>
+    validFn(address) && dispatch(address);
 
 const effectHouse = effectAddress(isHouse);
 const effectBuilding = effectAddress(isBuilding);
 const effectApartment = effectAddress(isApartment);
 
-const getHouseAddress = (address: any) => ({
-  address1: address.roadAddress,
+const getHouseAddress = (address: any): AddressType => ({
+  address1: `${address.roadAddress}`,
   address2: '',
   zipCode: address.zonecode,
 });
 
-const getBuildingAddress = (address: any) => ({
+const getBuildingAddress = (address: any): AddressType => ({
   address1: `${address.roadAddress}${address.roadAddress} ${address.buildingName}`,
   address2: '',
   zipCode: address.zonecode,
 });
 
-const getApartmentAddress = (address: any) => ({
-  address1: address.roadAddress + address.buildingName,
+const getApartmentAddress = (address: any): AddressType => ({
+  address1: `${address.roadAddress} ${address.buildingName}`,
   address2: '',
   zipCode: address.zonecode,
 });
@@ -56,25 +55,25 @@ export function useAddressApi() {
   const { daum } = window;
   const [address, setAddress] = useState(DEFAULT_ADDRESS);
 
-  const setHouseAddress = (APIaddress: any) => {
+  const setHouseAddress = (APIaddress: AddressType) => {
     const houseAddress = getHouseAddress(APIaddress);
     setAddress(houseAddress);
   };
 
-  const setBuildingAddress = (APIaddress: any) => {
+  const setBuildingAddress = (APIaddress: AddressType) => {
     const buildingAddress = getBuildingAddress(APIaddress);
 
     setAddress(buildingAddress);
   };
 
-  const setApartmentAddress = (APIaddress: any) => {
+  const setApartmentAddress = (APIaddress: AddressType) => {
     const ApartmentAddress = getApartmentAddress(APIaddress);
     setAddress(ApartmentAddress);
   };
 
   const addressControll = () => {
     new daum.Postcode({
-      oncomplete(userAddress: any) {
+      oncomplete(userAddress: AddressType) {
         effectHouse(userAddress, setHouseAddress);
         effectApartment(userAddress, setApartmentAddress);
         effectBuilding(userAddress, setBuildingAddress);

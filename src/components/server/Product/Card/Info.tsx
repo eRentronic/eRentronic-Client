@@ -1,5 +1,5 @@
 import { Text } from '@/components/common';
-import { Container } from '@/components/common/Layout/Core';
+import { Container } from '@/components/common/Layout/Core/Core';
 import * as S from '@/components/server/Product/Card/Info.style';
 
 type ProductInfoProps = {
