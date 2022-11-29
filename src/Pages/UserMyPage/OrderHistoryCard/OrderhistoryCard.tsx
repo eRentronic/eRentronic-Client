@@ -8,7 +8,7 @@ import { Container } from '@/components/common/Layout/Core';
 import { ImageContainer } from '@/components/common/Layout/ImageContainer';
 
 type OrderHistoryCardProps = {
-  imageURL: string;
+  imageURL?: string;
   productName: string;
   productPrice: number;
   options: string[];

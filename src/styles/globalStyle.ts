@@ -31,9 +31,9 @@ export const GlobalStyle = createGlobalStyle`
 		cursor: pointer;
 	}
 
-input {
-	font: inherit;
-}
+	input {
+		font: inherit;
+	}
 
 	a {
 		text-decoration:none;
