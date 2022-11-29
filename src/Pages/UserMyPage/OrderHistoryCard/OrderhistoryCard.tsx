@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { Text } from '@/components/common';
+import { Icon } from '@/components/common/Icon';
 import { Line } from '@/components/common/Indicator/Line';
 import { ProgressBar } from '@/components/common/Indicator/ProgressBar';
 import { Box } from '@/components/common/Layout/Box';
@@ -12,6 +13,7 @@ type OrderHistoryCardProps = {
   productName: string;
   productPrice: number;
   options: string[];
+  onClickCancle?: React.MouseEventHandler;
 };
 
 export function OrderHistoryCard({
@@ -19,6 +21,7 @@ export function OrderHistoryCard({
   productName,
   productPrice,
   options,
+  onClickCancle,
 }: OrderHistoryCardProps) {
   const optionList = options.map(option => <Text>{`* ${option}`}</Text>);
 
@@ -28,6 +31,7 @@ export function OrderHistoryCard({
       styles={{ width: '30%' }}
       size="medium"
       justifyContent="space-between"
+      position="relative"
     >
       <ImageContainer
         imageSrc={imageURL}
@@ -50,10 +54,19 @@ export function OrderHistoryCard({
         </Text>
         <Text>{productPrice.toLocaleString()}</Text>
       </StyledContainer>
+      <CancleButton iconSrc="CLOSE" onClick={onClickCancle} />
     </Box>
   );
 }
 
 const StyledContainer = styled(Container)`
   width: 100px;
+`;
+
+const CancleButton = styled(Icon)`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  fill: ${({ theme }) => theme.pallete.grey3};
+  cursor: pointer;
 `;
