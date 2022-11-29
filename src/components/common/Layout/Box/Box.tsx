@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import styled from 'styled-components';
+import styled, { CSSObject } from 'styled-components';
 
 import {
   Container,
@@ -14,8 +14,9 @@ type BoxBaseProps = {
   right?: number;
   size?: 'small' | 'medium' | 'large';
   boxColor?: keyof typeof globalTheme.pallete;
-  boderWeight?: number;
+  borderWeight?: number;
   borderColor?: keyof typeof globalTheme.pallete;
+  styles?: CSSObject;
 };
 
 type BoxProps = ContainerProps<'div'> &
@@ -28,7 +29,7 @@ const DEFAULT_PARAM: BoxProps = {
   right: undefined,
   size: 'medium',
   boxColor: 'primary',
-  boderWeight: 1,
+  borderWeight: 1,
   borderColor: 'primary',
 };
 
@@ -49,20 +50,22 @@ export const Box = forwardRef<HTMLDivElement, BoxProps>(
       size,
       boxColor,
       borderColor,
-      boderWeight,
+      borderWeight,
+      styles,
     } = containerProperty;
-    const boxStyle: BoxBaseProps = {
+    const boxProps: BoxBaseProps = {
       position,
       left,
       right,
       size,
       boxColor,
       borderColor,
-      boderWeight,
+      borderWeight,
+      styles,
     };
 
     return (
-      <BoxWrapper {...boxStyle}>
+      <BoxWrapper {...boxProps}>
         <Container ref={ref} {...containerProperty}>
           {children}
         </Container>
@@ -79,7 +82,8 @@ const BoxWrapper = styled.div<BoxBaseProps>(
     size = 'medium',
     boxColor = 'white',
     borderColor = 'primary',
-    boderWeight,
+    borderWeight,
+    styles,
     theme,
   }) => ({
     position,
@@ -87,7 +91,8 @@ const BoxWrapper = styled.div<BoxBaseProps>(
     right,
     padding: BOX_PADDING[size],
     borderRadius: '15px',
-    border: `${boderWeight}px solid ${theme.pallete[borderColor]}`,
+    border: `${borderWeight}px solid ${theme.pallete[borderColor]}`,
     backgroundColor: theme.pallete[boxColor],
+    ...styles,
   }),
 );

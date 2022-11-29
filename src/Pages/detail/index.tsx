@@ -4,12 +4,13 @@ import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 
-import * as API from '@/apis/mainProducts';
 import { Icon } from '@/components/common';
 import { Purchase } from '@/components/server/ProductDetail/OrderForm';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import * as S from '@/Pages/Detail/index.style';
 import { purchaseModalStore } from '@/recoils/modal/Purchase';
+
+import * as API from '@/apis/mainProducts';
 
 const getInfos = (path: string, token: string) => async () => {
   // id를 살려야 하나? 의논해보기
@@ -19,7 +20,7 @@ const getInfos = (path: string, token: string) => async () => {
   return result.data;
 };
 
-export function Detail() {
+export default function Detail() {
   const [isClicked, setIsClicked] = useRecoilState(purchaseModalStore);
   const [showDetail, setShowDetail] = useState(false);
   const location = useLocation();

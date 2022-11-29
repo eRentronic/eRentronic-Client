@@ -1,6 +1,6 @@
+import styled, { CSSObject } from 'styled-components';
+
 import { globalTheme } from '@/styles/globalTheme';
-import { CSSObject } from 'styled-components';
-import styled from 'styled-components';
 
 const { pallete } = globalTheme;
 
@@ -37,6 +37,7 @@ const calcWidthWithPercentage = (
 const calcWidthWidhtNumber = (backgroundWidth: number, barWidth: number) =>
   backgroundWidth * 0.01 * barWidth;
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 const calcProgressBarWidth: { [key in AllowedWidthType]: Function } = {
   string: calcWidthWithPercentage,
   number: calcWidthWidhtNumber,
@@ -52,8 +53,8 @@ export function ProgressBar(props: ProgressBarProps) {
 
   return (
     <Wrapper>
-      <Background {...progressBarProps}></Background>
-      <Progress {...progressBarProps} width={progressBarWidth}></Progress>
+      <Background {...progressBarProps} />
+      <Progress {...progressBarProps} width={progressBarWidth} />
     </Wrapper>
   );
 }

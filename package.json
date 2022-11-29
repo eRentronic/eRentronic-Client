@@ -1,5 +1,5 @@
 {
-  "name": "dott_react_boilerplate",
+  "name": "eRentronic",
   "version": "1.0.0",
   "description": "For use React Programming",
   "main": "index.js",
@@ -20,6 +20,7 @@
     "axios": "^0.27.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-quill": "^2.0.0",
     "react-router-dom": "^6.3.0",
     "recoil": "^0.7.5",
     "styled-component": "^2.8.0",
@@ -77,6 +78,8 @@
     "msw": "^0.44.2",
     "prettier": "^2.7.1",
     "react-refresh": "^0.14.0",
+    "sass": "^1.56.1",
+    "sass-loader": "^13.2.0",
     "style-loader": "^3.3.1",
     "terser-webpack-plugin": "^5.3.3",
     "ts-jest": "^28.0.7",
