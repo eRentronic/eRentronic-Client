@@ -1,8 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { Line } from '@/components/common/Indicator/Line';
 import { Container } from '@/components/common/Layout/Core';
+import { PageList } from '@/components/common/PageList';
 
 import { OrderHistoryCard } from './OrderHistoryCard/OrderhistoryCard';
 import { UserInfo } from './UserInfo/UserInfo';
@@ -14,6 +16,7 @@ export function UserMyPage() {
         <UserInfo />
       </Container>
       <Line height={2} />
+      <PageList />
       <Container>
         <OrderHistoryCard
           productName="테스트"
