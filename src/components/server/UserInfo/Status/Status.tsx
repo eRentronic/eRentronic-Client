@@ -38,6 +38,13 @@ export function Status({ isPurchase, data }: StatusProps) {
 
   const extraRentalStatus = !isPurchase && (
     <>
+      <Line
+        margin="10px 0"
+        height={2}
+        styles={{
+          gridColumn: '1/ -1',
+        }}
+      />
       <StatusContent text="이용중" count={using} />
       <StatusContent text="배송중" count={usingDelivering} />
       <StatusContent text="배송완료" count={usingDelComplete} />
@@ -68,13 +75,7 @@ export function Status({ isPurchase, data }: StatusProps) {
           <StatusContent text="입금전" count={deposit} />
           <StatusContent text="배송중" count={delivering} />
           <StatusContent text="배송완료" count={delComplete} />
-          <Line
-            margin="10px 0"
-            height="2px"
-            styles={{
-              gridColumn: '1/ -1',
-            }}
-          />
+
           {extraRentalStatus}
         </Container>
       </Box>
