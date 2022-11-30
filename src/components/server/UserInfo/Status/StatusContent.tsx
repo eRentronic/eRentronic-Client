@@ -5,7 +5,7 @@ import { Container } from '@/components/common/Layout/Core';
 
 type StatusContentProps = {
   text: '입금전' | '배송중' | '배송완료' | '이용중';
-  count: number;
+  count: number | undefined;
 };
 
 export function StatusContent({ text, count }: StatusContentProps) {
