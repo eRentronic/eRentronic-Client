@@ -34,3 +34,11 @@ Default.args = {
     usingDelComplete: 0,
   },
 };
+export const Purchase = Template.bind({});
+Purchase.args = {
+  data: {
+    deposit: 1,
+    delivering: 0,
+    delComplete: 2,
+  },
+};
