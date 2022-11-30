@@ -7,8 +7,26 @@ import { StatusContent } from './StatusContent';
 
 type StatusProps = {
   isPurchase: boolean;
+  data: {
+    deposit: number;
+    delivering: number;
+    delComplete: number;
+    using?: number;
+    usingDelivering?: number;
+    usingDelComplete?: number;
+  };
 };
-export function Status({ isPurchase }: StatusProps) {
+export function Status({ isPurchase, data }: StatusProps) {
+  const {
+    deposit,
+    delivering,
+    delComplete,
+    using,
+    usingDelivering,
+    usingDelComplete,
+  } = data;
+  if (!isPurchase) {
+  }
   const statusTitle = isPurchase ? (
     <Text color="primary" style={{ margin: '0 auto' }}>
       구매 현황
@@ -21,9 +39,9 @@ export function Status({ isPurchase }: StatusProps) {
 
   const extraRentalStatus = !isPurchase && (
     <>
-      <StatusContent text="이용중" count={2} />
-      <StatusContent text="배송중" count={2} />
-      <StatusContent text="배송완료" count={2} />
+      <StatusContent text="이용중" count={using} />
+      <StatusContent text="배송중" count={usingDelivering} />
+      <StatusContent text="배송완료" count={usingDelComplete} />
     </>
   );
   return (
@@ -35,9 +53,9 @@ export function Status({ isPurchase }: StatusProps) {
     >
       {statusTitle}
       <StatusContentContainer isPurchase={isPurchase}>
-        <StatusContent text="입금전" count={1} />
-        <StatusContent text="배송중" count={0} />
-        <StatusContent text="배송완료" count={2} />
+        <StatusContent text="입금전" count={deposit} />
+        <StatusContent text="배송중" count={delivering} />
+        <StatusContent text="배송완료" count={delComplete} />
         {extraRentalStatus}
       </StatusContentContainer>
     </Container>
