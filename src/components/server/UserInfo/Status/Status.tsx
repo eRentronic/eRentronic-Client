@@ -1,7 +1,7 @@
-import styled from 'styled-components';
-
 import { Text } from '@/components/common';
+import { Box } from '@/components/common/Layout/Box';
 import { Container } from '@/components/common/Layout/Core';
+import { Line } from '@/components/common/Line';
 
 import { StatusContent } from './StatusContent';
 
@@ -25,8 +25,7 @@ export function Status({ isPurchase, data }: StatusProps) {
     usingDelivering,
     usingDelComplete,
   } = data;
-  if (!isPurchase) {
-  }
+  const borderColor = isPurchase ? 'primary' : 'secondary';
   const statusTitle = isPurchase ? (
     <Text color="primary" style={{ margin: '0 auto' }}>
       구매 현황
@@ -52,25 +51,33 @@ export function Status({ isPurchase, data }: StatusProps) {
       gap="10px"
     >
       {statusTitle}
-      <StatusContentContainer isPurchase={isPurchase}>
-        <StatusContent text="입금전" count={deposit} />
-        <StatusContent text="배송중" count={delivering} />
-        <StatusContent text="배송완료" count={delComplete} />
-        {extraRentalStatus}
-      </StatusContentContainer>
+      <Box
+        borderColor={borderColor}
+        borderWeight={3}
+        boxColor="white"
+        styles={{ width: '100%' }}
+      >
+        <Container
+          styles={{
+            display: 'grid',
+            placeContent: 'space-between center',
+            gridTemplateColumns: '1fr 1fr 1fr',
+            width: '100%',
+          }}
+        >
+          <StatusContent text="입금전" count={deposit} />
+          <StatusContent text="배송중" count={delivering} />
+          <StatusContent text="배송완료" count={delComplete} />
+          <Line
+            margin="10px 0"
+            height="2px"
+            styles={{
+              gridColumn: '1/ -1',
+            }}
+          />
+          {extraRentalStatus}
+        </Container>
+      </Box>
     </Container>
   );
 }
-
-const StatusContentContainer = styled.div<{ isPurchase: boolean }>`
-  width: 100%;
-  padding: 20px 0;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  justify-content: center;
-  align-items: center;
-  border: 3px solid
-    ${({ isPurchase, theme }) =>
-      isPurchase ? theme.pallete.primary : theme.pallete.secondary};
-  border-radius: 10px;
-`;
