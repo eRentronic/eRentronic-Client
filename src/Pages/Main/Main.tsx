@@ -12,7 +12,11 @@ import { MainContents } from './Contents';
 import * as S from './style';
 
 export default function Main() {
-  const { infiniteData: ids, fetchNextPage } = useMainProducts<number[]>({
+  const {
+    infiniteData: ids,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useMainProducts<number[]>({
     select: data => {
       const { pages, pageParams } = data;
       const productsDataLists = pages.map(productData =>
@@ -25,7 +29,10 @@ export default function Main() {
 
   const onIntersectLastCard: IntersectionObserverCallback = useCallback(
     (entries: IntersectionObserverEntry[]) => {
-      fetchNextPage();
+      const [target] = entries;
+      if (target.isIntersecting) {
+        fetchNextPage();
+      }
     },
     [fetchNextPage],
   );
@@ -41,6 +48,7 @@ export default function Main() {
       <Container flexDirection="column" as="main">
         <MainInput />
         <MainContents idList={ids!} setIntersectTarget={setTarget} />
+        {isFetchingNextPage && <div>데이터 패칭중</div>}
       </Container>
       <Aside {...filterData} />
     </S.Wrapper>
