@@ -26,18 +26,19 @@ export function useMainProducts<formatedDataType>(
 ) {
   const { select, mergePages } = options!;
 
-  const { data, isSuccess, fetchNextPage } = useInfiniteQuery<
-    MainProductsType,
-    AxiosError,
-    formatedDataType
-  >(['productQueryKey'], getMainProducts, {
-    select,
-    getNextPageParam: (lastPage, allPages) => allPages.length,
-  });
+  const { data, isSuccess, fetchNextPage, isFetchingNextPage } =
+    useInfiniteQuery<MainProductsType, AxiosError, formatedDataType>(
+      ['productQueryKey'],
+      getMainProducts,
+      {
+        select,
+        getNextPageParam: (lastPage, allPages) => allPages.length,
+      },
+    );
 
   const infiniteData = mergePages!(data);
 
   if (isSuccess) {
-    return { infiniteData, fetchNextPage };
+    return { infiniteData, fetchNextPage, isFetchingNextPage };
   }
 }

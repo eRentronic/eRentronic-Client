@@ -11,7 +11,6 @@ export function useInterSectionObserver({
   onInterSect,
 }: Props) {
   const [target, setTarget] = useState<HTMLElement | null | undefined>(null);
-
   useEffect(() => {
     if (!target) return;
     const observer = new IntersectionObserver(onInterSect, {
@@ -22,7 +21,7 @@ export function useInterSectionObserver({
 
     observer.observe(target);
     return () => observer.unobserve(target);
-  }, [target, onInterSect, threshold, rootMargin, root]);
+  }, [onInterSect, target]);
 
   return setTarget;
 }
