@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 import { Button, Text } from '@/components/common';
-import { Container } from '@/components/common/Layout/Core/Core';
+import { Container } from '@/components/common/Layout/Core';
 
 type SingInpanelProps = {
   onClickSignIn: () => void;

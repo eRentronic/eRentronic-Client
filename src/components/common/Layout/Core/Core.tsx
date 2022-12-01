@@ -65,6 +65,7 @@ const StyledContainer = styled.div<ContainerProps<RegionalElements>>(
     backgroundColor,
     gap,
     onClick,
+    styles,
   }) => ({
     display: 'flex',
     flexDirection,
@@ -75,6 +76,7 @@ const StyledContainer = styled.div<ContainerProps<RegionalElements>>(
     gap,
     boxSizing: 'border-box',
     cursor: onClick ? 'pointer' : undefined,
+    ...styles,
   }),
 );
 
