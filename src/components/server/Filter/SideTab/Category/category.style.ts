@@ -41,7 +41,7 @@ export const CategoryTitle = styled(Text)<TextProps<'h4'>>`
 export const ViewMoreBtn = styled(Button)<
   ButtonProps<'button'> & TYPE.ViewMoreBtnProps
 >`
-  display: ${({ isDisplay }) => (!isDisplay ? 'flex' : 'none')};
+  display: ${({ isDisplay }) => (isDisplay ? 'flex' : 'none')};
   padding: 3px;
   justify-content: center;
   align-items: center;

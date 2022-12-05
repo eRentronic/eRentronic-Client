@@ -1,43 +1,48 @@
-export const DEFAULT_SIDETAB_TOGGLE = {
-  connection: { popUp: false, viewMore: false },
-  layout: { popUp: false, viewMore: false },
-  keyboardSwitch: { popUp: false, viewMore: false },
-  vendor: { popUp: false, viewMore: false },
-};
+import { filterModelType, actionType } from '@/service/filter';
 
-export type actionType = {
-  type: string;
-  payload: { popUp: boolean; viewMore: boolean };
+export const DEFAULT_SIDETAB_STATE: filterModelType = {
+  keyboardConnections: { data: [], viewMore: false },
+  layouts: { data: [], viewMore: false },
+  switches: { data: [], viewMore: false },
+  vendors: { data: [], viewMore: false },
 };
 
 export const reducer = (
-  state: typeof DEFAULT_SIDETAB_TOGGLE,
+  state: filterModelType,
   action: actionType,
-) => {
-  const { type, payload } = action;
+): filterModelType => {
+  const { type, payload, key } = action;
   switch (type) {
-    case 'dispatchConnection':
+    case 'dispatchViewMore':
       return {
         ...state,
-        connection: payload,
+        [key]: { ...state[key], viewMore: payload },
       };
-
-    case 'dispatchLayout':
-      return { ...state, layout: payload };
-
-    case 'dispatchSwitch':
-      return {
-        ...state,
-        keyboardSwitch: payload,
-      };
-
-    case 'dispatchVendor':
-      return { ...state, vendor: payload };
 
     case 'reset':
-      return { ...DEFAULT_SIDETAB_TOGGLE };
+      return { ...DEFAULT_SIDETAB_STATE };
 
     default:
       return { ...state };
   }
 };
+
+type sideTabReducerType = {
+  state: typeof DEFAULT_SIDETAB_STATE;
+  action: { type: string; keyOfSideTabState: keyof filterModelType };
+};
+
+export function sideTabReducer({ state, action }: sideTabReducerType) {
+  const { type, keyOfSideTabState } = action;
+
+  switch (type) {
+    case 'dispatchToggle':
+      return {
+        ...state,
+        [keyOfSideTabState]: !state[keyOfSideTabState].viewMore,
+      };
+
+    default:
+      return DEFAULT_SIDETAB_STATE;
+  }
+}
