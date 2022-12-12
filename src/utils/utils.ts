@@ -22,3 +22,15 @@ export const normalize = (target: any) => {
   }, {});
   return normalizedData;
 };
+
+export const mergeObjectArr = (arr: any, keys: string[]): any => {
+  const result = keys.reduce((acc, currentKey) =>
+    arr.reduce((last, current) => {
+      return {
+        ...acc,
+        [currentKey]: { ...last[currentKey], ...current[currentKey] },
+      };
+    }),
+  );
+  return result;
+};

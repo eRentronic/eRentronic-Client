@@ -1,103 +1,71 @@
-import { Dispatch } from 'react';
-
-const DEFAULT_SIDETAB_TOGGLE = {
-  connection: { popUp: false, viewMore: false },
-  layout: { popUp: false, viewMore: false },
-  keyboardSwitch: { popUp: false, viewMore: false },
-  vendor: { popUp: false, viewMore: false },
+export type actionType = {
+  type: string;
+  payload: boolean;
+  key: keyof filterModelType;
 };
 
-type actionType = {
-  type: string;
-  payload: { popUp: boolean; viewMore: boolean };
+export type filterModelDataType = {
+  data: {
+    id: number;
+    name: string;
+  }[];
+  viewMore: boolean;
 };
 
 export type filterModelType = {
+  keyboardConnections: filterModelDataType;
+  layouts: filterModelDataType;
+  switches: filterModelDataType;
+  vendors: filterModelDataType;
+};
+
+type filterDataType = {
+  [key: string]: {
+    id: number;
+    name: string;
+  }[];
+
   keyboardConnections: {
-    id: 0;
-    name: 'string';
+    id: number;
+    name: string;
   }[];
   layouts: {
-    id: 0;
-    name: 'string';
+    id: number;
+    name: string;
   }[];
   switches: {
-    id: 0;
-    name: 'string';
+    id: number;
+    name: string;
   }[];
 
   vendors: {
-    id: 0;
-    name: 'string';
+    id: number;
+    name: string;
   }[];
 };
 
-export const getFilterData = (
-  { keyboardConnections, layouts, switches, vendors }: filterModelType,
-  sideTabToggleState: typeof DEFAULT_SIDETAB_TOGGLE,
-  sideTabToggleStateDispatch: Dispatch<actionType>,
-) => {
-  const { connection, layout, keyboardSwitch, vendor } = sideTabToggleState;
-  return {
-    keyboardConnections: {
-      data: keyboardConnections,
-      view: connection,
-      toggleDispatch: sideTabToggleStateDispatch,
+const DEFAULT_SIDE_TAB_STATE: filterModelType = {
+  keyboardConnections: { data: [], viewMore: false },
+  vendors: { data: [], viewMore: false },
+  switches: { data: [], viewMore: false },
+  layouts: { data: [], viewMore: false },
+};
 
-      popUpAction: {
-        type: 'dispatchConnection',
-        payload: { ...connection, popUp: !connection.popUp },
-      },
+export const getDefaultState = (filterdata: filterDataType) => {
+  const keys = Object.keys(filterdata);
 
-      viewMoreAction: {
-        type: 'dispatchConnection',
-        payload: { ...connection, viewMore: !connection.viewMore },
-      },
-    },
-    layouts: {
-      data: layouts,
-      view: layout,
-      toggleDispatch: sideTabToggleStateDispatch,
+  return keys.reduce(
+    (acc, key) => ({
+      ...acc,
+      [key]: { viewMore: false, data: filterdata[key] },
+    }),
+    DEFAULT_SIDE_TAB_STATE,
+  );
+};
 
-      popUpAction: {
-        type: 'dispatchLayout',
-        payload: { ...layout, popUp: !layout.popUp },
-      },
-
-      viewMoreAction: {
-        type: 'dispatchLayout',
-        payload: { ...layout, viewMore: !layout.viewMore },
-      },
-    },
-    switches: {
-      data: switches,
-      view: keyboardSwitch,
-      toggleDispatch: sideTabToggleStateDispatch,
-
-      popUpAction: {
-        type: 'dispatchSwitch',
-        payload: { ...keyboardSwitch, popUp: !keyboardSwitch.popUp },
-      },
-
-      viewMoreAction: {
-        type: 'dispatchSwitch',
-        payload: { ...keyboardSwitch, viewMore: !keyboardSwitch.viewMore },
-      },
-    },
-    vendors: {
-      data: vendors,
-      view: vendor,
-      toggleDispatch: sideTabToggleStateDispatch,
-
-      popUpAction: {
-        type: 'dispatchVendor',
-        payload: { ...vendor, popUp: !vendor.popUp },
-      },
-
-      viewMoreAction: {
-        type: 'dispatchVendor',
-        payload: { ...vendor, viewMore: !vendor.viewMore },
-      },
-    },
-  };
+export const getAction = (
+  key: keyof filterModelType,
+  state: filterModelType,
+): actionType => {
+  return { type: 'dispatchViewMore', payload: !state[key].viewMore, key };
 };

@@ -1,4 +1,4 @@
-import { Component, ReactNode } from 'react';
+import { Component, ErrorInfo, ReactNode } from 'react';
 
 type Props = {
   children?: ReactNode;
@@ -19,8 +19,9 @@ export class ErrorBoundary extends Component<Props, State> {
     return { hasError: true };
   }
 
-  componentDidCatch(error: Error) {
+  componentDidCatch(error: Error, info: ErrorInfo) {
     console.error('에러 바운더리 에서 에러발생!:', error.name);
+    console.log(info);
   }
 
   render() {

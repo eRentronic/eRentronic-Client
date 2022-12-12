@@ -11,4 +11,7 @@ const StyledSpinner = styled.div`
   width: 60px;
   height: 60px;
   animation: spinner 0.5s linear infinite;
+  position: fixed;
+  top: 50%;
+  left: 50%;
 `;

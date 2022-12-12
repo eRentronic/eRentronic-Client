@@ -9,6 +9,7 @@ type EditableContainerProps = {
   onClickImage?: React.MouseEventHandler;
   onChangeEdit?: React.ChangeEventHandler;
   imageSrc?: string;
+  alt: string;
 };
 
 const DEFAULT_PROPS: Omit<
@@ -16,6 +17,7 @@ const DEFAULT_PROPS: Omit<
   'onClickImage' | 'onClickEdit'
 > = {
   size: 'medium',
+  alt: '수정 가능 이미지',
 };
 
 const IMAGE_CONTAINER_SIZE = {
@@ -24,7 +26,7 @@ const IMAGE_CONTAINER_SIZE = {
 
 export function EditableImageContainer(props: EditableContainerProps) {
   const imageContainerProps = { ...DEFAULT_PROPS, ...props };
-  const { onClickImage, onChangeEdit, imageSrc } = imageContainerProps;
+  const { onClickImage, onChangeEdit, imageSrc, alt } = imageContainerProps;
 
   const onErrorImage: React.ReactEventHandler<HTMLImageElement> = e => {
     e.currentTarget.src = ErrorImage;
@@ -42,7 +44,7 @@ export function EditableImageContainer(props: EditableContainerProps) {
       </IconWrapper>
       <Image
         src={validImage}
-        alt="프로필 이미지"
+        alt={alt}
         onError={onErrorImage}
         onClick={onClickImage}
       />
