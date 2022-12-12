@@ -17,6 +17,7 @@ module.exports = {
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, '..', 'dist'),
+    assetModuleFilename: 'assets/[name][ext]',
     clean: true,
   },
 
@@ -53,8 +54,8 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-        exclude: /node_modules/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
+        // exclude: /node_modules/,
       },
       {
         test: /\.svg$/,

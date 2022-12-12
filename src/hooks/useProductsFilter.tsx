@@ -22,13 +22,11 @@ type ProductsFilterProps<T = filterModelType> = UseQueryOptions<
 export function useProductsFilter<formatedDataType = filterModelType>(
   options?: ProductsFilterProps<formatedDataType>,
 ) {
-  const { select } = options!;
-
   const { data, isSuccess } = useQuery<
     filterModelType,
     AxiosError,
     formatedDataType
-  >(['productFilterQueryKey'], getProductsFilter, { select });
+  >(['productFilterQueryKey'], getProductsFilter, options);
 
   if (isSuccess) {
     return data;

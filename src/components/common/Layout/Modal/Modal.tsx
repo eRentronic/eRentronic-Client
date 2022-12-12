@@ -9,12 +9,7 @@ type ModalType = {
   store: RecoilState<boolean>;
 };
 
-export function Modal({
-  radius = 'false',
-  width = '',
-  children,
-  store,
-}: ModalType) {
+export function Modal({ radius = 'false', width, children, store }: ModalType) {
   const [isClicked, setIsClicked] = useRecoilState(store);
   const closeModal = () => {
     setIsClicked(!isClicked);
@@ -57,7 +52,7 @@ export const Dimmed = styled.section<{ isClicked: boolean }>`
 const ModalWrap = styled.div<{
   isClicked: boolean;
   radius: boolean | string;
-  width: string;
+  width: string | undefined;
 }>`
   display: ${({ isClicked }) => (isClicked ? 'flex' : 'none')};
   width: ${({ width }) => width};

@@ -5,8 +5,7 @@ import { useLocation } from 'react-router-dom';
 import { useSetRecoilState } from 'recoil';
 
 import { getData, HeaderType } from '@/apis/api';
-import * as API from '@/apis/mainProducts';
-import { Modal } from '@/components/common/Modal';
+import { Modal } from '@/components/common/Layout/Modal';
 import { Decide } from '@/components/server/ProductDetail/OrderForm/Decide/Decide';
 import * as S from '@/components/server/ProductDetail/OrderForm/index.style';
 import { Info } from '@/components/server/ProductDetail/OrderForm/Info';
@@ -19,6 +18,8 @@ import { useAddressApi } from '@/hooks/useAddressApi';
 import { useLocalStorage } from '@/hooks/useLocalStorage';
 import { useMutationPost } from '@/hooks/useMutationPost';
 import { purchaseModalStore } from '@/recoils/modal/Purchase';
+
+import * as API from '@/apis/mainProducts';
 
 const defaultOptions: DefaultOptionsState = {
   keyboardSwitch: '',

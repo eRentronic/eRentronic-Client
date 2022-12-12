@@ -3,10 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import { Card } from '@/components/server/Product/Card/';
 import { useMainProducts } from '@/hooks/useMainProducts';
 import { normalizeProduct, Discount } from '@/service/product';
+import { mergeObjectArr } from '@/utils/utils';
 
 import * as S from './style';
 
-type MainContentsProps = { idList: number[] };
+type MainContentsProps = {
+  idList: number[];
+  setIntersectTarget: React.Dispatch<
+    React.SetStateAction<HTMLElement | null | undefined>
+  >;
+};
 
 type normalizedProductType = {
   title: { [key: number]: string };
@@ -29,12 +35,27 @@ type normalizedProductType = {
   };
 };
 
-export function MainContents({ idList }: MainContentsProps) {
+export function MainContents({
+  idList,
+  setIntersectTarget,
+}: MainContentsProps) {
   const navigate = useNavigate();
-  const data = useMainProducts<normalizedProductType>({
-    select: normalizeProduct,
-  });
+  const { infiniteData: data } = useMainProducts<normalizedProductType>({
+    select: rawData => {
+      const { pages, pageParams } = rawData;
+      const productsDataLists = pages.map(productData =>
+        normalizeProduct(productData),
+      );
 
+      return { pages: productsDataLists, pageParams };
+    },
+    mergePages: rawData => {
+      const keys = Object.keys(rawData!.pages[0]);
+      const result = mergeObjectArr(rawData?.pages, keys);
+
+      return result;
+    },
+  })!;
   const {
     title,
     content,
@@ -46,7 +67,7 @@ export function MainContents({ idList }: MainContentsProps) {
     inBucket,
     vendor,
     discountInfo,
-  } = data as normalizedProductType;
+  } = data;
 
   const onClickCard = (productId: number) => () => {
     navigate(`/detail?id=${productId}`);
@@ -67,6 +88,11 @@ export function MainContents({ idList }: MainContentsProps) {
     onClickCard: onClickCard(id),
   }));
 
-  const cardList = cardPropsList.map(props => <Card {...props} />);
+  const cardList = cardPropsList.map((props, idx) => {
+    if (cardPropsList.length - 1 === idx) {
+      return <Card {...props} ref={setIntersectTarget} />;
+    }
+    return <Card {...props} />;
+  });
   return <S.MainContents>{cardList}</S.MainContents>;
 }

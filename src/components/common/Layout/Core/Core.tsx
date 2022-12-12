@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unused-prop-types */
 import { ReactNode, forwardRef, Ref } from 'react';
-import styled, { CSSProperties } from 'styled-components';
+import styled, { CSSObject, CSSProperties } from 'styled-components';
 
 export type ContainerProps<T extends RegionalElements> = {
   children?: ReactNode;
@@ -12,6 +12,7 @@ export type ContainerProps<T extends RegionalElements> = {
   backgroundColor?: CSSProperties['backgroundColor'];
   onClick?: React.MouseEventHandler;
   gap?: CSSProperties['gap'];
+  styles?: CSSObject;
 };
 
 type RegionalElements =
