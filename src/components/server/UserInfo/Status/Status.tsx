@@ -1,7 +1,7 @@
 import { Text } from '@/components/common';
+import { Line } from '@/components/common/Indicator/Line';
 import { Box } from '@/components/common/Layout/Box';
 import { Container } from '@/components/common/Layout/Core';
-import { Line } from '@/components/common/Line';
 
 import { StatusContent } from './StatusContent';
 
