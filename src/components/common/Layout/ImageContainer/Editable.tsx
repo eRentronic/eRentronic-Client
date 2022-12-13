@@ -59,6 +59,7 @@ const Figure = styled.figure<Pick<EditableContainerProps, 'size'>>(
     height: IMAGE_CONTAINER_SIZE.length[size],
     backgroundColor: theme.pallete.grey5,
     borderRadius: '50%',
+    margin: 0,
   }),
 );
 
