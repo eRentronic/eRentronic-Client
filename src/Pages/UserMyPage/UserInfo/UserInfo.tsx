@@ -20,6 +20,7 @@ export function UserInfo() {
       borderColor="primary"
       flexDirection="column"
       justifyContent="center"
+      alignItems="center"
       gap={10}
     >
       <Container gap={10} styles={{ width: '100%' }}>
