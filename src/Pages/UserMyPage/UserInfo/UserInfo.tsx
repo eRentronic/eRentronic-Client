@@ -10,24 +10,34 @@ import { EditableImageContainer } from '@/components/common/Layout/ImageContaine
 
 export function UserInfo() {
   const [value, setValue] = useState<string>();
+  const imgSrc = 'https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E';
 
   return (
     <Box
       size="medium"
       borderWeight={3}
-      boxColor="white"
+      boxColor="normalBg"
       borderColor="primary"
       flexDirection="column"
-      styles={{ width: '45%' }}
+      justifyContent="center"
       gap={10}
     >
-      <Container gap={10}>
-        <EditableImageContainer size="medium" alt="회원 이미지" />
-        <Container flexDirection="column" gap={5} justifyContent="center">
-          <UserInput iconSrc="EMAIL" />
-          <UserInput iconSrc="KEY" />
-          <UserInput iconSrc="ADDRESS" />
-          <UserInput iconSrc="ADDRESS" />
+      <Container gap={10} styles={{ width: '100%' }}>
+        <EditableImageContainer
+          imageSrc={imgSrc}
+          size="medium"
+          alt="회원 이미지"
+        />
+        <Container
+          flexDirection="column"
+          gap={5}
+          justifyContent="center"
+          styles={{ width: '80%' }}
+        >
+          <UserInput iconSrc="EMAIL" size="small" />
+          <UserInput iconSrc="KEY" size="small" />
+          <UserInput iconSrc="ADDRESS" size="small" />
+          <UserInput iconSrc="ADDRESS" size="small" />
         </Container>
       </Container>
       <ReactQuill theme="snow" value={value} onChange={setValue} />
