@@ -19,6 +19,7 @@ export default function Main() {
   } = useMainProducts<number[]>({
     select: data => {
       const { pages, pageParams } = data;
+
       const productsDataLists = pages.map(productData =>
         getIds(productData.content),
       );

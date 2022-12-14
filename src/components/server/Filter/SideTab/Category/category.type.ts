@@ -1,8 +1,7 @@
 export type CategoryProps = {
   categoryLists: { id: number; name: string }[];
-  onClickTitle: () => void;
-  onClickViewMoreButton: () => void;
-  view: { viewMore: boolean; popUp: boolean };
+  onClickCategory: () => void;
+  isDisplay: boolean;
   title: string;
 };
 

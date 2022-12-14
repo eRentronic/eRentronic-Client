@@ -1,11 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
-import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { Line } from '@/components/common/Indicator/Line';
 import { Container } from '@/components/common/Layout/Core';
 import { PageList } from '@/components/common/PageList';
 import { Status } from '@/components/server/UserInfo/Status';
+import { useOrderHistory } from '@/hooks/useOrderHistory';
 
 import { OrderHistoryCard } from './OrderHistoryCard/OrderhistoryCard';
 import { RentHistoryCard } from './RentHistoryCard/RentHistoryCard';
@@ -35,6 +34,17 @@ export function UserMyPage() {
     console.log('클릭이벤트');
   };
 
+  const orderHistories = useOrderHistory();
+  const orderList = orderHistories!.map(
+    ({ title, price, state, orderSheetId, imageUrl }) => (
+      <OrderHistoryCard
+        productPrice={price}
+        productName={title}
+        imageURL={imageUrl}
+        options={['1번 옵션', '2번 옵션']}
+      />
+    ),
+  );
   return (
     <Container
       flexDirection="column"
@@ -110,6 +120,9 @@ export function UserMyPage() {
           onClickCancel={onClickCancel}
         />
       </Container>
+      <Line height={2} />
+      {/* <PageList /> */}
+      <Container gap={20}>{orderList}</Container>
     </Container>
   );
 }

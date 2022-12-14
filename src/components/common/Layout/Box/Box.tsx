@@ -16,7 +16,7 @@ type BoxBaseProps = {
   boxColor?: keyof typeof globalTheme.pallete;
   borderWeight?: number;
   borderColor?: keyof typeof globalTheme.pallete;
-  styles?: CSSObject;
+  boxStyles?: CSSObject;
 };
 
 type BoxProps = ContainerProps<'div'> &
@@ -51,7 +51,7 @@ export const Box = forwardRef<HTMLDivElement, BoxProps>(
       boxColor,
       borderColor,
       borderWeight,
-      styles,
+      boxStyles,
     } = containerProperty;
     const boxProps: BoxBaseProps = {
       position,
@@ -61,7 +61,7 @@ export const Box = forwardRef<HTMLDivElement, BoxProps>(
       boxColor,
       borderColor,
       borderWeight,
-      styles,
+      boxStyles,
     };
 
     return (
@@ -83,7 +83,7 @@ const BoxWrapper = styled.div<BoxBaseProps>(
     boxColor = 'white',
     borderColor = 'primary',
     borderWeight,
-    styles,
+    boxStyles,
     theme,
   }) => ({
     position,
@@ -93,6 +93,6 @@ const BoxWrapper = styled.div<BoxBaseProps>(
     borderRadius: '15px',
     border: `${borderWeight}px solid ${theme.pallete[borderColor]}`,
     backgroundColor: theme.pallete[boxColor],
-    ...styles,
+    ...boxStyles,
   }),
 );

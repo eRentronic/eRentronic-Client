@@ -59,7 +59,6 @@ export function Purchase() {
 
   const { value } = useLocalStorage('loginState');
   const { loginToken } = value;
-  // TODO: value를 string으로 바꿔보기!
   const headers: HeaderType = {
     'Access-Token': loginToken,
     // withCredentials: true,
@@ -114,7 +113,12 @@ export function Purchase() {
       },
       totalPrice,
     },
-    { header: headers },
+    {
+      onSuccessCallback: setOrderResponse,
+      headers,
+      // onErrorCallback: error => console.error(error),
+    },
+    // { header: headers },
   );
 
   const isFormFilled =
