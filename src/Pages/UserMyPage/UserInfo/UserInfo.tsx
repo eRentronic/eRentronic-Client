@@ -18,7 +18,7 @@ export function UserInfo() {
       boxColor="white"
       borderColor="primary"
       flexDirection="column"
-      styles={{ width: '45%' }}
+      boxStyles={{ width: '45%' }}
       gap={10}
     >
       <Container gap={10}>

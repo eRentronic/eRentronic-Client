@@ -4,7 +4,7 @@ export type rawHistoryType = {
   totalPrice: number;
   createAt: Date;
   address: addressType;
-  orderHistoryResponses: orderHistoryType;
+  orderHistoryResponses: [orderHistoryType];
 };
 
 type addressType = {
@@ -55,9 +55,11 @@ export const parseOrderHistory = (
       orderSheetId,
       state,
       createAt,
-      orderHistoryResponses: {
-        product: { imageUrl, title, price },
-      },
+      orderHistoryResponses: [
+        {
+          product: { imageUrl, title, price },
+        },
+      ],
     }) => ({
       orderSheetId,
       state,

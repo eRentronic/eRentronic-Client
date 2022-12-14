@@ -28,7 +28,7 @@ export function OrderHistoryCard({
   return (
     <Box
       boxColor="white"
-      styles={{ width: '30%' }}
+      boxStyles={{ width: '30%' }}
       size="medium"
       justifyContent="space-between"
       position="relative"

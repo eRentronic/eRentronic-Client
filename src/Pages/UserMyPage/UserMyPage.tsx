@@ -1,15 +1,25 @@
-import { useQuery } from '@tanstack/react-query';
-import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 import { Line } from '@/components/common/Indicator/Line';
 import { Container } from '@/components/common/Layout/Core';
 import { PageList } from '@/components/common/PageList';
+import { useOrderHistory } from '@/hooks/useOrderHistory';
 
 import { OrderHistoryCard } from './OrderHistoryCard/OrderhistoryCard';
 import { UserInfo } from './UserInfo/UserInfo';
 
 export function UserMyPage() {
+  const orderHistories = useOrderHistory();
+  const orderList = orderHistories!.map(
+    ({ title, price, state, orderSheetId, imageUrl }) => (
+      <OrderHistoryCard
+        productPrice={price}
+        productName={title}
+        imageURL={imageUrl}
+        options={['1번 옵션', '2번 옵션']}
+      />
+    ),
+  );
   return (
     <UserPageLayout>
       <Container>
@@ -17,13 +27,7 @@ export function UserMyPage() {
       </Container>
       <Line height={2} />
       <PageList />
-      <Container>
-        <OrderHistoryCard
-          productName="테스트"
-          productPrice={10000000}
-          options={['1번 옵션', '2번 옵션']}
-        />
-      </Container>
+      <Container gap={20}>{orderList}</Container>
     </UserPageLayout>
   );
 }

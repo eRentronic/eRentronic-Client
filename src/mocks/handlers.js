@@ -233,7 +233,8 @@ export const handlers = [
               product: {
                 content: 'string',
                 id: 0,
-                imageUrl: '에러 나야함',
+                imageUrl:
+                  'https://developer.android.com/static/images/jetpack/compose/graphics-sourceimageland.jpg?hl=ko',
                 inBucket: true,
                 like: true,
                 price: 0,
@@ -269,7 +270,8 @@ export const handlers = [
               product: {
                 content: 'string',
                 id: 0,
-                imageUrl: '에러 나야함',
+                imageUrl:
+                  'https://developer.android.com/static/images/jetpack/compose/graphics-sourceimageland.jpg?hl=ko',
                 inBucket: true,
                 like: true,
                 price: 0,
@@ -305,7 +307,8 @@ export const handlers = [
               product: {
                 content: 'string',
                 id: 0,
-                imageUrl: '에러 나야함',
+                imageUrl:
+                  'https://developer.android.com/static/images/jetpack/compose/graphics-sourceimageland.jpg?hl=ko',
                 inBucket: true,
                 like: true,
                 price: 0,
@@ -341,7 +344,8 @@ export const handlers = [
               product: {
                 content: 'string',
                 id: 0,
-                imageUrl: '에러 나야함',
+                imageUrl:
+                  'https://developer.android.com/static/images/jetpack/compose/graphics-sourceimageland.jpg?hl=ko',
                 inBucket: true,
                 like: true,
                 price: 0,

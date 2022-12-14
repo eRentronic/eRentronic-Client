@@ -21,10 +21,14 @@ export const postData = async <T>(
   updatedData: T,
   headers?: HeaderType,
 ) => {
-  const data = await axios.post<T>(URL, updatedData, {
-    headers,
-  });
-  return data;
+  try {
+    const data = await axios.post<T>(URL, updatedData, {
+      headers,
+    });
+    return data;
+  } catch (e) {
+    throw new Error('주문 에러');
+  }
 };
 
 export const getData =

@@ -9,7 +9,7 @@ import {
 
 const getHistory = async () => {
   try {
-    const data = await axios.get(process.env.ORDER_HISTORY!);
+    const { data } = await axios.get(process.env.ORDER_HISTORY!);
     return data;
   } catch (e) {
     throw new Error('구매 내역 에러');
