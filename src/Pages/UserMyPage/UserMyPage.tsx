@@ -31,19 +31,21 @@ export function UserMyPage() {
   const [rentPage, setRentPage] = useState(1);
   const rentPageEnd = 9;
 
-  const onClickCancel = () => {};
+  const onClickCancel = () => {
+    console.log('클릭이벤트');
+  };
 
   return (
     <Container
       flexDirection="column"
-      justifyContent="space-between"
-      gap="15px"
+      alignItems="center"
+      gap={15}
       styles={{
         width: '100vw',
-        padding: '40px',
+        padding: '0 100px',
       }}
     >
-      <Container justifyContent="space-between">
+      <Container justifyContent="center" gap={20} styles={{ width: '100%' }}>
         <UserInfo />
         <Container flexDirection="column" gap={10}>
           <Status isPurchase data={purchaseData} />
@@ -57,7 +59,21 @@ export function UserMyPage() {
         focus={purchasePage}
         setFocus={setPurchasePage}
       />
-      <Container>
+      <Container
+        justifyContent="space-between"
+        gap={10}
+        styles={{ width: '100%' }}
+      >
+        <OrderHistoryCard
+          productName="테스트"
+          productPrice={10000000}
+          options={['1번 옵션', '2번 옵션']}
+        />
+        <OrderHistoryCard
+          productName="테스트"
+          productPrice={10000000}
+          options={['1번 옵션', '2번 옵션']}
+        />
         <OrderHistoryCard
           productName="테스트"
           productPrice={10000000}
@@ -70,7 +86,20 @@ export function UserMyPage() {
         focus={rentPage}
         setFocus={setRentPage}
       />
-      <Container>
+      <Container
+        justifyContent="space-between"
+        gap={10}
+        styles={{ width: '100%' }}
+      >
+        <RentHistoryCard
+          rentRate={50}
+          deliveryRate={50}
+          imgSrc="https://t1.daumcdn.net/cfile/tistory/24283C3858F778CA2E"
+          productName="제품 이름"
+          productPrice={100000}
+          options={['1번 옵션', '2번 옵션']}
+          onClickCancel={onClickCancel}
+        />
         <RentHistoryCard
           rentRate={50}
           deliveryRate={50}
