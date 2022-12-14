@@ -15,6 +15,7 @@ export const Wrapper = styled.div<WrapperProps>`
   top: 0;
   left: 0;
   padding: 5px;
+  box-sizing: border-box;
   background-color: rgba(0, 0, 0, 0.7);
   cursor: pointer;
 `;
