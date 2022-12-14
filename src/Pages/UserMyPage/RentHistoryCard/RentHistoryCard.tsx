@@ -40,7 +40,7 @@ export function RentHistoryCard({
       borderColor="secondary"
       borderWeight={3}
       size="large"
-      styles={{ position: 'relative', maxWidth: '500px', padding: '10px' }}
+      styles={{ position: 'relative', padding: '10px' }}
       alignItems="center"
       justifyContent="space-around"
       gap={20}
