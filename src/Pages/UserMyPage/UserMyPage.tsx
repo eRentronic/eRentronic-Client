@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import { useState } from 'react';
 
 import { Line } from '@/components/common/Indicator/Line';
 import { Container } from '@/components/common/Layout/Core';
@@ -10,32 +10,43 @@ import { OrderHistoryCard } from './OrderHistoryCard/OrderhistoryCard';
 import { RentHistoryCard } from './RentHistoryCard/RentHistoryCard';
 import { UserInfo } from './UserInfo/UserInfo';
 
-export function UserMyPage() {
-  const rentData = {
-    deposit: 1,
-    delivering: 0,
-    delComplete: 2,
-    using: 2,
-    usingDelivering: 1,
-    usingDelComplete: 0,
-  };
-  const purchaseData = {
-    deposit: 1,
-    delivering: 0,
-    delComplete: 2,
-  };
+const RENT_DATA = {
+  deposit: 1,
+  delivering: 0,
+  delComplete: 2,
+  using: 2,
+  usingDelivering: 1,
+  usingDelComplete: 0,
+};
+const PURCHASE_DATA = {
+  deposit: 1,
+  delivering: 0,
+  delComplete: 2,
+};
+const PURCHASE_PAGE_NUM = 3;
+const RENT_PAGE_NUM = 2;
 
+export function UserMyPage() {
   const [purchasePage, setPurchasePage] = useState(1);
-  const purchasePageEnd = 10;
+
   const [rentPage, setRentPage] = useState(1);
   const rentPageEnd = 9;
 
   const onClickCancel = () => {
-    console.log('클릭이벤트');
+    console.log('x버튼 클릭');
   };
 
-  const orderHistories = useOrderHistory();
-  const orderList = orderHistories!.map(
+  const purchaseHistories = useOrderHistory()!;
+  const purchasePageEnd = purchaseHistories.length;
+
+  const purchasePageData = purchaseHistories.slice(
+    (purchasePage - 1) * PURCHASE_PAGE_NUM,
+    (purchasePage - 1) * PURCHASE_PAGE_NUM + PURCHASE_PAGE_NUM,
+  );
+
+  // const currentPageData = slicedOrderHistory[purchasePage - 1];
+
+  const orderList = purchasePageData.map(
     ({ title, price, state, orderSheetId, imageUrl }) => (
       <OrderHistoryCard
         productPrice={price}
@@ -58,8 +69,8 @@ export function UserMyPage() {
       <Container justifyContent="center" gap={20} styles={{ width: '100%' }}>
         <UserInfo />
         <Container flexDirection="column" gap={10}>
-          <Status isPurchase data={purchaseData} />
-          <Status isPurchase={false} data={rentData} />
+          <Status isPurchase data={PURCHASE_DATA} />
+          <Status isPurchase={false} data={RENT_DATA} />
         </Container>
       </Container>
       <Line height={2} color="grey2" width="100%" />
@@ -71,24 +82,10 @@ export function UserMyPage() {
       />
       <Container
         justifyContent="space-between"
-        gap={10}
+        gap={20}
         styles={{ width: '100%' }}
       >
-        <OrderHistoryCard
-          productName="테스트"
-          productPrice={10000000}
-          options={['1번 옵션', '2번 옵션']}
-        />
-        <OrderHistoryCard
-          productName="테스트"
-          productPrice={10000000}
-          options={['1번 옵션', '2번 옵션']}
-        />
-        <OrderHistoryCard
-          productName="테스트"
-          productPrice={10000000}
-          options={['1번 옵션', '2번 옵션']}
-        />
+        {orderList}
       </Container>
       <PageList
         end={rentPageEnd}
@@ -121,8 +118,6 @@ export function UserMyPage() {
         />
       </Container>
       <Line height={2} />
-      {/* <PageList /> */}
-      <Container gap={20}>{orderList}</Container>
     </Container>
   );
 }
