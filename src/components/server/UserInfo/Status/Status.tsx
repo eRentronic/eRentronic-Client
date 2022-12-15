@@ -62,7 +62,7 @@ export function Status({ isPurchase, data }: StatusProps) {
         borderColor={borderColor}
         borderWeight={3}
         boxColor="white"
-        styles={{ width: '100%' }}
+        boxStyles={{ width: '100%' }}
       >
         <Container
           styles={{
