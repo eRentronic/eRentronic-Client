@@ -30,21 +30,21 @@ export function UserMyPage() {
   const [purchasePage, setPurchasePage] = useState(1);
 
   const [rentPage, setRentPage] = useState(1);
-  const rentPageEnd = 9;
+  const rentPageEnd = 2;
 
   const onClickCancel = () => {
     console.log('x버튼 클릭');
   };
 
   const purchaseHistories = useOrderHistory()!;
-  const purchasePageEnd = purchaseHistories.length;
+  const purchasePageEnd = Math.floor(
+    purchaseHistories.length / PURCHASE_PAGE_NUM,
+  );
 
   const purchasePageData = purchaseHistories.slice(
     (purchasePage - 1) * PURCHASE_PAGE_NUM,
     (purchasePage - 1) * PURCHASE_PAGE_NUM + PURCHASE_PAGE_NUM,
   );
-
-  // const currentPageData = slicedOrderHistory[purchasePage - 1];
 
   const orderList = purchasePageData.map(
     ({ title, price, state, orderSheetId, imageUrl }) => (
@@ -76,7 +76,6 @@ export function UserMyPage() {
       <Line height={2} color="grey2" width="100%" />
       <PageList
         end={purchasePageEnd}
-        skipNumber={5}
         focus={purchasePage}
         setFocus={setPurchasePage}
       />
@@ -87,12 +86,7 @@ export function UserMyPage() {
       >
         {orderList}
       </Container>
-      <PageList
-        end={rentPageEnd}
-        skipNumber={5}
-        focus={rentPage}
-        setFocus={setRentPage}
-      />
+      <PageList end={rentPageEnd} focus={rentPage} setFocus={setRentPage} />
       <Container
         justifyContent="space-between"
         gap={10}
