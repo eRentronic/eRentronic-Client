@@ -59,10 +59,10 @@ export function Purchase() {
 
   const { value } = useLocalStorage('loginState');
   const { loginToken } = value;
-  const headers: HeaderType = {
-    'Access-Token': loginToken,
-    // withCredentials: true,
-  };
+  // const headers: HeaderType = {
+  //   'Access-Token': loginToken,
+  //   // withCredentials: true,
+  // };
 
   useEffect(() => {
     setTimeout(() => {
@@ -95,13 +95,13 @@ export function Purchase() {
   const { address1, address2, zipCode } = address;
 
   const { mutate } = useMutationPost(
-    URL,
+    `${URL}?accessToken=${loginToken}`,
     {
       purchases: [
         {
           productId,
           quantity: amount,
-          productTotalPrice,
+          productTotalPrice: productTotalPrice * amount,
         },
       ],
       rentals: [],
@@ -115,7 +115,7 @@ export function Purchase() {
     },
     {
       onSuccessCallback: setOrderResponse,
-      headers,
+      // headers,
       // onErrorCallback: error => console.error(error),
     },
     // { header: headers },

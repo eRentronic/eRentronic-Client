@@ -45,7 +45,8 @@ export function LoginForm({ routeToPassword }: LoginFormProps) {
   const { isLogin } = value;
 
   const onLoginSuccess = (data: AxiosResponse) => {
-    setValue({ isLogin: true, loginToken: data.headers['access-token'] });
+    const { accessToken } = data.data;
+    setValue({ isLogin: true, loginToken: accessToken });
   };
 
   const onLoginFail = () => {
