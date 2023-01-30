@@ -14,7 +14,7 @@ import { darkMode, lightMode } from '@/styles/globalTheme';
 export function App() {
   const isDarkmode = useRecoilValue(DarkModeStore);
   const MainPage = lazy(() => import('@/Pages/Main/Main'));
-  const DetailPage = lazy(() => import('@/Pages/detail'));
+  const DetailPage = lazy(() => import('@/Pages/Detail'));
   const LoginPage = lazy(() => import('@/Pages/Login'));
 
   return (

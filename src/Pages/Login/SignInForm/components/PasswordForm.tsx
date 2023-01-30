@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react';
 import styled from 'styled-components';
 
-import { Container } from '@/components/common/Layout/Core/Core';
+import { Container } from '@/components/common/Layout/Core';
 import { CautionMessage } from '@/components/common/Text/Caution/types';
 import { SignInInput } from '@/Pages/Login/SignInForm/components/SinginInput';
 

@@ -13,7 +13,7 @@ type OrderHistoryCardProps = {
   productName: string;
   productPrice: number;
   options: string[];
-  onClickCancle?: React.MouseEventHandler;
+  onClickCancel?: React.MouseEventHandler;
 };
 
 export function OrderHistoryCard({
@@ -21,47 +21,59 @@ export function OrderHistoryCard({
   productName,
   productPrice,
   options,
-  onClickCancle,
+  onClickCancel,
 }: OrderHistoryCardProps) {
-  const optionList = options.map(option => <Text>{`* ${option}`}</Text>);
+  const optionList = options.map(option => (
+    <Text typography="Light" color="grey3">{`* ${option}`}</Text>
+  ));
 
   return (
     <Box
       boxColor="white"
-      styles={{ width: '30%' }}
+      borderWeight={3}
+      boxStyles={{ width: '30%' }}
       size="medium"
       justifyContent="space-between"
+      alignItems="center"
       position="relative"
+      gap={20}
     >
       <ImageContainer
         imageSrc={imageURL}
         size="medium"
         alt="주문기록 제품 이미지"
       />
-      <Container flexDirection="column" gap={5}>
-        <Text>제품명</Text>
+      <Container
+        flexDirection="column"
+        justifyContent="flex-start"
+        gap={5}
+        styles={{ width: '30%' }}
+      >
+        <Text typography="Light" color="grey3">
+          제품명
+        </Text>
         <Line />
-        <Text>{productName}</Text>
-        <Text>옵션</Text>
+        <Text typography="Light" color="grey3">
+          {productName}
+        </Text>
+        <Text typography="Light" color="grey3">
+          옵션
+        </Text>
         <Line />
         {optionList}
       </Container>
-      <StyledContainer flexDirection="column">
+      <Container flexDirection="column" gap={10} styles={{ width: '100px' }}>
         <Text styles={{ margin: '0 auto' }}>배송 상태</Text>
         <ProgressBar progressRate={50} height={10} />
         <Text styles={{ margin: '0 auto' }} typography="Bold">
           가격
         </Text>
         <Text>{productPrice.toLocaleString()}</Text>
-      </StyledContainer>
-      <CancleButton iconSrc="CLOSE" onClick={onClickCancle} />
+      </Container>
+      <CancleButton iconSrc="CLOSE" onClick={onClickCancel} />
     </Box>
   );
 }
-
-const StyledContainer = styled(Container)`
-  width: 100px;
-`;
 
 const CancleButton = styled(Icon)`
   position: absolute;

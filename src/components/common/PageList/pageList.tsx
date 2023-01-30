@@ -116,7 +116,7 @@ export function PageList({
     <Container
       backgroundColor="none"
       justifyContent="center"
-      alignItem="center"
+      alignItems="center"
       gap={15}
     >
       <>
